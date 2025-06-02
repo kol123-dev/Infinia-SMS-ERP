@@ -1,0 +1,1 @@
+{!! QrCode::size($template->qr_image_size)->generate($qr_text) !!}

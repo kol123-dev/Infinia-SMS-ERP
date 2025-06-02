@@ -1,0 +1,12 @@
+{
+    "version": "8.2.7",
+    "release_date": "03/01/2025",
+    "required_manual_update": false,
+    "min": "8.2.6",
+    "migrations": [
+         "database/migrations/2024_12_27_033444_update_8.2.7.php"
+    ],
+    "url": "https://spondonit.com/contact",
+    "notes": "This is a mostly bug fixing update."
+  }
+

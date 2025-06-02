@@ -1,0 +1,24 @@
+{
+    "Certificate": {
+        "item_id": "1011212",
+        "migration": {
+            "certificate_types":"Modules/Certificate/Database/Migrations/2023_10_05_064926_create_certificate_types_table.php",
+            "certificate_templates":"Modules/Certificate/Database/Migrations/2023_10_05_071914_create_certificate_templates_table.php",
+            "certificate_template_designs":"Modules/Certificate/Database/Migrations/2023_10_06_043223_create_certificate_template_designs_table.php",
+            "certificate_settings":"Modules/Certificate/Database/Migrations/2023_10_05_071937_create_certificate_settings_table.php",
+            "certificate_records":"Modules/Certificate/Database/Migrations/2023_10_15_100024_create_certificate_records_table.php"
+        },
+        "names": [
+            
+        ],
+        "versions": [
+            "1.0"
+        ],
+        "url": [
+            "https://spondonit.com/contact"
+        ],
+        "notes": [
+            "This is the module to generate Certificate's for students and employees."
+        ]
+    }
+}
