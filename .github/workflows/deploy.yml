@@ -22,13 +22,13 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
 
-      - name: Sync changed files using rsync
+      - name: Sync files using rsync
         run: |
           rsync -avz --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
           --exclude='.env' \
           --exclude='storage/' \
           --exclude='.git/' \
-          ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/Tesla01/web/sms.infiniasync.com/public_html/public/
+          ./ Tesla01@${{ secrets.SERVER_IP }}:/home/Tesla01/web/sms.infiniasync.com/public_html/public/
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.0
@@ -37,7 +37,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/www/sms.infiniasync.com/html/dssd/ss
+            cd /home/Tesla01/web/sms.infiniasync.com/public_html/public
             echo "Setting up Laravel..."
             
             # Setup permissions
