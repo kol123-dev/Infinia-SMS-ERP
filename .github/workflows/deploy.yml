@@ -10,25 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-  - name: Checkout repo
-    uses: actions/checkout@v3  
+      - name: Checkout repo
+        uses: actions/checkout@v3  
 
-  - name: Install rsync
-    run: sudo apt-get update && sudo apt-get install -y rsync
+      - name: Install rsync
+        run: sudo apt-get update && sudo apt-get install -y rsync
 
-  - name: Save SSH Private Key
-    run: |
-      mkdir -p ~/.ssh
-      echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-      chmod 600 ~/.ssh/deploy_key
+      - name: Save SSH Private Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
 
-  - name: Sync changed files using rsync
-    run: |
-      rsync -avz --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
-      --exclude='.env' \
-      --exclude='storage/' \
-      --exclude='.git/' \
-      ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/sms.infiniasync.com/html/dssd/ss/
+      - name: Sync changed files using rsync
+        run: |
+          rsync -avz --delete -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+          --exclude='.env' \
+          --exclude='storage/' \
+          --exclude='.git/' \
+          ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/var/www/sms.infiniasync.com/html/dssd/ss/
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.0
