@@ -41,12 +41,12 @@ class CreateSmEmailSettingsTable extends Migration
             [
                 'email_engine_type' => 'smtp',
                 'from_name'=>'System Admin',
-                'from_email'=>'hello@aorasoft.com',
+                'from_email'=>'info.@infinia .com',
                 'mail_driver'=>'smtp',
                 'mail_host'=>'smtp.gmail.com',
                 'mail_port'=>'587',
-                'mail_username'=>'hello@aorasoft.com',
-                'mail_password'=>'123456',
+                'mail_username'=>'info@infinia .com',
+                'mail_password'=>'1234567',
                 'mail_encryption'=>'tls',
                 'active_status'=>'0',
                 'academic_id' => 1
@@ -57,7 +57,7 @@ class CreateSmEmailSettingsTable extends Migration
             [
                 'email_engine_type' => 'php',
                 'from_name'=>'System Admin',
-                'from_email'=>'hello@aorasoft.com',
+                'from_email'=>'info@infinia .com',
                 'mail_driver'=>'php',
                 'mail_host'=>'',
                 'mail_port'=>'',

@@ -147,14 +147,11 @@
                     <div class="col-lg-12">
                         <div class="main-title m-0 text-right">
                             @php
-                                $is_set_online_exam_questions = DB::table('sm_online_exam_question_assigns')
+                            $is_set_online_exam_questions = DB::table('sm_online_exam_question_assigns')
                                 ->where('online_exam_id', $online_exam->id)
                                 ->first();
                             @endphp
-                              <a href="{{ route('online-exam') }}" class="primary-btn small fix-gr-bg">
-                                @lang('admin.back')
-                                </a>
-                            @if (!empty($is_set_online_exam_questions))
+                            @if (empty($is_set_online_exam_questions))
                                 @if (userPermission('manage_online_exam_question'))
                                     <a href="{{ route('online_exam_publish', $online_exam->id) }}" class="primary-btn small fix-gr-bg">
                                         @lang('exam.published_now')
@@ -165,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="white-box @if(empty($is_set_online_exam_questions)) mt-20 @else mt-20 @endif">
+                <div class="white-box @if(empty($is_set_online_exam_questions)) mt-20 @else mt-60 @endif">
                     <div class="row">
                     <div class="col-lg-4 no-gutters">
                         <div class="main-title">
@@ -265,7 +262,7 @@
 @include('backEnd.partials.data_table_js')
 @push('script')
 <script>
-    $(document).on('change','.common-checkbox',function (){
+$(document).on('change','.common-checkbox',function (){
         let url = $("#url").val();
         let onlineExamId=$("#online_exam_id_ajax").val();
         let questionBankId = $(this).val();
@@ -291,6 +288,6 @@
                 }
             }
         });
-    });
+});
 </script>
 @endpush

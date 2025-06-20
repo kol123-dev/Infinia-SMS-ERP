@@ -395,6 +395,7 @@ class SmCommunicateController extends Controller
                 }
             }
         } catch (Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }

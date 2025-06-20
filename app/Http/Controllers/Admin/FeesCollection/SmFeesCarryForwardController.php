@@ -67,6 +67,7 @@ class SmFeesCarryForwardController extends Controller
                 return redirect('fees-forward');
             }
         } catch (\Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }

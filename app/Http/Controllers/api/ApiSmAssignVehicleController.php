@@ -7,7 +7,6 @@ use App\ApiBaseMethod;
 use App\SmAssignVehicle;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\SmAcademicYear;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Validator;
 
@@ -91,15 +90,8 @@ class ApiSmAssignVehicleController extends Controller
         }
 
         try {
-            $user_id = auth()->user()->id;
-            
             $assign_vehicle = new SmAssignVehicle();
             $assign_vehicle->route_id = $request->route;
-            $assign_vehicle->academic_id =  SmAcademicYear::API_ACADEMIC_YEAR(auth()->user()->school_id);
-            $assign_vehicle->school_id = auth()->user()->school_id;
-            $assign_vehicle->created_by = $user_id;
-            $assign_vehicle->updated_by = $user_id;
-   
             $vehicles = '';
             $i = 0;
             foreach ($request->vehicles as $vehicle) {

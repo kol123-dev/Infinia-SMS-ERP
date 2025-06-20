@@ -29,7 +29,7 @@ class CreateSmGeneralSettingsTable extends Migration
             $table->integer('promotionSetting')->nullable()->default(0);
             $table->string('logo')->nullable();
             $table->string('favicon')->nullable();
-            $table->string('system_version')->nullable()->default('8.2.7');
+            $table->string('system_version')->nullable()->default('8.2.4');
             $table->integer('active_status')->nullable()->default(1);
             $table->string('currency_code')->nullable()->default('USD');
             $table->string('language_name')->nullable()->default('en');
@@ -78,7 +78,7 @@ class CreateSmGeneralSettingsTable extends Migration
             $table->integer('Chat')->default(1)->nullable();
             $table->integer('FeesCollection')->default(0)->nullable();
             $table->integer('income_head_id')->default(0)->nullable();
-            $table->integer('InfixBiometrics')->default(0)->nullable();
+            $table->integer('infiniaBiometrics')->default(0)->nullable();
             $table->integer('ResultReports')->default(0)->nullable();
             $table->integer('TemplateSettings')->default(1)->nullable();
             $table->integer('MenuManage')->default(1)->nullable();
@@ -139,17 +139,17 @@ class CreateSmGeneralSettingsTable extends Migration
 
         DB::table('sm_general_settings')->insert([
             [
-                'copyright_text' => "Copyright © " . date('Y') . " All rights reserved | This application is made with by Codethemes",
+                'copyright_text' => "Copyright © " . date('Y') . " All rights reserved | This application is made with by infinia ",
                 'logo' => 'public/uploads/settings/logo.png',
                 'favicon' => 'public/uploads/settings/favicon.png',
-                'phone' => '+96897002784',
+                'phone' => '+254798928419',
                 'school_code' => '12345678',
-                'email' => 'hello@aorasoft.com',
-                'address' => 'Al Khuwair, Muscat, Oman',
-                'currency' => 'USD',
-                'currency_symbol' => '$',
-                'school_name' => 'Infix Edu',
-                'site_title' => 'Infix Education software',
+                'email' => 'admin@infinia .com',
+                'address' => 'Nairobi, Kenya',
+                'currency' => 'Kenya Shilling',
+                'currency_symbol' => 'KES',
+                'school_name' => 'infinia ',
+                'site_title' => 'infinia  Education software',
                 'session_id' => 1,
                 'week_start_id' => 3,
                 'time_zone_id' => 51,

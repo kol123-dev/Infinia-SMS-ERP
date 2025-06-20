@@ -161,6 +161,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($fees_dues as $fees_due)
+                                            {{-- @dd($fees_due) --}}
                                             <tr>
                                                 <td>{{$fees_due->recordDetail->studentDetail !=""?$fees_due->recordDetail->studentDetail->admission_no:""}}</td>
                                                 <td>{{$fees_due->recordDetail->studentDetail !=""?$fees_due->recordDetail->studentDetail->full_name:""}}</td>

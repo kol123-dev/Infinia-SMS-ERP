@@ -13,629 +13,266 @@ class SmCourseTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('sm_courses')->delete();
-
-        DB::table('sm_course_categories')->insert([
-            [
-                'category_name' => 'Academic',
-                'school_id' => 1,
-            ],
-            [
-                'category_name' => 'Professional Development',
-                'school_id' => 1,
-            ],
-            [
-                'category_name' => 'Personal Development',
-                'school_id' => 1,
-            ],
-            [
-                'category_name' => 'Technical Skills',
-                'school_id' => 1,
-            ],
-        ]);
-
         DB::table('sm_courses')->insert([
             [
-                'title' => 'MERN Full Stack Web Development',
-                'image' => 'public/uploads/theme/edulia/course/1.jpg',
-                'category_id' => 2,
-            
-                'overview' => '
-                    <div class="container">
-                        <h4 class="text-primary">Overview:</h4>
-                        <p class="text-muted">
-                            Dive into the world of web development with our MERN Full Stack Web Development Course. Designed for beginners, this course provides an interactive and practical approach to mastering MongoDB, Express.js, React.js, and Node.js. Develop your skills, build dynamic web applications, and kickstart your journey as a full-stack developer.
-                        </p>
-                        <ul class="list-unstyled ml-4">
-                            <li><strong>Course Highlights:</strong></li>
-                            <li>- Comprehensive understanding of the MERN stack</li>
-                            <li>- Hands-on projects to enhance real-world skills</li>
-                            <li>- Modern best practices for front-end and back-end development</li>
-                            <li>- Responsive design and API integration</li>
-                            <li>- Career-focused guidance and mentorship</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'outline' => '
-                    <div class="container mt-4">
-                        <h4 class="text-success">Outline:</h4>
-                        <p class="text-muted">
-                            The MERN Full Stack Web Development course is divided into several modules to ensure a structured and comprehensive learning experience. Gain hands-on experience with project-based learning to solidify your skills in both front-end and back-end development.
-                        </p>
-                        <div class="container mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Front-End Development:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> React.js Basics</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> State and Props Management</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Component Lifecycle</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Building Reusable Components</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Integrating APIs in React</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Back-End Development:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Node.js Fundamentals</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> RESTful APIs with Express.js</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> MongoDB for Database Management</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Authentication and Authorization</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Deployment and Scaling</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ',
-            
-                'prerequisites' => '
-                    <div class="container mt-4">
-                        <h4 class="text-danger">Prerequisites:</h4>
-                        <p class="text-muted">
-                            No prior coding experience is required, but basic knowledge of HTML, CSS, and JavaScript will be helpful.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li>- A laptop or computer with an internet connection</li>
-                            <li>- Enthusiasm to learn and explore web development</li>
-                            <li>- Basic understanding of how the web works</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'resources' => '
-                    <div class="container mt-4">
-                        <h4 class="text-warning">Instructors:</h4>
-                        <p class="text-muted">
-                            Our experienced instructors bring a wealth of knowledge and industry expertise to the table.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li><strong>Course Instructors:</strong></li>
-                            <li>1. John Doe - Expert in React.js and Modern JavaScript</li>
-                            <li>2. Jane Smith - Backend Developer specializing in Node.js</li>
-                            <li>3. Alex Johnson - Database Architect and MongoDB Specialist</li>
-                            <li>4. Sarah Lee - Full Stack Developer with MERN expertise</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'stats' => '
-                    <div class="container mt-4">
-                        <h4 class="text-info">Reviews:</h4>
-                        <p class="text-muted">
-                            "This course is an excellent starting point for anyone looking to become a full-stack developer. The hands-on projects and detailed instruction helped me build my first web application. Highly recommend!" - Anna M.
-                        </p>
-                        <p class="text-muted">
-                            "I loved the practical approach of this course. The instructors were very knowledgeable and supportive." - Michael R.
-                        </p>
-                    </div>
-                ',
+                'title' => 'infinia  Professional Writing Workshop',
+                'image' => 'public/uploads/theme/edulia/course/academic1.jpg',
                 
-                'active_status' => 1,
-            ],
-            
-            [
-                'title' => 'Mastering Laravel',
-                'image' => 'public/uploads/theme/edulia/course/5.jpg',
-                'category_id' => 2,
-            
-                'overview' => '
-                    <div class="container">
-                        <h4 class="text-primary">Overview:</h4>
-                        <p class="text-muted">
-                            Master the art of web development with Laravel, one of the most popular PHP frameworks. This course is perfect for those who want to dive deep into Laravel, from basic to advanced concepts, and build robust and scalable applications. Learn how to leverage Laravel’s powerful features to create professional web applications with ease.
-                        </p>
-                        <ul class="list-unstyled ml-4">
-                            <li><strong>Course Highlights:</strong></li>
-                            <li>- In-depth understanding of Laravel framework</li>
-                            <li>- Hands-on projects to enhance real-world skills</li>
-                            <li>- Master database migrations, Eloquent ORM, and query building</li>
-                            <li>- Build RESTful APIs and integrate third-party services</li>
-                            <li>- Advanced concepts like middleware, job queues, and testing</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'outline' => '
-                    <div class="container mt-4">
-                        <h4 class="text-success">Outline:</h4>
-                        <p class="text-muted">
-                            The Mastering Laravel course is structured to provide a deep understanding of the framework, along with project-based learning to solidify your skills in Laravel development.
-                        </p>
-                        <div class="container mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Basic Concepts:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Introduction to Laravel</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Routing and Controllers</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Blade Templating Engine</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Database Migrations and Seeding</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Eloquent ORM and Relationships</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Advanced Concepts:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Middleware and Request Lifecycle</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Job Queues and Event Broadcasting</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> RESTful APIs with Laravel</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Authentication and Authorization</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Testing and Debugging in Laravel</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ',
-            
-                'prerequisites' => '
-                    <div class="container mt-4">
-                        <h4 class="text-danger">Prerequisites:</h4>
-                        <p class="text-muted">
-                            Basic understanding of PHP and web development is recommended. Prior knowledge of object-oriented programming (OOP) will be beneficial.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li>- A laptop or computer with an internet connection</li>
-                            <li>- Basic knowledge of PHP and OOP concepts</li>
-                            <li>- Understanding of HTML, CSS, and JavaScript</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'resources' => '
-                    <div class="container mt-4">
-                        <h4 class="text-warning">Instructors:</h4>
-                        <p class="text-muted">
-                            Our instructors are seasoned Laravel developers with years of industry experience. They bring practical knowledge and insights to guide you through the learning process.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li><strong>Course Instructors:</strong></li>
-                            <li>1. Mark Taylor - Senior Laravel Developer and Architect</li>
-                            <li>2. Emily Clark - PHP Expert and Laravel Specialist</li>
-                            <li>3. David Lee - Backend Developer with a focus on API Development</li>
-                            <li>4. Laura King - Laravel Developer and DevOps Specialist</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'stats' => '
-                    <div class="container mt-4">
-                        <h4 class="text-info">Reviews:</h4>
-                        <p class="text-muted">
-                            "The best Laravel course I’ve taken! I learned everything from setting up a basic Laravel application to building complex systems. The real-world examples were extremely helpful." - John D.
-                        </p>
-                        <p class="text-muted">
-                            "I’ve been using Laravel for a while, but this course took my skills to the next level. The advanced topics were explained clearly and concisely." - Sarah P.
-                        </p>
-                    </div>
-                ',
-                
-                'active_status' => 1,
-            ],
-            
-            [
-                'title' => 'Mastering Docker',
-                'image' => 'public/uploads/theme/edulia/course/6.jpg',
-                'category_id' => 2,
-            
-                'overview' => '
-                    <div class="container">
-                        <h4 class="text-primary">Overview:</h4>
-                        <p class="text-muted">
-                            Dive into the world of containerization with Docker! This course is designed to help you master Docker from the ground up. You’ll learn how to build, deploy, and scale applications using containers, optimizing your development workflow and enhancing your ability to manage software environments efficiently. 
-                        </p>
-                        <ul class="list-unstyled ml-4">
-                            <li><strong>Course Highlights:</strong></li>
-                            <li>- Deep understanding of Docker and containerization concepts</li>
-                            <li>- Hands-on experience with Docker containers and Docker Compose</li>
-                            <li>- Learn how to deploy applications in isolated environments</li>
-                            <li>- Implement Docker in real-world use cases for development and production</li>
-                            <li>- Advanced Docker topics, including multi-stage builds and networking</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'outline' => '
-                    <div class="container mt-4">
-                        <h4 class="text-success">Outline:</h4>
-                        <p class="text-muted">
-                            The Mastering Docker course is divided into comprehensive modules, each designed to give you a thorough understanding of Docker and containerization. The course combines theoretical knowledge with hands-on projects to help you implement Docker in real-world scenarios.
-                        </p>
-                        <div class="container mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Docker Basics:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Introduction to Containers and Docker</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Installing Docker and Setup</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Docker Images and Containers</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Running and Managing Containers</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Docker Commands and Best Practices</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Advanced Docker Concepts:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Docker Compose for Multi-Container Applications</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Docker Networking and Volumes</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Multi-Stage Builds in Docker</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Docker Swarm and Orchestration</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> CI/CD with Docker</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ',
-            
-                'prerequisites' => '
-                    <div class="container mt-4">
-                        <h4 class="text-danger">Prerequisites:</h4>
-                        <p class="text-muted">
-                            This course assumes basic knowledge of software development and systems administration. No prior Docker experience is required.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li>- A laptop or computer with an internet connection</li>
-                            <li>- Familiarity with basic development tools (e.g., text editor, command-line interface)</li>
-                            <li>- Basic understanding of Linux/Unix commands is recommended</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'resources' => '
-                    <div class="container mt-4">
-                        <h4 class="text-warning">Instructors:</h4>
-                        <p class="text-muted">
-                            Our instructors are experienced professionals who have worked with Docker in large-scale production environments. They’ll guide you through the course with a hands-on approach, offering insights into best practices and advanced concepts.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li><strong>Course Instructors:</strong></li>
-                            <li>1. Peter Harris - DevOps Engineer with extensive Docker experience</li>
-                            <li>2. Lisa White - Cloud Infrastructure Specialist and Docker Expert</li>
-                            <li>3. Mark Robinson - Software Engineer with expertise in containerization and orchestration</li>
-                            <li>4. James Green - Senior Developer focusing on scalable microservices architectures</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'stats' => '
-                    <div class="container mt-4">
-                        <h4 class="text-info">Reviews:</h4>
-                        <p class="text-muted">
-                            "The best Docker course I’ve taken! It’s clear, practical, and filled with examples that helped me implement Docker in production environments. Highly recommend!" - Brian L.
-                        </p>
-                        <p class="text-muted">
-                            "This course made Docker easy to understand. The hands-on approach helped me build real-world applications using Docker containers." - Emily S.
-                        </p>
-                    </div>
-                ',
-                
-                'active_status' => 1,
-            ],
+                'overview' => 'infinia  School invites you to participate in our esteemed Creative Writing Workshop, designed to cultivate and refine your writing skills in a professional setting. 
 
-            [
-                'title' => 'Creative Design Mastery: From Basics to Professional Graphics',
-                'image' => 'public/uploads/theme/edulia/course/7.jpg',
-                'category_id' => 4,
-            
-                'overview' => '
-                    <div class="container">
-                        <h4 class="text-primary">Overview:</h4>
-                        <p class="text-muted">
-                            Unleash your creativity with our comprehensive Graphic Design course! This course is designed to help you master the principles, tools, and techniques of graphic design. Whether you’re a beginner or looking to enhance your skills, you’ll learn to create stunning visuals, professional designs, and effective branding materials.
-                        </p>
-                        <ul class="list-unstyled ml-4">
-                            <li><strong>Course Highlights:</strong></li>
-                            <li>- Deep understanding of design principles and color theory</li>
-                            <li>- Hands-on projects to build your design portfolio</li>
-                            <li>- Learn industry-standard tools like Adobe Photoshop, Illustrator, and Figma</li>
-                            <li>- Master typography, layout design, and branding techniques</li>
-                            <li>- Explore advanced topics like UI/UX design and motion graphics</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'outline' => '
-                    <div class="container mt-4">
-                        <h4 class="text-success">Outline:</h4>
-                        <p class="text-muted">
-                            The Creative Design Mastery course is divided into structured modules that focus on both the theoretical and practical aspects of graphic design. From basic design principles to advanced tools and techniques, this course is perfect for aspiring graphic designers.
-                        </p>
-                        <div class="container mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Graphic Design Essentials:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Introduction to Graphic Design</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Design Principles and Color Theory</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Basics of Adobe Photoshop</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Working with Adobe Illustrator</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Typography and Layout Design</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Advanced Graphic Design Concepts:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> UI/UX Design with Figma</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Branding and Identity Design</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Advanced Photoshop and Illustrator Techniques</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Motion Graphics Basics</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Portfolio Development</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ',
-            
-                'prerequisites' => '
-                    <div class="container mt-4">
-                        <h4 class="text-danger">Prerequisites:</h4>
-                        <p class="text-muted">
-                            This course is designed for all skill levels, from beginners to experienced designers. Basic familiarity with computers is required.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li>- A computer with a stable internet connection</li>
-                            <li>- Adobe Creative Cloud (Photoshop, Illustrator) or equivalent tools</li>
-                            <li>- A passion for creativity and design</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'resources' => '
-                    <div class="container mt-4">
-                        <h4 class="text-warning">Instructors:</h4>
-                        <p class="text-muted">
-                            Our instructors are professional graphic designers with years of experience in the design industry. They’ll guide you through every step of the course, ensuring you gain both technical skills and artistic confidence.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li><strong>Course Instructors:</strong></li>
-                            <li>1. Emily Carter - Graphic Designer with expertise in branding and identity</li>
-                            <li>2. Alex Johnson - UI/UX Specialist with a background in product design</li>
-                            <li>3. Sarah Lee - Illustrator and Photoshop Guru with 10+ years of experience</li>
-                            <li>4. David Martin - Motion Graphics Artist specializing in animation</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'stats' => '
-                    <div class="container mt-4">
-                        <h4 class="text-info">Reviews:</h4>
-                        <p class="text-muted">
-                            "A must-take course for anyone starting their graphic design journey! The hands-on projects were incredibly helpful." - Jessica P.
-                        </p>
-                        <p class="text-muted">
-                            "The instructors were fantastic! I especially loved the sections on UI/UX and motion graphics." - Daniel T.
-                        </p>
-                    </div>
-                ',
-            
-                'active_status' => 1,
-            ],
-            
-            [
-                'title' => 'SQA Mastery: Ensuring Excellence in Software Quality',
-                'image' => 'public/uploads/theme/edulia/course/8.jpg',
-                'category_id' => 5,
-            
-                'overview' => '
-                    <div class="container">
-                        <h4 class="text-primary">Overview:</h4>
-                        <p class="text-muted">
-                            Ensure the quality and reliability of software products with our comprehensive Software Quality Assurance (SQA) course. This course equips you with the essential skills and techniques to excel in the field of software testing and quality assurance. From foundational principles to advanced testing methodologies, you’ll gain the expertise needed to deliver defect-free and high-performing software solutions.
-                        </p>
-                        <ul class="list-unstyled ml-4">
-                            <li><strong>Course Highlights:</strong></li>
-                            <li>- Learn the fundamentals of Software Quality Assurance</li>
-                            <li>- Master manual and automated testing techniques</li>
-                            <li>- Gain hands-on experience with popular testing tools like Selenium and JIRA</li>
-                            <li>- Understand test planning, execution, and defect tracking</li>
-                            <li>- Explore advanced topics like performance testing, security testing, and CI/CD integration</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'outline' => '
-                    <div class="container mt-4">
-                        <h4 class="text-success">Outline:</h4>
-                        <p class="text-muted">
-                            The SQA Mastery course is designed to provide you with in-depth knowledge and practical skills. The course is structured into modules covering everything from basic SQA concepts to advanced testing frameworks and real-world implementations.
-                        </p>
-                        <div class="container mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">SQA Fundamentals:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Introduction to Software Quality Assurance</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Understanding the Software Development Life Cycle (SDLC)</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Basics of Manual Testing</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Writing Effective Test Cases</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Test Plan and Strategy Development</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Advanced Testing Concepts:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Automated Testing with Selenium</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Performance and Load Testing with JMeter</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Security Testing Basics</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Bug Reporting and Defect Management using JIRA</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> CI/CD Integration in Testing</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ',
-            
-                'prerequisites' => '
-                    <div class="container mt-4">
-                        <h4 class="text-danger">Prerequisites:</h4>
-                        <p class="text-muted">
-                            This course is suitable for beginners and professionals looking to enhance their skills. Basic knowledge of software development and tools is recommended but not mandatory.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li>- A computer with an internet connection</li>
-                            <li>- Familiarity with basic software concepts</li>
-                            <li>- Passion for ensuring software quality</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'resources' => '
-                    <div class="container mt-4">
-                        <h4 class="text-warning">Instructors:</h4>
-                        <p class="text-muted">
-                            Learn from seasoned SQA professionals with extensive experience in software testing and quality assurance. They’ll guide you through the practical and theoretical aspects of SQA, ensuring you’re industry-ready.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li><strong>Course Instructors:</strong></li>
-                            <li>1. Maria Smith - Senior QA Engineer with expertise in automation</li>
-                            <li>2. Kevin Brown - Performance Testing Specialist with a focus on large-scale systems</li>
-                            <li>3. Laura Wilson - Security Testing Expert and QA Consultant</li>
-                            <li>4. Michael Clark - QA Lead with experience in CI/CD and agile testing practices</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'stats' => '
-                    <div class="container mt-4">
-                        <h4 class="text-info">Reviews:</h4>
-                        <p class="text-muted">
-                            "A perfect course for both beginners and experienced testers! The practical approach made it easy to grasp complex concepts." - John D.
-                        </p>
-                        <p class="text-muted">
-                            "The instructors were excellent, and the course covered everything I needed to advance my career in QA." - Anna R.
-                        </p>
-                    </div>
-                ',
-            
-                'active_status' => 1,
-            ],
-            
-            
-            [
-                'title' => 'WordPress Theme Development',
-                'image' => 'public/uploads/theme/edulia/course/3.jpg',
-                'category_id' => 2,
-            
-                'overview' => '
-                    <div class="container">
-                        <h4 class="text-primary">Overview:</h4>
-                        <p class="text-muted">
-                            Unlock the power of WordPress theme development with this hands-on course! Designed for beginners and intermediate developers, this course will guide you through the essentials of building custom WordPress themes from scratch. Learn how to create themes with clean, reusable code, implement best practices, and customize WordPress to meet your needs.
-                        </p>
-                        <ul class="list-unstyled ml-4">
-                            <li><strong>Course Highlights:</strong></li>
-                            <li>- Learn how to create a custom WordPress theme from the ground up</li>
-                            <li>- Understand WordPress theme structure and template files</li>
-                            <li>- Master theme customization with the WordPress Customizer API</li>
-                            <li>- Best practices for responsive, SEO-friendly theme development</li>
-                            <li>- How to deploy and maintain WordPress themes on live websites</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'outline' => '
-                    <div class="container mt-4">
-                        <h4 class="text-success">Outline:</h4>
-                        <p class="text-muted">
-                            The WordPress Theme Development course is structured into modules that gradually take you from understanding basic WordPress theme structure to developing advanced, custom themes with full features and functionality.
-                        </p>
-                        <div class="container mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">WordPress Theme Basics:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Understanding WordPress theme structure</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Creating a theme folder and basic files</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Using `index.php`, `style.css`, and `functions.php`</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Template Hierarchy and Template Tags</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Implementing WordPress Loop in themes</li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <h5 class="text-secondary">Advanced Theme Development:</h5>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Using the WordPress Customizer API</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Integrating widgets, menus, and custom post types</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Responsive design techniques for WordPress themes</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Optimizing themes for speed and SEO</li>
-                                        <li class="mb-2"><i class="bi bi-check-circle-fill"></i> Deploying themes and ensuring theme updates</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ',
-            
-                'prerequisites' => '
-                    <div class="container mt-4">
-                        <h4 class="text-danger">Prerequisites:</h4>
-                        <p class="text-muted">
-                            This course is suitable for developers with a basic understanding of HTML, CSS, and PHP. No prior WordPress theme development experience is required.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li>- A laptop or computer with an internet connection</li>
-                            <li>- Basic knowledge of HTML, CSS, and PHP</li>
-                            <li>- Familiarity with WordPress installation and management is helpful but not required</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'resources' => '
-                    <div class="container mt-4">
-                        <h4 class="text-warning">Instructors:</h4>
-                        <p class="text-muted">
-                            Our instructors are experienced WordPress developers with a deep understanding of theme development. They will guide you through the process of creating high-quality WordPress themes, sharing insights from real-world projects.
-                        </p>
-                        <ul class="list-unstyled">
-                            <li><strong>Course Instructors:</strong></li>
-                            <li>1. Emily Taylor - Expert WordPress Developer with years of theme development experience</li>
-                            <li>2. David Smith - Full Stack Developer specializing in WordPress and PHP</li>
-                            <li>3. Sarah Jones - Front-End Developer focused on creating responsive WordPress themes</li>
-                            <li>4. Mark Miller - WordPress developer and performance optimization specialist</li>
-                        </ul>
-                    </div>
-                ',
-            
-                'stats' => '
-                    <div class="container mt-4">
-                        <h4 class="text-info">Reviews:</h4>
-                        <p class="text-muted">
-                            "This course provided me with all the knowledge I needed to build my first custom WordPress theme. The instructors were great and helped me troubleshoot every challenge along the way." - John K.
-                        </p>
-                        <p class="text-muted">
-                            "I learned everything about WordPress theme development in this course, from setting up the theme to customizing it with advanced features. It’s a must for any WordPress developer!" - Laura D.
-                        </p>
-                    </div>
-                ',
+                Distinguished writers and aspiring authors alike are welcome to join us for an immersive experience, where we delve into the intricacies of creative expression and storytelling. 
                 
+                Workshop Highlights:
+                Structured Writing Exercises for Skill Enhancement 
+                
+                - Dynamic Creative Storytelling Games for Conceptual Development 
+                - Rigorous Poetry Activities to Enhance Expressive Communication 
+                - Team-building Word Challenges for Collaborative Learning 
+                - Platform to Share and Celebrate Your Literary Achievements! 
+                
+                Audience Profile:
+                
+                - Students of All Age Groups 
+                - Aspiring Writers and Poets Seeking Professional Growth 
+                - Enthusiasts Eager to Explore the Art of Creativity 
+                
+                 Date and Time:
+                [Insert Date] | [Insert Time]
+                [Insert Location]
+                
+                Registration Fee: [Insert Fee]
+                
+                 Participant Benefits:
+                
+                - Exclusive Creative Writing Workbook for Practical Insights 
+                - Certificate of Participation Recognizing Your Commitment 
+                - Networking Opportunities and Lasting Connections! 
+                
+                Secure your place today to embark on a writing journey that combines professionalism with creative exploration. For inquiries and registrations, please contact [Insert Contact Information].
+                
+                Join infinia  School in elevating the art of writing to new heights! ',
+                
+                'outline' => 'Overview:
+                The "infinia  Writing Workshop" provides a dynamic platform for individuals to refine their writing skills in a professional setting. Tailored for students of all ages and aspiring writers, this workshop combines structured exercises, creative storytelling games, and expressive poetry activities to enhance participants\' literary prowess. Facilitated by experts, attendees can expect a comprehensive exploration of the art of writing, fostering collaborative learning through team-building word challenges. Join us for an enriching experience that includes exclusive materials, a certificate of participation, and valuable networking opportunities. Elevate your writing journey with the infinia  Writing Workshop.',
+
+                'prerequisites' => 'Module 1: Introduction to Creative Writing
+
+                - Understanding the Basics of Creative Expression
+                - Exploring Various Writing Styles and Genres
+                
+                Module 2: Building Strong Foundations
+                
+                - Developing Effective Writing Habits
+                - Crafting Engaging Openings and Closures
+                
+                Module 3: Character Development
+                
+                - Creating Memorable Characters
+                - Exploring Character Motivations and Arcs
+                
+                Module 4: Plot Construction
+                
+                - Constructing Compelling Storylines
+                - Incorporating Conflict and Resolution
+                
+                Module 5: The Art of Descriptive Writing
+                
+                - Enhancing Imagery and Vivid Descriptions
+                - Creating Atmosphere and Setting
+                
+                Module 6: Poetry and Expressive Writing
+                
+                - Crafting Poetic Forms and Styles
+                - Channeling Emotion Through Words
+                
+                Module 7: Editing and Revision Techniques
+                
+                - Refining Prose for Clarity and Impact
+                - Incorporating Feedback for Improvement
+                
+                Module 8: Collaborative Writing
+                
+                - Team-building Word Challenges
+                - Group Exercises to Stimulate Creative Thinking
+                
+                Module 9: Final Projects and Presentations
+                
+                - Crafting and Sharing Personal Projects
+                - Receiving Constructive Feedback
+                
+                Conclusion and Certificate Ceremony
+                
+                - Recognition of Participants\' Achievements
+                - Networking Opportunities and Closing Remarks
+                
+                Note: The curriculum is subject to adjustments based on participants\' needs and progress throughout the infinia  Writing Workshop.',
+
+                'resources' => 'Instructors for "infinia  Writing Workshop":
+
+                    1. Dr. Emily Thompson
+                        - Background: Ph.D. in Creative Writing
+                        - Expertise: Fiction Writing, Plot Development
+                    2. Prof. Christopher Rodriguez
+                        - Background: M.A. in English Literature
+                        - Expertise: Poetry, Descriptive Writing
+                    3. Ms. Sarah Turner
+                        - Background: B.A. in Journalism
+                        - Expertise: Editing and Revision Techniques
+                    4. Dr. Michael Harris
+                        - Background: Ph.D. in Linguistics
+                        - Expertise: Collaborative Writing, Team-building
+                    5. Ms. Olivia Bennett
+                        - Background: M.F.A. in Creative Writing
+                        - Expertise: Character Development, Storytelling Games
+                    
+                    These seasoned professionals bring a wealth of experience to the infinia  Writing Workshop, ensuring a diverse and comprehensive learning experience for participants. Each instructor is dedicated to fostering creativity, refining writing skills, and guiding participants towards achieving their literary goals.',
+
+                'stats' => 'Review of infinia  Writing Workshop: Unlocking Creative Potential
+                I recently had the privilege of attending the infinia  Writing Workshop, and it exceeded all my expectations. The workshop offered a well-rounded curriculum that catered to writers of various skill levels, from beginners to seasoned wordsmiths.
+                
+                The instructors, each a specialist in their field, brought a unique perspective to the sessions. Dr. Emily Thompson\'s insights into fiction writing and plot development were invaluable, and Prof. Christopher Rodriguez\'s poetic expertise added a delightful dimension to the workshop.
+                
+                One of the standout features was the emphasis on hands-on activities. The collaborative writing exercises led by Dr. Michael Harris were not only intellectually stimulating but also fostered a sense of camaraderie among participants. Ms. Sarah Turner\'s guidance on editing and revision techniques was practical and immediately applicable to our writing projects.
+                
+                The workshop\'s structure allowed for a seamless progression from foundational concepts to advanced techniques. I particularly appreciated the individual attention given during the final projects and presentations, where constructive feedback from both instructors and peers proved instrumental in refining our work.
+                
+                The infinia  Writing Workshop not only enhanced my writing skills but also provided a supportive environment for personal growth. The networking opportunities were an unexpected bonus, connecting me with like-minded individuals who share a passion for the written word.
+                
+                In conclusion, if you\'re looking to elevate your writing abilities in a collaborative and inspiring setting, the infinia  Writing Workshop is an exceptional choice. I left the workshop feeling inspired, motivated, and equipped with a toolkit of writing techniques that will undoubtedly shape my future creative endeavors.',
+
                 'active_status' => 1,
             ],
             
+            [
+                'title' => 'Mathematics Mastery Program',
+                'image' => 'public/uploads/theme/edulia/course/academic2.jpg',
+                
+                'overview' => 'The Mathematics Mastery Program at infinia  is designed to instill a deep understanding and proficiency in mathematical concepts. Tailored for students of all levels, this program employs a comprehensive approach to foster critical thinking and problem-solving skills.',
+                
+                'outline' => 'The Mathematics Mastery Program at infinia  is designed to instill a deep understanding and proficiency in mathematical concepts. Tailored for students of all levels, this program employs a comprehensive approach to foster critical thinking and problem-solving skills.',
+
+                'prerequisites' => 'Module 1: Foundations of Mathematics
+
+                - Arithmetic Operations
+                - Number Theory
+                - Basic Algebraic Concepts
+                
+                Module 2: Geometry and Spatial Reasoning
+                
+                - Shapes and Properties
+                - Spatial Visualization
+                - Geometric Constructions
+                
+                Module 3: Algebraic Manipulations
+                
+                - Equations and Inequalities
+                - Polynomial Functions
+                - Factoring Techniques
+                
+                Module 4: Advanced Topics in Calculus
+                
+                - Limits and Derivatives
+                - Integration
+                - Applications of Calculus
+                
+                Module 5: Probability and Statistics
+                
+                - Probability Theory
+                - Descriptive Statistics
+                - Inferential Statistics
+                
+                Module 6: Real-world Applications
+                
+                - Practical Problem Solving
+                - Mathematical Modeling
+                - Applications Across Disciplines',
+
+                'resources' => '
+                1. Dr. Catherine Rodriguez
+                    - Background: Ph.D. in Mathematics
+                    - Expertise: Algebraic Manipulations, Calculus
+                2. Prof. Jonathan Miller
+                    - Background: M.S. in Statistics
+                    - Expertise: Probability and Statistics, Real-world Applications
+                3. Ms. Rachel Turner
+                    - Background: B.Ed. in Mathematics Education
+                    - Expertise: Foundations of Mathematics, Geometry
+                4. Mr. David Harris
+                    - Background: M.S. in Applied Mathematics
+                    - Expertise: Advanced Topics in Calculus, Real-world Applications',
+
+                'stats' => 'Enrolling in the Mathematics Mastery Program at infinia  has been a transformative experience. The curriculum\'s structured progression has equipped me with a solid foundation in fundamental concepts, and the instructors\' expertise ensures a clear understanding of complex topics.
+
+                Dr. Catherine Rodriguez\'s approach to teaching calculus demystifies intricate concepts, making them accessible and applicable. Prof. Jonathan Miller\'s engaging sessions on statistics have enhanced my ability to analyze and interpret data effectively.
+                
+                Ms. Rachel Turner\'s dedication to building a strong foundation in mathematics through the early modules has been invaluable. Mr. David Harris\'s real-world applications module brought the abstract nature of mathematics to life, showcasing its relevance across diverse fields.
+                
+                The Mathematics Mastery Program at infinia  has not only sharpened my mathematical skills but has also cultivated a genuine passion for the subject. The program\'s holistic approach, expert instructors, and practical applications make it a standout choice for anyone seeking to master mathematics.',
+
+                'active_status' => 1,
+            ],
+            
+            [
+                'title' => 'Coding and Robotics Lab',
+                'image' => 'public/uploads/theme/edulia/course/academic3.jpg',
+                
+                'overview' => 'The Coding and Robotics Lab at infinia  offers an immersive learning experience that blends coding principles with hands-on robotics projects. Geared towards students with varying levels of coding proficiency, this lab equips participants with practical skills and fosters a passion for technology and innovation.',
+                
+                'outline' => 'The Coding and Robotics Lab at infinia  offers an immersive learning experience that blends coding principles with hands-on robotics projects. Geared towards students with varying levels of coding proficiency, this lab equips participants with practical skills and fosters a passion for technology and innovation.',
+
+                'prerequisites' => 'Module 1: Introduction to Coding
+
+                Fundamentals of Programming Logic
+                Basics of Algorithm Design
+                Coding Syntax and Best Practices
+                Module 2: Robotics Foundations
+                
+                Understanding Robot Components
+                Basic Electronics and Circuitry
+                Introduction to Robotics Software
+                Module 3: Intermediate Coding Concepts
+                
+                Object-Oriented Programming (OOP)
+                Data Structures and Algorithms
+                Version Control with Git
+                Module 4: Advanced Robotics Projects
+                
+                Designing and Building Robot Prototypes
+                Integrating Sensors and Actuators
+                Programming Robot Behavior
+                Module 5: Real-world Applications
+                
+                Robotics in Industry and Research
+                Ethical Considerations in Robotics
+                Final Project Showcase',
+
+                'resources' => 'Dr. Alan Carter
+
+                Background: Ph.D. in Computer Science
+                Expertise: Introduction to Coding, Intermediate Coding Concepts
+                Prof. Michelle Adams
+                
+                Background: M.Eng. in Robotics
+                Expertise: Robotics Foundations, Advanced Robotics Projects
+                Mr. Daniel Miller
+                
+                Background: B.Sc. in Computer Engineering
+                Expertise: Coding Syntax and Best Practices, Real-world Applications
+                Ms. Emily Turner
+                
+                Background: M.Sc. in Electrical Engineering
+                Expertise: Basic Electronics and Circuitry, Ethical Considerations in Robotics',
+
+                'stats' => 'Enrolling in the Coding and Robotics Lab at infinia  has been a game-changer for me. The curriculum\'s balance between coding theory and practical robotics applications has provided a well-rounded understanding of these technologies.
+
+                Dr. Alan Carter\'s clear explanations and engaging coding exercises in the introductory modules laid a strong foundation. Prof. Michelle Adams\' expertise in robotics made the transition to hands-on projects seamless, and Mr. Daniel Miller\'s guidance on coding best practices has been invaluable.
+                
+                Ms. Emily Turner\'s sessions on electronics and ethical considerations in robotics added a thoughtful dimension to the program. The real-world applications module brought everything together, showcasing the limitless possibilities of coding and robotics.
+                
+                The Coding and Robotics Lab at infinia  has not only broadened my technical skills but has also sparked a genuine interest in exploring the intersection of coding and robotics in various fields. The knowledgeable instructors and practical approach make this lab an exceptional choice for anyone passionate about technology.',
+
+                'active_status' => 1,
+            ],
         ]);
     }
 }

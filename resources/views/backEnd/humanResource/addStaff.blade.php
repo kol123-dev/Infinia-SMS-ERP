@@ -173,8 +173,7 @@
                                                                     @foreach ($roles as $key => $value)
                                                                         <option value="{{ $value->id }}"
                                                                             {{ old('role_id') == $value->id ? 'selected' : '' }}>
-                                                                            {{__('rolepermission::role.'.$value->name) }}
-                                                                        </option>
+                                                                            {{ $value->name }}</option>
                                                                     @endforeach
                                                                 </select>
 

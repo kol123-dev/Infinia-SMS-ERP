@@ -103,7 +103,7 @@
 
                 @if (userPermission(1500) && menuStatus(1505))
                     <li data-position="{{ menuPosition(1505) }}">
-                        <a href="{{ route('lms.student.certificates', auth()->id())}}">@lang('lms::lms.certificate')</a>
+                        <a href="{{ route('lms.student.certificate', auth()->id())}}">@lang('lms::lms.certificate')</a>
                     </li>
                 @endif
 
@@ -376,6 +376,10 @@
 @if (moduleStatusCheck('Gmeet') == true)
     @include('gmeet::menu')
 @endif
+
+{{-- @if (moduleStatusCheck('Lms') == true)
+    @include('lms::menu.lms_sidebar')
+@endif --}}
 
 <!-- Jitsi Menu -->
 @if (moduleStatusCheck('Jitsi') == true)

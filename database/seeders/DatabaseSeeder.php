@@ -7,8 +7,6 @@ use App\SmAcademicYear;
 use Illuminate\Database\Seeder;
 use Database\Seeders\SmSchoolSeeder;
 use Database\Seeders\ContinentsTableSeeder;
-use Database\Seeders\FrontendCMS\SmNewsSeeder;
-use Database\Seeders\Admin\ExpertTeacherSeeder;
 use Database\Seeders\Lesson\SmTopicsTableSeeder;
 use Database\Seeders\Admin\SmVisitorsTableSeeder;
 use Database\Seeders\Exam\SmExamTypesTableSeeder;
@@ -71,9 +69,7 @@ use Database\Seeders\HumanResources\SmDesignationsTableSeeder;
 use Database\Seeders\UploadContent\SmUploadContentTableSeeder;
 use Database\Seeders\Academics\SmAssignClassTeacherTableSeeder;
 use Database\Seeders\Academics\SmClassRoutineUpdatesTableSeeder;
-use Database\Seeders\FrontendCMS\FrontAcademicCalendarSeeder;
-use Database\Seeders\FrontendCMS\FrontClassRoutineSeeder;
-use Database\Seeders\FrontendCMS\FrontExamRoutineSeeder;
+use Database\Seeders\Admin\ExpertTeacherSeeder;
 use Database\Seeders\HumanResources\SmStaffAttendancesTableSeeder;
 use Database\Seeders\FrontSettings\SmBackgroundSettingsTableSeeder;
 use Database\Seeders\FrontSettings\SmFrontendPermissionTableSeeder;
@@ -95,8 +91,6 @@ class DatabaseSeeder extends Seeder
             $params = [];
             $params['school_id'] = $school->id;
 
-            $this->callWith(SmNewsSeeder::class, array_merge($params, ['count' => 4]));
-
             $this->callWith(SmVisitorsTableSeeder::class, array_merge($params, ['count' => 10]));
 
             $this->callWith(SmDesignationsTableSeeder::class, array_merge($params, ['count' => 5]));
@@ -107,7 +101,7 @@ class DatabaseSeeder extends Seeder
             $this->callWith(SmExpenseHeadsTableSeeder::class, array_merge($params, ['count' => 10]));
             $this->callWith(SmIncomeHeadsTableSeeder::class, array_merge($params, ['count' => 10]));
             $this->callWith(SmBankAccountsTableSeeder::class, array_merge($params, ['count' => 10]));
-            $this->callWith(SmBookCategoriesTableSeeder::class, array_merge($params, ['count' => 10]));
+            // $this->callWith(SmBookCategoriesTableSeeder::class, array_merge($params, ['count' => 10]));
             $this->callWith(SmContactMessagesTableSeeder::class, array_merge($params, ['count' => 10]));
             $this->callWith(SmDormitoryListsTableSeeder::class, array_merge($params, ['count' => 7]));
             $this->callWith(SmRoomTypesTableSeeder::class, array_merge($params, ['count' => 6]));
@@ -117,8 +111,8 @@ class DatabaseSeeder extends Seeder
             $this->callWith(SmStudentCategoriesTableSeeder::class, array_merge($params, ['count' => 6]));
 
             $this->callWith(StaffsTableSeeder::class, array_merge($params, ['count' => 5]));
-            $parameter = ['school_id' => $school->id, 'count' => 4];
-            $this->callWith(ExpertTeacherSeeder::class, $parameter);
+            // $parameter = ['school_id' => $school->id, 'count' => 4];
+            // $this->callWith(ExpertTeacherSeeder::class, $parameter);
             $this->callWith(SmBackgroundSettingsTableSeeder::class, array_merge($params, ['count' => 2]));
             $this->callWith(SmFrontendPermissionTableSeeder::class, array_merge($params, ['count' => 2]));
             $this->callWith(SmPhotoGalleryTableSeeder::class, array_merge($params, ['count' => 4]));
@@ -126,7 +120,9 @@ class DatabaseSeeder extends Seeder
             $this->callWith(SmEventTableSeeder::class, array_merge($params, ['count' => 4]));
             $this->callWith(SmCourseTableSeeder::class, array_merge($params, ['count' => 2]));
 
+
             $academicYears = SmAcademicYear::where('school_id', $school->id)->get();
+
 
             foreach ($academicYears as $academicYear) {
                 $params['academic_id'] = $academicYear->id;
@@ -134,10 +130,7 @@ class DatabaseSeeder extends Seeder
                 $this->callWith(SmSectionsTableSeeder::class, array_merge($params, ['count' => 5]));
 
                 $this->callWith(SmSubjectsTableSeeder::class, array_merge($params, ['count' => 10]));
-                $this->callWith(SmClassesTableSeeder::class, array_merge($params, ['count' => 1]));
-
-                $this->callWith(FrontAcademicCalendarSeeder::class, array_merge($params, ['count' => 5]));
-                $this->callWith(FrontClassRoutineSeeder::class, array_merge($params, ['count' => 5]));
+                $this->callWith(SmClassesTableSeeder::class, array_merge($params, ['count' => 10]));
 
                 // $this->callWith(SmStudentAttendanceTableSeeder::class, array_merge($params, ['count' => 10]));
 
@@ -155,7 +148,7 @@ class DatabaseSeeder extends Seeder
                 $this->callWith(SmClassRoutineUpdatesTableSeeder::class, array_merge($params, ['count' => 1]));
                 $this->callWith(SmExamSchedulesTableSeeder::class, array_merge($params, ['count' => 1]));
                 $this->callWith(SmExamAttendancesTableSeeder::class, array_merge($params, ['count' => 1]));
-                $this->callWith(SmExamMarksRegistersTableSeeder::class, array_merge($params, ['count' => 1]));
+                // $this->callWith(SmExamMarksRegistersTableSeeder::class, array_merge($params, ['count' => 1]));
 
                 $this->callWith(SmFeesGroupsTableSeeder::class, array_merge($params, ['count' => 5]));
 
@@ -190,16 +183,13 @@ class DatabaseSeeder extends Seeder
                 $this->callWith(SmPostalReceiveTableSeeder::class, array_merge($params, ['count' => 5]));
                 $this->callWith(SmSendMessageTableSeeder::class, array_merge($params, ['count' => 5]));
 
-                $this->callWith(SmUploadContentTableSeeder::class, array_merge($params, ['count' => 20]));
+                $this->callWith(SmUploadContentTableSeeder::class, array_merge($params, ['count' => 5]));
 
                 // $this->callWith(SmStudentCertificateTableSeeder::class, array_merge($params, ['count' => 5]));
                 $this->callWith(SmSmTodoTableSeeder::class, array_merge($params, ['count' => 5]));
                 $this->callWith(SmOptionSubjectTableSeeder::class, array_merge($params, ['count' => 5]));
                 $this->callWith(SmAssignClassTeacherTableSeeder::class, array_merge($params, ['count' => 5]));
 
-                $this->callWith(FrontExamRoutineSeeder::class, array_merge($params, ['count' => 5]));
-
-                $this->callWith(DemoDataSeeder::class, array_merge($params, ['count' => 5]));
             }
         }
         

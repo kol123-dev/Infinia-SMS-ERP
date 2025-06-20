@@ -316,4 +316,4 @@ if ($("#table_id, .school-table-data").length) {
          }
      };
 </script>
-@endpush 
+@endpush

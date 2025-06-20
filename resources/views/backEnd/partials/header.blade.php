@@ -14,11 +14,16 @@
     @else
         <link rel="icon" href="{{asset('public/uploads/settings/favicon.png')}}" type="image/png"/>
     @endif
-    <title>{{@schoolConfig()->school_name ? @schoolConfig()->school_name : 'Infix Edu ERP'}} |
+    <title>{{@schoolConfig()->school_name ? @schoolConfig()->school_name : 'infinia Edu ERP'}} |
         @yield('title')
     </title>
 
     <meta name="_token" content="{!! csrf_token() !!}"/>
+    @if(userRtlLtl() ==1)
+        <link rel="stylesheet" href="{{ asset('public/backEnd/assets/css/rtl/bootstrap.rtl.min.css') }}" />
+    @else
+        <link rel="stylesheet" href="{{ asset('public/backEnd/vendors/css/bootstrap.min.css') }}" />
+    @endif
 <link rel="stylesheet" href="{{ asset('public/backEnd/vendors/css/jquery-ui.css') }}" />
 <link rel="stylesheet" href="{{ asset('public/backEnd/vendors/css/bootstrap-datepicker.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('public/backEnd/vendors/font_awesome/css/all.min.css') }}" />
@@ -97,7 +102,6 @@ if (empty(color_theme())) {
         @endif
         <input type="hidden" id="demoMode" value="{{ config('app.app_sync') }}">
     @php
-   
         if (file_exists($generalSetting->logo)) {
             $tt = file_get_contents(base_path($generalSetting->logo));
         } else {

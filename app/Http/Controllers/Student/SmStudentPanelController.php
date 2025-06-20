@@ -349,7 +349,7 @@ class SmStudentPanelController extends Controller
             $now = Carbon::now();
             $year = $now->year;
             $month  = $now->month;
-            $days = $now->daysInMonth;
+            $days = cal_days_in_month(CAL_GREGORIAN, $now->month, $now->year);
             $studentRecord = StudentRecord::where('student_id', $student_detail->id)
                 ->where('academic_id', getAcademicId())
                 ->where('school_id', $student_detail->school_id)
@@ -387,6 +387,7 @@ class SmStudentPanelController extends Controller
             }
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }
@@ -932,7 +933,7 @@ class SmStudentPanelController extends Controller
             $now = Carbon::now();
             $year = $now->year;
             $month  = $now->month;
-            $days =  $now->daysInMonth;
+            $days = cal_days_in_month(CAL_GREGORIAN, $now->month, $now->year);
             $attendance = $student_details->attendances;
 
             $subjectAttendance = SmSubjectAttendance::with('student')
@@ -1036,6 +1037,7 @@ class SmStudentPanelController extends Controller
                 ->where('academic_id', getAcademicId())
                 ->where('school_id', Auth::user()->school_id)
                 ->get();
+
             $grades = SmMarksGrade::where('active_status', 1)
                 ->where('academic_id', getAcademicId())
                 ->where('school_id', Auth::user()->school_id)
@@ -1059,7 +1061,7 @@ class SmStudentPanelController extends Controller
             $exam_terms = SmExamType::where('school_id', Auth::user()->school_id)
                 ->where('academic_id', getAcademicId())
                 ->get();
-            
+
             if (moduleStatusCheck('University')) {
                 $student_id = $student_detail->id;
                 $studentDetails = SmStudent::find($student_id);

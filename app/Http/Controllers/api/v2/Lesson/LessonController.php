@@ -24,101 +24,92 @@ use App\Scopes\StatusAcademicSchoolScope;
 use Modules\Lesson\Entities\LessonPlanner;
 use App\Http\Resources\v2\LessonPlanResource;
 use App\Http\Resources\v2\LessonPlanDetailsResource;
-use Exception;
 
 class LessonController extends Controller
 {
     public function index(Request $request)
     {
-        try {
-            $student_id = $request->student_id;
-            $record_id  = $request->record_id;
-            $next_date  = $request->next_date;
-    
-            $student_detail = SmStudent::withoutGlobalScope(SchoolScope::class)
-                ->where('id', $student_id)
-                ->first(['id', 'school_id']);
-    
-            if (!$student_detail) {
-                return response()->json([
-                    'success' => false,
-                    'data'    => null,
-                    'message' => 'Student not found',
-                ]);
-            }
-    
-            $week_start_id = SmGeneralSettings::where('school_id', $student_detail->school_id)->value('week_start_id');
-            $week_end_name = SmWeekend::withoutGlobalScope(SchoolScope::class)
-                ->where('school_id', $student_detail->school_id)
-                ->where('id', $week_start_id)
-                ->value('name');
-    
-            $start_day  = WEEK_DAYS_BY_NAME[$week_end_name ?? 'Monday'];
-            $end_day    = $start_day == 0 ? 6 : $start_day - 1;
-    
-            if ($next_date) {
-                $date = Carbon::parse($next_date);
-    
-                if ($date->isPast()) {
-                    $end_date = $date->subDays(1);
-                    $start_date = $end_date->subDays(6);
-                } elseif ($date->isFuture()) {
-                    $start_date = $date->addDay(1);
-                    $end_date = $start_date->addDays(6);
-                } else {
-                    $start_date = Carbon::now()->startOfWeek($start_day);
-                    $end_date = Carbon::now()->endOfWeek($end_day);
-                }
+        $student_id = $request->student_id;
+        $record_id = $request->record_id;
+        $next_date = $request->next_date;
+
+        $student_detail = SmStudent::withOutGlobalScope(SchoolScope::class)->where('id', $student_id)->first(['id', 'school_id']);
+
+        $gs = SmGeneralSettings::where('school_id', $student_detail->school_id)->first('week_start_id');
+
+        $week_end = SmWeekend::withOutGlobalScope(SchoolScope::class)->where('school_id', $student_detail->school_id)->where('id', $gs->week_start_id)->value('name');
+
+        $start_day = WEEK_DAYS_BY_NAME[$week_end ?? 'Saturday'];
+
+        $end_day = $start_day == 0 ? 6 : $start_day - 1;
+
+        if ($next_date) {
+            $date = Carbon::parse($next_date);
+            if ($date->isPast()) {
+                $end_date = Carbon::parse($next_date)->subDays(1);
+                $start_date = Carbon::parse($end_date)->subDays(6);
+                $data['this_week'] = $week_number = $end_date->weekOfYear;
+                $period = CarbonPeriod::create($start_date, $end_date);
+            } elseif ($date->isFuture()) {
+                $start_date = Carbon::parse($next_date)->addDay(1);
+                $date = Carbon::parse($next_date)->addDay(1);
+                $end_date = Carbon::parse($start_date)->addDay(7);
+                $data['this_week'] = $week_number = $end_date->weekOfYear;
+                $period = CarbonPeriod::create($start_date, $end_date);
             } else {
-                $start_date = Carbon::now()->startOfWeek($start_day);
-                $end_date = Carbon::now()->endOfWeek($end_day);
+                $data['this_week'] = $weekNumber = date("W");
+                $period = CarbonPeriod::create(Carbon::now()->startOfWeek($start_day)->format('Y-m-d'), Carbon::now()->endOfWeek($end_day)->format('Y-m-d'));
             }
-    
-            $data['this_week'] = $start_date->weekOfYear;
-            $period = CarbonPeriod::create($start_date, $end_date);
-    
-            $dates = [];
-            foreach ($period as $date) {
-                $dates[] = $date->format('Y-m-d');
-            }
-    
-            $student_record = StudentRecord::where('school_id', $student_detail->school_id)->findOrFail($record_id);
-    
-            $data['weeks'] = SmWeekend::withoutGlobalScope(SchoolScope::class)
-                ->with(['classRoutine' => function ($q) use ($student_record) {
-                    $q->withoutGlobalScope(StatusAcademicSchoolScope::class)
-                        ->where('class_id', $student_record->class_id)
-                        ->where('section_id', $student_record->section_id)
-                        ->where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
-                        ->where('school_id', auth()->user()->school_id);
-                }])
-                ->where('active_status', 1)
-                ->where('school_id', $student_detail->school_id)
-                ->orderBy('order', 'ASC')
-                ->get()
-                ->map(function ($weekend, $index) use ($dates) {
-                    return [
-                        'id'          => (int) $weekend->id,
-                        'name'        => (string) $weekend->name,
-                        'isWeekend'   => (int) $weekend->is_weekend,
-                        'date'        => $dates[$index] ?? null,
-                        'classRoutine' => LessonPlanResource::collection($weekend->classRoutine),
-                    ];
-                });
-    
-            return response()->json([
-                'success' => true,
-                'data'    => $data,
-                'message' => 'Lesson plan list',
-            ]);
-    
-        } catch (Exception $e) {
-            return response()->json([
+        } else {
+            $data['this_week'] = $weekNumber = date("W");
+            $period = CarbonPeriod::create(Carbon::now()->startOfWeek($start_day)->format('Y-m-d'), Carbon::now()->endOfWeek($end_day)->format('Y-m-d'));
+        }
+
+        $dates = [];
+        foreach ($period as $date) {
+            $dates[] = $date->format('Y-m-d');
+        }
+        $student_record = StudentRecord::where('school_id', $student_detail->school_id)->findOrFail($record_id);
+
+        $data['weeks'] = SmWeekend::withOutGlobalScope(SchoolScope::class)
+            ->with(['classRoutine' => function ($q) use ($student_record) {
+                $q->withoutGlobalScope(StatusAcademicSchoolScope::class)
+                    ->where('class_id', $student_record->class_id)
+                    ->where('section_id', $student_record->section_id)
+                    ->where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
+                    ->where('school_id', auth()->user()->school_id);
+            }])
+            ->orderBy('order', 'ASC')
+            ->where('active_status', 1)
+            ->where('school_id',  $student_detail->school_id)
+            ->get()->map(function ($value, $index) use ($period) {
+                $dates = [];
+                foreach ($period as $date) {
+                    $dates[] = $date->format('Y-m-d');
+                }
+                return [
+                    'id' => (int)$value->id,
+                    'name' => (string)$value->name,
+                    'isWeekend' => (int)$value->is_weekend,
+                    'date' => (string)$dates[$index],
+                    'classRoutine' => LessonPlanResource::collection($value->classRoutine)
+                ];
+            });
+
+        if (!$data) {
+            $response = [
                 'success' => false,
                 'data'    => null,
-                'message' => 'Something went wrong: ' . $e->getMessage(),
-            ]);
+                'message' => 'Operation failed'
+            ];
+        } else {
+            $response = [
+                'success' => true,
+                'data'    => $data,
+                'message' => 'Lesson plan list'
+            ];
         }
+        return response()->json($response);
     }
 
 

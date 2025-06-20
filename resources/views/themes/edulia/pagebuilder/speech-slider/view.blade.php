@@ -1,10 +1,5 @@
 @pushonce(config('pagebuilder.site_style_var'))
     <link rel="stylesheet" href="{{ asset('public/theme/edulia/packages/carousel/owl.carousel.min.css') }}">
-    <style>
-        .home_speech_section .owl-carousel .owl-nav button, .home_speech_section .owl-carousel .owl-nav button {
-            background: #ffffff;
-        }
-    </style>
 @endpushonce
 
 <section class="section_padding home_speech_section">
@@ -25,7 +20,7 @@
     <script src="{{ asset('public/theme/edulia/packages/carousel/owl.carousel.min.js') }}"></script>
     <script>
         $('.home_speech_section .owl-carousel').owlCarousel({
-            nav: false,
+            nav: true,
             navText: ['<i class="far fa-angle-left"></i>', '<i class="far fa-angle-right"></i>'],
             dots: false,
             items: 3,

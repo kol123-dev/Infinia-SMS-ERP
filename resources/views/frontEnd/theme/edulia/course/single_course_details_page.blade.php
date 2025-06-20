@@ -1,19 +1,5 @@
 @extends(config('pagebuilder.site_layout'),['edit' => false ])
 @section(config('pagebuilder.site_section'))
-<style>
-    .list-unstyled li {
-        font-size: 1.1rem;
-        color: #6c757d;
-    }
-    .list-unstyled li i {
-        color: #28a745;
-        margin-right: 10px;
-    }
-    .list-unstyled li.mb-2 {
-        margin-bottom: 1rem;
-    }
-</style>
-
 {{headerContent()}}
     <section class="bradcrumb_area">
         <div class="container">
@@ -108,35 +94,24 @@
             </div>
         </div>
     </section>
-    {{ footerContent() }}
 @endsection
-
 @pushonce(config('pagebuilder.site_script_var'))
     <script>
-        const filterBtns = document.querySelectorAll('.about-filter');
-        const aboutItems = document.querySelectorAll('.course_details_abouts_item');
-
-        filterBtns.forEach((btn) => {
-            btn.addEventListener('click', function (e) {
+        // ABOUT FILTER BTN
+        let filterBtn = document.querySelectorAll('.about-filter');
+        let aboutInfo = document.querySelectorAll('.course_details_abouts_item');
+        filterBtn.forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
                 e.preventDefault();
-
-                filterBtns.forEach((btn) => btn.classList.remove('active'));
-
-                this.classList.add('active');
-
-                const value = this.dataset.name;
-
-                aboutItems.forEach((item) => {
+                let value = e.target.dataset.name;
+                aboutInfo.forEach(function(item) {
                     if (item.classList.contains(value)) {
-                        item.style.display = 'block';
+                        item.style.display = 'block'
                     } else {
-                        item.style.display = 'none';
+                        item.style.display = 'none'
                     }
-                });
-            });
-        });
-
-        document.querySelector('.course_details_abouts_item.overview').style.display = 'block';
-        document.querySelector('.about-filter[data-name="overview"]').classList.add('active');
+                })
+            })
+        })
     </script>
 @endpushonce

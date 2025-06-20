@@ -314,7 +314,6 @@ Route::group(['middleware' => ['auth:api', 'subdomain']], function () {
     Route::middleware(['subdomain'])->group(function () {
         Route::get('jitsi/virtual-class', 'Student\Class\JitsiController@index');
         Route::get('jitsi/meetings', 'Student\Class\JitsiController@meetings');
-        Route::get('jitsi/settings', 'Student\Class\JitsiController@settings');
 
         Route::get('bbb/virtual-class', 'Student\Class\BBBController@index');
         Route::get('bbb/meetings', 'Student\Class\BBBController@meetings');

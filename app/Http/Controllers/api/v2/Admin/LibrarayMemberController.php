@@ -182,8 +182,6 @@ class LibrarayMemberController extends Controller
 
     public function store(Request $request)
     {
-        try {
-
         $this->validate($request, [
             'member_type'   => "required",
             'student'       => "required_if:member_type,2",
@@ -194,6 +192,7 @@ class LibrarayMemberController extends Controller
             'member_ud_id.unique'   => 'The Member id must be an unique value'
         ]);
 
+        // $student_staff_id = '';
         if (!empty($request->student)) {
             $student = SmStudent::where('id', $request->student)->where('school_id', auth()->user()->school_id)->first();
             $student_staff_id = $student->user_id;
@@ -214,19 +213,11 @@ class LibrarayMemberController extends Controller
             $user_id = $request->user_id;
         }
         $isExitMember = SmLibraryMember::where('student_staff_id', $student_staff_id)->withoutGlobalScope(StatusAcademicSchoolScope::class)->where('school_id', auth()->user()->school_id)->status()->first();
-        if ($isExitMember) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Member already exists',
-                'data'    => [],
-            ]);
-        } 
-        // if (!empty($isExitMember)) {
-        //     $members = $isExitMember;
-        //     $members->active_status = 1;
-        //     $members->update();
-        // } 
-        else {
+        if (!empty($isExitMember)) {
+            $members = $isExitMember;
+            $members->active_status = 1;
+            $members->update();
+        } else {
             $members = new SmLibraryMember();
             $members->member_type = $request->member_type;
             $members->student_staff_id = $student_staff_id;
@@ -276,12 +267,5 @@ class LibrarayMemberController extends Controller
             ];
         }
         return response()->json($response);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors'  => $e->validator->errors()->first(),
-            ]);
-        }
     }
 }

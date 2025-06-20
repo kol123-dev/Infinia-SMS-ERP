@@ -2731,6 +2731,7 @@ class SmExaminationController extends Controller
             $input['section_id'] = $request->section;
             $input['student_id'] = $request->student;
 
+            // dd($request->all());
             if (moduleStatusCheck('University')) {
                 $exam_type = $request->exam_type;
                 $student_id = $request->student_id;
@@ -2851,6 +2852,7 @@ class SmExaminationController extends Controller
                     Toastr::warning('Exam Setup Not Complete', 'Warning');
                     return redirect()->back();
                 }
+                // dd($un_session,$un_semester,$un_semester_label);
                 $data=[];
                 $data['semester']=$un_semester->name;
                 $data['semester_label']=$un_semester_label->name;
@@ -3066,6 +3068,7 @@ class SmExaminationController extends Controller
                     'section_id', 'exam_content', 'total_class_days', 'student_attendance', 'optional_subject_setup'));
             }
         } catch (\Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }

@@ -529,13 +529,9 @@
                                            </tr>
 
                                            @php
-                                                @$payments = $student->feesPayment
-                                                    ->where('active_status', 1)
-                                                    ->where('student_id', $student->id)
-                                                    ->where('fees_type_id', $fees_assigned->feesGroupMaster->feesTypes->id)
-                                                    ->filter(function ($payment) use ($fees_assigned) {
-                                                        return $payment->record_id == $fees_assigned->record_id || is_null($payment->record_id);
-                                                    });
+                                               @$payments =$student->feesPayment->where('active_status', 1)
+                                                           ->where('record_id',$fees_assigned->record_id)
+                                                           ->where('fees_type_id',$fees_assigned->feesGroupMaster->feesTypes->id);
                                                $i = 0;
                                            @endphp
                                            @foreach($payments as $payment)

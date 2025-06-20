@@ -42,7 +42,6 @@ class SpeechSliderController extends Controller
             $speechSlider = new SpeechSlider();
             $speechSlider->name = $request->name;
             $speechSlider->designation = $request->designation;
-            $speechSlider->title = $request->title;
             $speechSlider->speech = $request->speech;
             $speechSlider->image = fileUpload($request->image, $destination);
             $speechSlider->school_id = app('school')->id;
@@ -89,7 +88,6 @@ class SpeechSliderController extends Controller
             $speechSlider = SpeechSlider::find($request->id);
             $speechSlider->name = $request->name;
             $speechSlider->designation = $request->designation;
-            $speechSlider->title = $request->title;
             $speechSlider->speech = $request->speech;
             $speechSlider->image = fileUpdate($speechSlider->image, $request->image, $destination);
             $speechSlider->school_id = app('school')->id;

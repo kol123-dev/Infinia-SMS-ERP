@@ -26,6 +26,7 @@ class SubdomainMiddleware
     {
 
         $school = SaasSchool();
+        // dd($school);
         Session::put('domain', $school->domain);
         app()->forgetInstance('school');
         app()->instance('school', $school);

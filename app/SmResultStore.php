@@ -40,27 +40,22 @@ class SmResultStore extends Model
     }
 
     public static function remarks($gpa){
-        $school_id = 1;
-        if (Auth::check()) {
-            $school_id = Auth::user()->school_id;
-        } elseif (app()->bound('school')) {
-            $school_id = app('school')->id;
-        }  
-        try{
-            $mark = SmMarksGrade::where([
-                ['from', '<=', $gpa], 
-                ['up', '>=', $gpa]]
-                )
-                ->where('school_id', $school_id)
-                ->where('academic_id', getAcademicId())
-                ->first();
-                return $mark;
-        } catch (\Exception $e) {
-            $mark=[];
+    try{
+        $mark = SmMarksGrade::where([
+            ['from', '<=', $gpa], 
+            ['up', '>=', $gpa]]
+            )
+            ->where('school_id',Auth::user()->school_id)
+            ->where('academic_id', getAcademicId())
+            ->first();
             return $mark;
-        }
+    } catch (\Exception $e) {
+        $mark=[];
+        return $mark;
     }
-    
+
+
+    }
     public static function  GetResultBySubjectId($class_id, $section_id, $subject_id,$exam_id,$student_id){
     	
         try {

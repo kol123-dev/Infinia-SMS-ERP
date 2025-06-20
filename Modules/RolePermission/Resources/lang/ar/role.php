@@ -17,13 +17,5 @@ return [
     'update_password'=>'Update Password',
     'due_fees_login_permission' => 'Due Fees Login Permission',
     'fees_due_users_login_permission' => 'Fees Due User Login Permission',
-    'Super admin'=>'Super Admin',
-    'Student'=>'Student',
-    'Parents'=>'Parents',
-    'Teacher'=>'Teacher',
-    'Admin'=>'Admin',
-    'Accountant'=>'Accountant',
-    'Receptionist'=>'Receptionist',
-    'Librarian'=>'Librarian',
-    'Driver'=>'Driver',
+    
 ];

@@ -24,6 +24,8 @@ class DropForeignColumn extends Migration
         
     }
 
+        //infinia sync.com
+
     /**
      * Reverse the migrations.
      *

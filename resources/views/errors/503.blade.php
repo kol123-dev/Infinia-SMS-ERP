@@ -473,68 +473,48 @@ if(! (config('app.app_sync') && Storage::exists('.app_resetting')) ){
 
             <p class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal text-white">
                 Demo resets every 4 hours. Feel free to test all the features before purchasing, keep in mind that some features are disabled. As there are many users checking demo simultaneously, so if you found any inconsistency then please try demo after sometime.
-            </p>
+                </p>
+
+          
         </div>
     </div>
 
     <div class="relative pb-full md:flex md:pb-0 md:min-h-screen w-full md:w-1/2">
-        <div style="" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
-        </div>
+            <div style="" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
+               </div>
     </div>
 </div>
    
  @else 
 
-<div class="md:flex min-h-screen">
-    <div class="w-full md:w-1/2   flex items-center justify-center">
-        <div class="max-w-sm m-8">
-            <div class="text-black text-5xl md:text-15xl font-black">
-                <img src="{{url($setting->image ?? asset('/public/backEnd/img/503.png') )}}" alt="" class="img img-fluid">
+  <div class="md:flex min-h-screen">
+            <div class="w-full md:w-1/2   flex items-center justify-center">
+                <div class="max-w-sm m-8">
+                    <div class="text-black text-5xl md:text-15xl font-black">
+                    	<img src="{{url($setting->image ?? asset('/public/backEnd/img/503.png') )}}" alt="" class="img img-fluid">  </div>
+
+                    <div class="w-16 h-1 bg-purple-light my-3 md:my-6"></div>
+
+                    <h4 class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal text-white">
+                        {{$setting->title}}</h4>
+                    <p class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal text-white">
+                        {{$setting->sub_title}}</p>
+
+                  
+                </div>
             </div>
 
-            <div class="w-16 h-1 bg-purple-light my-3 md:my-6"></div>
+            <div class="relative pb-full md:flex md:pb-0 md:min-h-screen w-full md:w-1/2">
+                    <div style="" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
+                   	</div>
+            </div>
+  </div>
 
-            <h4 class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal text-white">
-                {{$setting->title}}</h4>
-            <p class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal text-white">
-                {{$setting->sub_title}}
-            </p>
-        </div>
-    </div>
+  @endif 
 
-    <div class="relative pb-full md:flex md:pb-0 md:min-h-screen w-full md:w-1/2">
-        <div style="" class="absolute pin bg-cover bg-no-repeat md:bg-left lg:bg-center">
-        </div>
-    </div>
-</div>
-
-@endif 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="{{asset('public/backEnd/error')}}/js/jquery-3.3.1.slim.min.js"></script>
 <script src="{{asset('public/backEnd/error')}}/js/popper.min.js"></script>
 <script src="{{asset('public/backEnd/error')}}/js/bootstrap.min.js"></script>
-
-
-@if(config('app.app_sync') && Storage::exists('.app_resetting') )
-    <script>
-        $(document).ready(function () {
-            setInterval(function () {
-                $.ajax({
-                    url: '{{ route("checkResetting") }}',
-                    type: 'GET',
-                    success: function (response) {
-                        if (response.is_resetting) {
-                            console.log("Resetting completed. Redirecting...");
-                            window.location.href = '{{ url("/") }}';
-                        }
-                    },
-                    error: function (xhr) {
-                        console.error("Error checking resetting state:", xhr.statusText);
-                    }
-                });
-            }, 10000);
-        });
-    </script>
-@endif
-
+  
 </body>
 </html>

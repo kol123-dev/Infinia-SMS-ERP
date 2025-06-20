@@ -38,7 +38,6 @@
         "pusher/pusher-php-server": "^5.0",
         "rahulreghunath/textlocal": "^1.0",
         "silviolleite/laravelpwa": "^2.0",
-        "simplesoftwareio/simple-qrcode": "~4",
         "spatie/valuestore": "^1.2",
         "spondonit/laravel-fcm-notification": "^1.0",
         "spondonit/rpclient": "^1.0",

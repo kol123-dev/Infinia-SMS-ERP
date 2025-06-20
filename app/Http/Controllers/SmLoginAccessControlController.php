@@ -32,7 +32,7 @@ class SmLoginAccessControlController extends Controller
     {
 
         try {
-            $roles = InfixRole::where('id', '!=', 1)->where('id', '!=', 3)->where(function ($q) {
+            $roles = InfixRole::where('is_saas',0)->where('id', '!=', 1)->where('id', '!=', 3)->where(function ($q) {
                 $q->where('school_id', Auth::user()->school_id)->orWhere('type', 'System');
             })->get();
             $classes = SmClass::get();

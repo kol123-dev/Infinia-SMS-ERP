@@ -378,7 +378,7 @@
                         "is_array": "0"
                     },
                     "home_about_area_description": {
-                        "value": "<span class=\" author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qowz80zsz78zz72zz122zz85zauz85zz84zz80zz65zz88zqj38z87zz67zez72ziz70zaaxz85zfsz81za\">In the dynamic landscape of education, the need for efficient school management systems has never been more crucial. Enter infixEDU, a comprehensive solution designed to revolutionize the way educational institutions operate, ensuring a seamless and innovative approach to administration.<\/span>",
+                        "value": "<span class=\" author-d-1gg9uz65z1iz85zgdz68zmqkz84zo2qowz80zsz78zz72zz122zz85zauz85zz84zz80zz65zz88zqj38z87zz67zez72ziz70zaaxz85zfsz81za\">In the dynamic landscape of education, the need for efficient school management systems has never been more crucial. Enter infiniaEDU, a comprehensive solution designed to revolutionize the way educational institutions operate, ensuring a seamless and innovative approach to administration.<\/span>",
                         "is_array": "0"
                     },
                     "home_about_area_items": {
@@ -404,7 +404,7 @@
                         "is_array": "0"
                     },
                     "home_about_area_button_link": {
-                        "value": "aboutus-page",
+                        "value": "/aboutus-page",
                         "is_array": "0"
                     }
                 }
@@ -625,16 +625,16 @@
                         "value": "View Course",
                         "is_array": "0"
                     },
-                    "view_course_button_link": {
-                        "value": "course",
+                    "view_course_link": {
+                        "value": "/course",
                         "is_array": "0"
                     },
                     "contact_us_button": {
                         "value": "Contact Us",
                         "is_array": "0"
                     },
-                    "contact_us_button_link": {
-                        "value": "contact-us",
+                    "contact_us_link": {
+                        "value": "/contact-us",
                         "is_array": "0"
                     },
                     "counter_list_items": {
@@ -1024,7 +1024,7 @@
             },
             "3671a7ece0": {
                 "settings": {
-                    "about_area_img_medium": {
+                    "about_area_img_1": {
                         "value": [
                             "{\"type\":\"image\",\"name\":\"about-img-4.jpg\",\"path\":\"optionbuilder\\\/uploads\\\/867411-10-2023_1155amabout-img-4.jpg\",\"mime\":\"jpg\",\"size\":62937,\"thumbnail\":\"[App_url]/public\\\/storage\\\/optionbuilder\\\/uploads\\\/867411-10-2023_1155amabout-img-4.jpg\"}"
                         ],
@@ -1149,13 +1149,13 @@
                                 "item_image": [
                                     "{\"type\":\"image\",\"name\":\"playstore.svg\",\"path\":\"optionbuilder\/uploads\/362301-03-2024_0451pmplaystore.svg\",\"mime\":\"svg\",\"size\":7228,\"thumbnail\":\"[App_url]/public\/storage\/optionbuilder\/uploads\/362301-03-2024_0451pmplaystore.svg\"}"
                                 ],
-                                "item_link": ""
+                                "item_link": "https:\/\/aorasoft.com\/"
                             },
                             "1704279092258": {
                                 "item_image": [
                                     "{\"type\":\"image\",\"name\":\"appstore.svg\",\"path\":\"optionbuilder\/uploads\/231701-03-2024_0452pmappstore.svg\",\"mime\":\"svg\",\"size\":9268,\"thumbnail\":\"[App_url]/public\/storage\/optionbuilder\/uploads\/231701-03-2024_0452pmappstore.svg\"}"
                                 ],
-                                "item_link": ""
+                                "item_link": "https:\/\/aorasoft.com\/"
                             }
                         },
                         "is_array": "1"

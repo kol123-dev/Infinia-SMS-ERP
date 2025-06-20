@@ -25,70 +25,58 @@ class StudentController extends Controller
 {
     public function studentDetailsSearch(Request $request)
     {
-        try {
-            $this->validate($request, [
-                'class'   => 'required',
-                'roll_no' => 'nullable|integer|not_in:0',
-            ], [
-                'roll_no.not_in' => 'The selected roll is invalid.',
-            ]);
-    
-            $records = StudentRecord::query();
-            $records->where('is_promote', 0)
-                ->where('school_id', auth()->user()->school_id)
-                ->where('class_id', $request->class)
-                ->when($request->section, function ($query) use ($request) {
-                    $query->where('section_id', $request->section);
-                })
-                ->when($request->roll_no, function ($query) use ($request) {
-                    $query->where('roll_no', $request->roll_no);
-                });
-    
-            $student_records = $records->where('is_promote', 0)->whereHas('student')->get(['student_id'])->unique('student_id')->toArray();
-    
-            $all_students = SmStudent::withoutGlobalScope(SchoolScope::class)
-                ->with('studentRecords', 'studentRecords.class', 'studentRecords.section')
-                ->whereIn('id', $student_records)
-                ->where('active_status', 1)
-                ->where('school_id', auth()->user()->school_id)
-                ->with(['parents' => function ($query) {
-                    $query->select('id', 'fathers_name');
-                }])
-                ->with(['gender' => function ($query) {
-                    $query->select('id', 'base_setup_name');
-                }])
-                ->with(['category' => function ($query) {
-                    $query->select('id', 'category_name');
-                }])
-                ->when($request->roll_no, function ($query) use ($request) {
-                    $query->where('roll_no', 'like', "%$request->roll_no%");
-                })->when($request->name, function ($query) use ($request) {
-                    $query->where('full_name', 'like', "%$request->name%");
-                })->get();
-    
-            $data = StudentListResource::collection($all_students);
-    
+        $this->validate($request, [
+            'class' => 'required',
+        ]);
+        $records = StudentRecord::query();
+        $records->where('is_promote', 0)
+            ->where('school_id', auth()->user()->school_id)
+            ->where('class_id', $request->class)
+            ->when($request->section, function ($query) use ($request) {
+                $query->where('section_id', $request->section);
+            });
+
+        $student_records = $records->where('is_promote', 0)->whereHas('student')->get(['student_id'])->unique('student_id')->toArray();
+
+        $all_students =  SmStudent::withoutGlobalScope(SchoolScope::class)
+            ->with('studentRecords', 'studentRecords.class', 'studentRecords.section')
+            ->whereIn('id', $student_records)
+            ->where('active_status', 1)
+            ->where('school_id', auth()->user()->school_id)
+            ->with(['parents' => function ($query) {
+                $query->select('id', 'fathers_name');
+            }])
+            ->with(['gender' => function ($query) {
+                $query->select('id', 'base_setup_name');
+            }])
+            ->with(['category' => function ($query) {
+                $query->select('id', 'category_name');
+            }])
+            ->when($request->roll_no, function ($query) use ($request) {
+                $query->where('roll_no', 'like', "%$request->roll_no%");
+            })->when($request->name, function ($query) use ($request) {
+                $query->where('full_name', 'like', "%$request->name%");
+            })->get();
+
+        $data = StudentListResource::collection($all_students);
+
+        if (!$data) {
+            $response = [
+                'success' => false,
+                'data'    => null,
+                'message' => 'Operation failed'
+            ];
+        } else {
             $response = [
                 'success' => true,
                 'data'    => $data,
                 'message' => 'Student search result'
             ];
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => true,
-                'data'    => [],
-                'message' => $e->validator->errors()->first(),
-            ], 422);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'error'   => $e->getMessage(),
-            ], 500);
         }
-    
         return response()->json($response);
     }
+
+
     public function profilePersonal(Request $request)
     {
         $school_id = auth()->user()->school_id;

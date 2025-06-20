@@ -14,7 +14,6 @@ class NotificationController extends Controller
     {
         $notifications = SmNotification::orderBy('id', 'DESC')
             ->where('user_id', auth()->user()->id)
-            ->where('role_id', auth()->user()->role_id)
             ->where('school_id', auth()->user()->school_id)
             ->where('is_read', 0)
             ->get();

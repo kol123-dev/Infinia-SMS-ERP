@@ -277,7 +277,7 @@ if (!function_exists('getColumnInfo')) {
                 break;
 
             case '9x3':
-                return ['col-lg-9', 'col-lg-3'];
+                return ['col-9', 'col-3'];
                 break;
 
             case '12x1':
@@ -358,6 +358,7 @@ if (!function_exists('createPageSlug')) {
 
 if (!function_exists('getComponentSettings')) {
     function getComponentSettings($directory) {
+        //dump(file_exists(resource_path('views/themes/'.activeTheme().'/pagebuilder/'. $directory . '/settings.php')));
         if (file_exists(resource_path('views/themes/'.activeTheme().'/pagebuilder/'. $directory . '/settings.php'))) {
             $settings = include resource_path('views/themes/'.activeTheme().'/pagebuilder/'. $directory . '/settings.php');
             return $settings;

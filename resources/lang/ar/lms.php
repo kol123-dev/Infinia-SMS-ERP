@@ -66,7 +66,5 @@
     'lmsSelect' => 'Select',
     'lms_checkout' => 'Checkout',
     'Document' => 'Document',
-    'Edit' => 'Edit',
-    'Course Teacher' => 'Course Teacher',
     ]
 ?>

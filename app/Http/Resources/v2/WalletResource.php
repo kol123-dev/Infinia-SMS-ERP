@@ -4,6 +4,7 @@ namespace App\Http\Resources\v2;
 
 use App\SmPaymentMethhod;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Cast\Double;
 use App\Scopes\ActiveStatusSchoolScope;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,17 +29,14 @@ class WalletResource extends JsonResource
 
         $method = SmPaymentMethhod::withoutGlobalScope(ActiveStatusSchoolScope::class)
             ->where('school_id', auth()->user()->school_id)
-            ->where('id', $this->payment_method)
-            ->first();
-    
-        $paymentMethod = $method ? $method->method : $this->payment_method;
+            ->where('id', $this->payment_method)->first();
 
         return [
-            'id'             => (int)$this->id,
-            'created_at'     => (string)$this->created_at,
-            'payment_method' => (string)$paymentMethod,
-            'amount'         => (float)$this->amount,
-            'status'         => (string)$status,
+            'id'                => (int)$this->id,
+            'created_at'        => (string)$this->created_at,
+            'payment_method'    => (string)@$method->method,
+            'amount'            => (float)$this->amount,
+            'status'            => (string)$status,
         ];
     }
 }

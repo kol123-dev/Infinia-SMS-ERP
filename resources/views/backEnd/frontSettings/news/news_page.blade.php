@@ -229,13 +229,6 @@
                                                     <label for="autoApproval">{{__('common.yes')}}</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <label class="primary_input_label" for="">@lang('common.mark_as_archive')</label>
-                                                <div class="">
-                                                    <input type="checkbox" id="mark_archive" class="common-checkbox form-control" name="mark_as_archive" value="1" {{ isset($add_news) ? ($add_news->mark_as_archive == 1 ? 'checked' : '') : '' }}>
-                                                    <label for="mark_archive">{{__('common.yes')}}</label>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -306,13 +299,7 @@
                                     <tbody>
                                         @foreach ($news as $value)
                                             <tr>
-                                                <td>{{ $value->news_title }}
-                                                    @if ($value->mark_as_archive == 1)
-                                                        <span>  
-                                                            <button class="btn btn-outline-danger btn-sm px-1 py-0" style="font-size: 9px;">Archived</button>
-                                                        </span>
-                                                    @endif
-                                                </td>
+                                                <td>{{ $value->news_title }}</td>
                                                 <td data-sort="{{ strtotime($value->publish_date) }}">
                                                     {{ $value->publish_date != '' ? dateConvert($value->publish_date) : '' }}
                                                 </td>

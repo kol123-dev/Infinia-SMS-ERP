@@ -1,9 +1,3 @@
-@php
-    $count =  pagesetting('course_count');
-    $column = pagesetting('course_area_column');
-    $sorting = pagesetting('course_sorting');
-@endphp
-
 @if ($courses->isEmpty() && auth()->check() && auth()->user()->role_id == 1)
     <p class="text-center text-danger">@lang('edulia.no_data_available_please_go_to') <a target="_blank"
             href="{{ URL::to('/course-list') }}">@lang('edulia.add_course')</a></p>
@@ -51,66 +45,4 @@
             </a>
         </div>
     @endforeach
-
-    <div id="dynamicLoadMoreData">
-
-    </div>
-
-    @if ((Request::is('/') || Request::is('home')) || Request::segment(1) == 'pages')
-
-    @else
-        @if (Request::is('course'))
-            @if ($courseCount > $count)
-                <div class="row text-center">
-                    <div class="col-md-12">
-                        <div class="load_more section_padding_top">
-                            <a href="#" class="site_btn load_more_course_btn" data-skip="{{$count}}">{{ __('edulia.load_more') }}</a>
-                        </div>
-                    </div>
-                </div>
-            @endif
-        @endif
-    @endif
 @endif
-
-@pushonce(config('pagebuilder.site_script_var'))
-    <script>
-
-        $(document).on('click', '.load_more_course_btn', function (e) {
-            e.preventDefault();
-            var skip = $(this).data('skip');
-            var take = {{ $count }};
-            var row_each_column = {{ $column }};
-            var sorting = "{{ $sorting }}";
-
-            $.ajax({
-                url: "{{ route('frontend.load-more-course-list') }}",
-                method: "POST",
-                data: {
-                    skip: skip,
-                    row_each_column : row_each_column,
-                    take : take,
-                    sorting : sorting,
-                    _token: "{{ csrf_token() }}",
-                },
-                success: function (response) {
-                    if (response.success) {
-                        $('#dynamicLoadMoreData').append(response.html);
-
-                        $('.load_more_course_btn').data('skip', skip + take);
-
-                        if (!response.has_more) {
-                            $('.load_more_course_btn').hide();
-                        }
-                    } else {
-                        console.error('Failed to load more photos.');
-                    }
-                },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                },
-            });
-        });
-
-    </script>
-@endpushonce

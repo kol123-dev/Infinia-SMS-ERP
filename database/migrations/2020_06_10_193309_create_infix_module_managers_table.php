@@ -553,7 +553,7 @@ class CreateInfixModuleManagersTable extends Migration
             $s = new InfixModuleManager();
             $s->name = "CcAveune";
             $s->email = 'support@spondonit.com';
-            $s->notes = "This CcAveune Module For InfixEdu . Manage online payment for fees & wallet.";
+            $s->notes = "This CcAveune Module For infinia  . Manage online payment for fees & wallet.";
             $s->version = "1.0";
             $s->update_url = "https://spondonit.com/contact";
             $s->is_default = 0;
@@ -606,7 +606,7 @@ class CreateInfixModuleManagersTable extends Migration
             $s = new InfixModuleManager();
             $s->name = "InAppLiveClass";
             $s->email = 'support@spondonit.com';
-            $s->notes = "This InAppLiveClass Module For InfixEdu . Manage Online Class and Meeting Reports.";
+            $s->notes = "This InAppLiveClass Module For infinia  . Manage Online Class and Meeting Reports.";
             $s->version = "1.0";
             $s->update_url = "https://spondonit.com/contact";
             $s->is_default = 0;

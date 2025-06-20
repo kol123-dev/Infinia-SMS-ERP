@@ -36,7 +36,6 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Requests\Admin\AdminSection\SmVisitorRequest;
 use App\Http\Requests\Admin\FrontSettings\ExamResultSearch;
-use App\Models\SmExpertTeacher;
 use Modules\RolePermission\Entities\Permission;
 
 class FrontendController extends Controller
@@ -44,9 +43,6 @@ class FrontendController extends Controller
     public function singleCourseDetails($course_id)
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.course_details'),
-            ];
             $data['course'] = SmCourse::where('school_id', app('school')->id)->find($course_id);
             return view('frontEnd.theme.' . activeTheme() . '.course.single_course_details_page', $data);
         } catch (\Exception $e) {
@@ -58,9 +54,6 @@ class FrontendController extends Controller
     public function singleNewsDetails($news_id)
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.blog_details'),
-            ];
             $data['news'] = SmNews::with(['newsComments.onlyChildrenFrontend'])->where('school_id', app('school')->id)->findOrFail($news_id);
             return view('frontEnd.theme.' . activeTheme() . '.news.single_news_details_page', $data);
         } catch (\Exception $e) {
@@ -105,9 +98,6 @@ class FrontendController extends Controller
     public function singleGalleryDetails($gallery_id)
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.gallery_details'),
-            ];
             $data['gallery_feature'] = SmPhotoGallery::where('school_id', app('school')->id)->where('parent_id', '=', null)->findOrFail($gallery_id);
             $data['galleries'] = SmPhotoGallery::where('school_id', app('school')->id)->where('parent_id', '!=', null)->where('parent_id', $gallery_id)->get();
             return view('frontEnd.theme.' . activeTheme() . '.photoGallery.single_photo_gallery', $data);
@@ -119,9 +109,6 @@ class FrontendController extends Controller
     public function singleNoticeDetails($notice_id)
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.notice_details'),
-            ];
             $data['notice_detail'] = SmNoticeBoard::where('is_published', 1)->where('school_id', app('school')->id)->findOrFail($notice_id);
             $data['notices'] = SmNoticeBoard::where('publish_on', '<=', date('Y-m-d'))->where('is_published', 1)->where('school_id', app('school')->id)->get();
             return view('frontEnd.theme.' . activeTheme() . '.notice.single_notice', $data);
@@ -302,7 +289,7 @@ class FrontendController extends Controller
     public function allBlogList()
     {
         try {
-            $data['news'] = SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)->paginate(8);
+            $data['news'] = SmNews::where('school_id', app('school')->id)->paginate(8);
             $data['newsPage'] = SmNewsPage::where('school_id', app('school')->id)->first();
             return view('frontEnd.theme.' . activeTheme() . '.news.all_news_list', $data);
         } catch (\Exception $e) {
@@ -314,10 +301,10 @@ class FrontendController extends Controller
     public function loadMoreBlogs(Request $request)
     {
         try {
-            $data['count'] = SmNews::where('mark_as_archive',0)->count();
+            $data['count'] = SmNews::count();
             $data['skip'] = $request->skip;
             $data['limit'] = $data['count'] - $data['skip'];
-            $data['news'] = SmNews::skip($data['skip'])->where('school_id', app('school')->id)->where('mark_as_archive',0)->take(4)->get();
+            $data['news'] = SmNews::skip($data['skip'])->where('school_id', app('school')->id)->take(4)->get();
             return view('frontEnd.theme.' . activeTheme() . '.news.load_more_news', $data);
         } catch (\Exception $e) {
             return response('error');
@@ -327,9 +314,6 @@ class FrontendController extends Controller
     public function singleEventDetails($id)
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.event_details'),
-            ];
             $data['event'] = SmEvent::with('user')->find($id);
             return view('frontEnd.theme.' . activeTheme() . '.single_event', $data);
         } catch (\Exception $e) {
@@ -340,7 +324,7 @@ class FrontendController extends Controller
     public function blogList()
     {
         try {
-            $data['blogs'] = SmNews::with('category')->where('mark_as_archive',0)->where('school_id', app('school')->id);
+            $data['blogs'] = SmNews::with('category')->where('school_id', app('school')->id);
             return view('frontEnd.theme.' . activeTheme() . '.blog_list', $data);
         } catch (\Exception $e) {
             return response('error');
@@ -350,128 +334,20 @@ class FrontendController extends Controller
     public function loadMoreBlogList(Request $request)
     {
         try {
-            $skip = $request->skip;
-            $take = 5;
-            $totalDataCount = SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)->count();
-            $blogs = SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)
-                ->skip($skip)
-                ->take($take)
-                ->get();
-
-            $html = view('frontEnd.theme.' . activeTheme() . '.read_more_blog_list', compact('blogs'))->render();
-
-            return response()->json([
-                'success' => true,
-                'html' => $html,
-                'loaded_data_count' => $blogs->count(),
-                'total_data' => $totalDataCount,
-            ]);
+            $data['count'] = SmNews::count();
+            $data['skip'] = $request->skip;
+            $data['limit'] = $data['count'] - $data['skip'];
+            $data['blogs'] = SmNews::skip($data['skip'])->where('school_id', app('school')->id)->take(5)->get();
+            $html = view('frontEnd.theme.' . activeTheme() . '.read_more_blog_list', $data)->render();
+            return response()->json(['success' => true, 'html' => $html, 'total_data' => $data['count']]);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'error' => $e->getMessage()]);
-        }
-    }
-
-    public function loadMorePhotoGalleryList(Request $request)
-    {
-        try {
-            $skip = $request->skip;
-            $take = $request->take;
-            $totalCount = SmPhotoGallery::where('school_id', app('school')->id)->count();
-            $remainingCount = $totalCount - $skip;
-
-            $photoGalleries = SmPhotoGallery::where('school_id', app('school')->id)
-                ->skip($skip)
-                ->take($take)
-                ->get();
-            
-            $html = view('frontEnd.theme.' . activeTheme() . '.read_more_photo_gallery_list', [
-                'photoGalleries' => $photoGalleries,
-                'column' => $request->row_each_column,
-            ])->render();
-
-            return response()->json([
-                'success' => true,
-                'html' => $html,
-                'has_more' => $remainingCount > $take,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
-    }
-
-    public function loadMoreEvents(Request $request)
-    {
-        try {
-            $skip = $request->skip;
-            $take = $request->take;
-            $totalCount = SmEvent::where('school_id', app('school')->id)->count();
-            $remainingCount = $totalCount - $skip;
-
-            $events = SmEvent::where('school_id', app('school')->id)
-                ->skip($skip)
-                ->take($take)
-                ->orderBy('id', $request->sorting === 'asc' ? 'asc' : ($request->sorting === 'desc' ? 'desc' : 'random'))
-                ->get();
-
-            $html = view('frontEnd.theme.' . activeTheme() . '.read_more_events', [
-                'events' => $events,
-                'dateshow' => $request->dateshow,
-                'enevtlocation' => $request->enevtlocation,
-                'column' => $request->row_each_column,
-                'button' => $request->button,
-            ])->render();
-
-            return response()->json([
-                'success' => true,
-                'html' => $html,
-                'has_more' => $remainingCount > $take,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
-    }
-
-    public function loadMoreCourseList(Request $request)
-    {
-        try {
-            $skip = $request->skip;
-            $take = $request->take;
-            $totalCount = SmCourse::where('school_id', app('school')->id)->count();
-            $remainingCount = $totalCount - $skip;
-
-            $coursesQuery = SmCourse::where('school_id', app('school')->id);
-
-            if ($request->sorting == 'asc') {
-                $coursesQuery->orderBy('id', 'asc');
-            } elseif ($request->sorting == 'desc') {
-                $coursesQuery->orderBy('id', 'desc');
-            } else {
-                $coursesQuery->inRandomOrder();
-            }
-            
-            $courses = $coursesQuery->skip($skip)->take($take)->get();
-            
-            $html = view('frontEnd.theme.' . activeTheme() . '.read_more_course_list', [
-                'courses' => $courses,
-                'column' => $request->row_each_column,
-            ])->render();
-
-            return response()->json([
-                'success' => true,
-                'html' => $html,
-                'has_more' => $remainingCount > $take,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return response()->json(['error' => $e]);
         }
     }
 
     public function singleSpeechSlider($id)
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.speech_details'),
-            ];
             $data['singleSpeechSlider'] = SpeechSlider::where('school_id', app('school')->id)->findOrFail($id);
             return view('frontEnd.theme.' . activeTheme() . '.speechSlider.single_speech_slider', $data);
         } catch (\Exception $e) {
@@ -503,9 +379,6 @@ class FrontendController extends Controller
     public function frontendSingleStudentDetails($id)
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.student_details'),
-            ];
             $data['singleStudent'] = SmStudent::where('id', $id)->where('school_id', app('school')->id)->with('parents', 'gender', 'religion', 'bloodGroup', 'studentRecord.class', 'studentRecord.section')->first();
             return view('frontEnd.theme.' . activeTheme() . '.frontend_single_student_details', $data);
         } catch (\Exception $e) {
@@ -516,10 +389,7 @@ class FrontendController extends Controller
     public function archiveList()
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.archive_list'),
-            ];
-            $data['archives'] = SmNews::with('category')->where('mark_as_archive',1)->where('school_id', app('school')->id);
+            $data['archives'] = SmNews::with('category')->where('school_id', app('school')->id);
             $data['archiveYears'] = $data['archives']->get()->groupBy(function ($q) {
                 return $q->created_at->format('Y');
             });
@@ -534,10 +404,10 @@ class FrontendController extends Controller
     {
         try {
             $years = $request->year;
-            $data['count'] = SmNews::where('mark_as_archive',1)->count();
+            $data['count'] = SmNews::count();
             $data['skip'] = $request->skip;
             $data['limit'] = $data['count'] - $data['skip'];
-            $data['archives'] = SmNews::where('mark_as_archive',1)->when($request->year, function ($q) use ($years) {
+            $data['archives'] = SmNews::when($request->year, function ($q) use ($years) {
                 $q->where(function ($query) use ($years) {
                     foreach ($years as $year) {
                         $query->whereYear('created_at', '=', $year, 'or');
@@ -556,7 +426,6 @@ class FrontendController extends Controller
             $years = $request->year;
             $data['archives'] = SmNews::with('category')
                     ->where('school_id', app('school')->id)
-                    ->where('mark_as_archive',1)
                     ->when($request->data_count > 0 , function($q) use($years){
                         $q->where(function ($q) use ($years) {
                             foreach ($years as $year) {
@@ -574,10 +443,7 @@ class FrontendController extends Controller
     public function bookAVisit()
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.book_a_visit'),
-            ];
-            return view('frontEnd.theme.' . activeTheme() . '.visit_a_book', $data);
+            return view('frontEnd.theme.' . activeTheme() . '.visit_a_book');
         } catch (\Exception $e) {
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
@@ -621,21 +487,11 @@ class FrontendController extends Controller
             return redirect()->back();
         }
     }
-    public function staffDetails($id = null)
+    public function staffDetails($id)
     {
         try {
-            $data['page'] = (object)[
-                'title' => __('edulia.staff_details'),
-            ];
-
-            $expert = SmExpertTeacher::where('staff_id', $id)->first();
-            if ($expert) {
-                $data['staffDetails'] = SmStaff::where('id', $id)->where('school_id', app('school')->id)->first();
-                return view('frontEnd.theme.' . activeTheme() . '.staff.staff_details', $data);
-            } else {
-                Toastr::error('Operation Failed', 'Failed');
-                return redirect()->back();
-            }
+            $data['staffDetails'] = SmStaff::where('id', $id)->where('school_id', app('school')->id)->first();
+            return view('frontEnd.theme.' . activeTheme() . '.staff.staff_details', $data);
         } catch (\Exception $e) {
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();

@@ -28,10 +28,6 @@
         display: block;
         margin-top: 40px;
 
-        @media (max-width: 767px){
-            margin-bottom: 8px;
-        }
-
         @include Ipad {
             margin-top: 30px;
         }
@@ -63,20 +59,28 @@
             height: 380px;
             margin-bottom: 30px;
             overflow: hidden;
-            aspect-ratio: 300 / 380;
-            object-fit: cover;
-            object-position: top center;
 
             @include Laptop {
+                height: 300px;
                 margin-bottom: 25px;
             }
 
             @include Ipad {
+                height: 250px;
                 margin-bottom: 20px;
             }
 
-            @include Tab {
-                margin-bottom: 12px;
+            @include Tablet {
+                margin-bottom: 20px;
+            }
+
+            @include Mobile {
+                height: 260px;
+                margin-bottom: 10px;
+            }
+
+            @include sMobile {
+                height: 190px;
             }
 
             & img {

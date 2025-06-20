@@ -797,9 +797,7 @@ class LoginController extends Controller
                 $roles = [1, 2, 3, 4, 5, 6, 7, 8];
             }
 
-            #$data['users'] = User::whereIn('role_id', $roles)->select('role_id', 'email')->where('school_id', $school->id)->orderByRaw('FIELD(role_id, 1, 5, 4, 3, 6, 7, 8, 2)')->get()->groupBy('role_id');
-            $data['users'] = User::whereIn('role_id', $roles)->where('school_id', $school->id)->select('role_id', 'email')->orderBy('role_id')->orderBy('id', 'asc')->get()->groupBy('role_id')->map(fn($users) => $users->first())->filter();
-
+            $data['users'] = User::whereIn('role_id', $roles)->select('role_id', 'email')->where('school_id', $school->id)->orderByRaw('FIELD(role_id, 1, 5, 4, 3, 6, 7, 8, 2)')->get()->groupBy('role_id');
             if (moduleStatusCheck('Saas')) {
                 $data['schools'] = SmSchool::orderBy('school_name', 'asc')->take(5)->get()->except($school->id);
             }

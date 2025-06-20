@@ -16,7 +16,6 @@ class SmBookCategoriesTableSeeder extends Seeder
         ])->each(function ($book_category){
             SmBook::factory()->times(11)->create([
                'school_id' => $book_category->school_id,
-               'quantity' => 100
             ]);
         });
     }

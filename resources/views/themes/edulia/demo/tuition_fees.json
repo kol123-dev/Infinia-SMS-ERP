@@ -131,7 +131,7 @@
             "366ib87dg8": {
                 "settings": {
                     "tuition_fees_heading": {
-                        "value": "Academic Year 2024 - 2025",
+                        "value": "Academic Year 2021 - 2022",
                         "is_array": "0"
                     },
                     "tuition_fees_sub_heading": {
@@ -275,16 +275,16 @@
                         "is_array": "0"
                     },
                     "paragraph": {
-                        "value": "<p>The tuition fees are due prior to the start of the academic year and payable in advance of attendance, at the start of each month. Tuition fees will be invoiced from the time of admission to ensure that payments can be processed before the start of the month. If your circumstances change.<\/p><p><br><\/p><p>Telephone:&nbsp;<span style=\"text-align: var(--bs-body-text-align);\">+96897002784<\/span><\/p><p><span style=\"text-align: var(--bs-body-text-align);\"><br><\/span><\/p><p>Email: hello@aorasoft.com<\/p>",
+                        "value": "<p>The tuition fees are due prior to the start of the academic year and payable in advance of attendance, at the start of each month. Tuition fees will be invoiced from the time of admission to ensure that payments can be processed before the start of the month. If your circumstances change.<\/p><p><br><\/p><p>Telephone:&nbsp;<span style=\"text-align: var(--bs-body-text-align);\">+971 6 535522<\/span><\/p><p><span style=\"text-align: var(--bs-body-text-align);\"><br><\/span><\/p><p>Email: hello@aorasoft.com<\/p>",
                         "is_array": "0"
                     },
                     "service_details": {
                         "value": {
                             "4881699604954": {
-                                "heading": "Payment Deadlines",
-                                "paragraph": "All payments must be completed by the specified deadlines to ensure smooth processing of your enrollment and continued attendance. Late payments may incur penalties or result in access to services being restricted. Please contact us if you need assistance or encounter difficulties in meeting payment deadlines.",
+                                "heading": "Nunc eleifend sapien",
+                                "paragraph": "Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text",
                                 "cta-text": "Read More",
-                                "cta-url": "tuition-fees"
+                                "cta-url": "#"
                             }
                         },
                         "is_array": "1"

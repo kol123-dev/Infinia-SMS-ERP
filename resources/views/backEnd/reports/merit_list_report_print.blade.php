@@ -339,8 +339,8 @@
                                     <div class="thumb_logo">
                                         <img  src="{{asset('/')}}{{generalSetting()->logo}}" alt="{{generalSetting()->school_name}}"></div>
                                     <div class="company_info">
-                                        <h3>{{isset(generalSetting()->school_name)?generalSetting()->school_name:'Infix School Management ERP'}} </h3>
-                                        <p>{{isset(generalSetting()->address)?generalSetting()->address:'Infix School Address'}}</p>
+                                        <h3>{{isset(generalSetting()->school_name)?generalSetting()->school_name:'infinia School Management ERP'}} </h3>
+                                        <p>{{isset(generalSetting()->address)?generalSetting()->address:'infinia School Address'}}</p>
                                         <p>@lang('common.email'):  {{isset(generalSetting()->email)?generalSetting()->email:'hello@aorasoft.com'}},   @lang('common.phone'):  {{isset(generalSetting()->phone)?generalSetting()->phone:'+96897002784'}} </p>
                                     </div>
                                 </div>
@@ -467,12 +467,12 @@
                     @endforeach
                 
                     @php
-                        $gpa = ($number_of_subjects_without_optional != 0) ? number_format((float)$total_grade_point / $number_of_subjects_without_optional, 2, '.', '') : 0;
+                        $gpa = number_format((float)$total_grade_point / $number_of_subjects_without_optional, 2, '.', '');
                         // Check if GPA is greater than 5
                         if ($gpa > 5) {
                             $gpa = 5.00;
-                        }
-                        $gpa_without_optional = $number_of_subjects_without_optional ? number_format((float)$total_grade_point / $number_of_subjects, 2, '.', '') : $failgpa;
+                                                                }
+                        $gpa_without_optional = $number_of_subjects_without_optional ? number_format((float)$total_grade_point_without_optional / $number_of_subjects_without_optional, 2, '.', '') : $failgpa;
                     @endphp
                 
                     <tr>

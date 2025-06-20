@@ -1,6 +1,6 @@
 @extends(config('pagebuilder.site_layout'), ['edit' => false])
 @section(config('pagebuilder.site_section'))
-    {{headerContent()}}
+{{headerContent()}}
     <section class="bradcrumb_area">
         <div class="container">
             <div class="row">
@@ -24,9 +24,8 @@
                             <div class="col-md-7">
                                 <div class="noticeboard_details_wrapper">
                                     <h4>{{ $notice_detail->notice_title }}
+                                        <span>{{ date('d M, Y', strtotime($notice_detail->notice_date)) }}</span>
                                     </h4>
-                                    <span class="d-block mt-3 ">{{ date('d M, Y', strtotime($notice_detail->notice_date)) }}</span>
-
                                     <p>{{ $notice_detail->notice_message }}</p>
                                 </div>
                             </div>
@@ -53,7 +52,6 @@
             </div>
         </div>
     </section>
-    {{ footerContent() }}
 @endsection
 @pushonce(config('pagebuilder.site_script_var'))
     <script>

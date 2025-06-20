@@ -322,7 +322,7 @@
                         <div class="student_grid_box d-flex align-items-center flex-fill">
                             <span class="sep_name">@lang('student.guardian')</span>
                             <span>:</span>
-                            <span class="f_w_400  text-uppercase">{{@$admitcard->studentRecord->studentDetail->parents->fathers_name}}</span>
+                            <span class="f_w_400  text-uppercase">{{@$admitcard->studentRecord->studentDetail->parents->guardians_name}}</span>
                         </div>
                         @isset($admitcard->studentRecord->studentDetail->category->category_name)
                             <p class="m-0">@lang('student.category')

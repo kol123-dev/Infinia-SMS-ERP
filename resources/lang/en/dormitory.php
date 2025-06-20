@@ -39,6 +39,5 @@
     'save_room'=>'Save Room',
     'update_room'=>'Update Room',
     'assigned'=>'Assigned',
-    'not_assigned'=>'Not Assigned',
     'room_name'=>'Room Name',
 ];

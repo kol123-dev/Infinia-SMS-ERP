@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin\FrontSettings;
 
-use App\GlobalVariable;
 use App\SmStaff;
 use Illuminate\Http\Request;
 use App\Models\SmExpertTeacher;
@@ -21,10 +20,11 @@ class SmExpertTeacherController extends Controller
         try {
             $expertTeachers = SmExpertTeacher::where('school_id', auth()->user()->school_id)->orderBy('position', 'asc')->with('staff.designations')->get();
             $roles = InfixRole::where('is_saas',0)->where('active_status', '=', '1')
-                ->whereNotIn('id', [1, 2, 3, GlobalVariable::isAlumni()])
+                ->whereNotIn('id', [1, 2, 3, 10])
                 ->where(function ($q) {
                     $q->where('school_id', auth()->user()->school_id)->orWhere('type', 'System');
                 })->get();
+                // dd($expertTeachers);
             return view('backEnd.frontSettings.expert_teacher.expert_teacher', compact('expertTeachers', 'roles'));
         } catch (\Exception $e) {
             Toastr::error('Operation Failed', 'Failed');
@@ -34,20 +34,19 @@ class SmExpertTeacherController extends Controller
     public function store(Request $request)
     {
         try {
-            $sm_staff = SmStaff::where('user_id', $request->staff)->first();
-            
-            $staffExists = SmExpertTeacher::where('staff_id', $sm_staff->id)->first();
+            $staffExists = SmExpertTeacher::where('staff_id', $request->staff)->first();
             if ($staffExists == null) {
                 $expertTeacher = new SmExpertTeacher();
-                $expertTeacher->staff_id = $sm_staff->id;
+                $expertTeacher->staff_id = $request->staff;
                 $expertTeacher->created_by = auth()->user()->id;
                 $expertTeacher->school_id = auth()->user()->school_id;
                 $expertTeacher->save();
 
-               if ($sm_staff != null) {
-                   $sm_staff->show_public = 1;
-                   $sm_staff->update();
-               }
+                $staff = SmStaff::find($request->staff);
+                if ($staff != null) {
+                    $staff->show_public = 1;
+                    $staff->update();
+                }
 
                 Toastr::success('Operation successful', 'Success');
                 return redirect()->route('expert-teacher');

@@ -3,6 +3,7 @@
 <li>
 
     @if(Auth::user()->role_id == 1 || moduleStatusCheck('SaasHr')== TRUE)
+    @dd(1);
         <a href="{{route('superadmin-dashboard')}}" id="admin-dashboard">
     @else
         <a href="{{route('admin-dashboard')}}" id="admin-dashboard">

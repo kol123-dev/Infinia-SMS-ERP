@@ -14,9 +14,6 @@ return [
     'about_area' => 'About Area',
     'only_allowed_and_max_size_is_3MB' => 'only .jpg,.png allowed and max size is 3MB',
     'about_area_main_image' => 'About Area Main Image',
-    'about_area_img_medium' => 'About Area Medium Image',
-    'about_area_img_large' => 'About Area Large Image',
-    'about_area_img_small' => 'About Area Small Image',
     'about_area_medium_image' => 'About Area Medium Image',
     'about_area_small_image' => 'About Area Small Image',
     'main_heading' => 'Main Heading',
@@ -63,11 +60,8 @@ return [
     'heading' => 'Heading',
     'enter_heading' => 'Enter Heading',
     'view_course_button' => 'View Course Button',
-    'view_course_button_link' => 'View Course Button Link',
-    'enter_button_link' => 'Enter Button Link',
     'contact_us_button' => 'Contact Us Button',
     'enter_button_title' => 'Enter Button Title',
-    'contact_us_button_link' => 'Contact Us Button Link',
     'course' => 'Course',
     'sub_heading' => 'Sub Heading',
     'how_many_course_you_want_to_show' => 'How many Course you want to show?',
@@ -480,6 +474,5 @@ return [
     'is_show_school_registration' => 'Is Show School Registration?',
     'is_show_parent_registration' => 'Is Show Parent Registration?',
     'schools' => 'Schools',
-    'blog_details' => 'Blog Details',
 
 ];

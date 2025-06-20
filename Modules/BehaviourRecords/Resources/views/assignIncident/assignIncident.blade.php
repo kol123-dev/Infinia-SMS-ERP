@@ -66,7 +66,7 @@
                                     'div' => 'col-lg-4',
                                     'required' => ['academic'],
                                     'visiable' => ['academic', 'class', 'section'],
-                                    'selected' => ['section_id' => @$data['section_id'], 'class_id' => @$data['class_id'], 'academic_year' => @$data['academic_year']],
+                                    'selected' => ['section_id' => $data['section_id'], 'class_id' => $data['class_id'], 'academic_year' => $data['academic_year']],
                                 ])
                                 <div class="col-lg-4 mt-0">
                                     <div class="primary_input sm_mb_20 ">
@@ -232,7 +232,7 @@
                 processing: true,
                 serverSide: true,
                 "ajax": $.fn.dataTable.pipeline({
-                    url: "{{ route('behaviour_records.assign_incident_datatable')}}",
+                    url: "{{ url('behaviour_records/assign_incident_datatable') }}",
                     data: {
                         academic_year: $('#academic_id').val(),
                         class: $('#class').val(),

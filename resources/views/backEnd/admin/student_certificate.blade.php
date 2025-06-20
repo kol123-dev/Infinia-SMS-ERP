@@ -158,22 +158,21 @@
                                         <div class="primary_input">
                                             <label>@lang('admin.body_max_character_lenght_500') <span></span></label>
                                             <textarea class="primary_input_field" cols="0" rows="4" name="body" maxlength="500">{{isset($certificate)? $certificate->body: old('body')}}</textarea>
+                                            
+                                            
 
                                             @if($errors->has('body'))
                                                 <span class="error text-danger">{{ $errors->first('body') }}</span>
                                             @endif
                                         </div>
                                         <span class="text-primary">
-                                            [name] [dob] [present_address] [guardian] [created_at] [admission_no] [roll_no]  [gender] [admission_date] [category] [cast] [father_name] [mother_name] [religion] [email] [phone]  @if (moduleStatusCheck('Lms')) [course_name] @endif
+                                            [name] [dob] [present_address] [guardian] [created_at] [admission_no] [roll_no]  [gender] [admission_date] [category] [cast] [father_name] [mother_name] [religion] [email] [phone]
                                             @if(moduleStatusCheck('University'))
                                             [arabic_name] [faculty] [session] [department] [academic] [semester] [semester_label] [graduation_date]
                                             @else 
                                             [class] [section]
                                             @endif 
                                         </span>
-                                        @if (moduleStatusCheck('Lms'))
-                                            <code class="d-block">For Lms Certificate make  take the [name] and [course_name] variable</code>
-                                        @endif
                                     </div>
                                     <div class="col-lg-6 mt-20">
                                         <div class="primary_input">
@@ -467,7 +466,7 @@
                                                         @endif
                                                     @endif
                                                     @if(userPermission("student-certificate-delete"))
-                                                        <a class="dropdown-item" data-toggle="modal" data-target="#deleteSectionModal{{ @$certificate->id}}"  href="#">@lang('common.delete')</a>
+                                                    <a class="dropdown-item" data-toggle="modal" data-target="#deleteSectionModal{{ @$certificate->id}}"  href="#">@lang('common.delete')</a>
                                                     @endif
                                             </x-drop-down>
                                         </td>
@@ -552,10 +551,12 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>

@@ -9,7 +9,7 @@ return [
 
     'debug' => env('APP_DEBUG', true),
 
-    'name' => env('APP_NAME', 'Infix Edu'),
+    'name' => env('APP_NAME', 'infinia Edu'),
 
     'force_https'=> env('FORCE_HTTPS',false),
 
@@ -243,7 +243,6 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Str' => Illuminate\Support\Str::class,
         // 'Vimeo' => Vimeo\Laravel\Facades\Vimeo::class,
-        'Toastr' => Brian2694\Toastr\Facades\Toastr::class,
 
     ],
 

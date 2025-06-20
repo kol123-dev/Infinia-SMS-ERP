@@ -493,6 +493,8 @@
             <td class="border-top-0">
                 
                 @if (userPermission('delete-class-routine'))
+
+                    
                     <button class="removeRoutineRowBtn primary-btn icon-only fix-gr-bg" type="button">
                         <span class="ti-trash" ></span>
                         </button>

@@ -281,6 +281,7 @@ class SmExamFormatSettingsController extends Controller
             Toastr::success('Operation successful', 'Success');
             return redirect()->route('exam-report-position');
         } catch (\Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }
@@ -587,6 +588,7 @@ class SmExamFormatSettingsController extends Controller
             Toastr::success('Operation successful', 'Success');
             return redirect()->route('all-exam-report-position');
         } catch (\Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\StudentInfo;
 
+use App\Http\Controllers\Admin\SystemSettings\SmSystemSettingController;
 use App\User;
 use App\SmClass;
 use App\SmStaff;
@@ -24,7 +25,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\StudentAttendanceImport;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\FlutterAppNotification;
-use App\Http\Controllers\Admin\SystemSettings\SmSystemSettingController;
 use App\Http\Requests\Admin\StudentInfo\SmStudentAttendanceSearchRequest;
 use Modules\University\Repositories\Interfaces\UnCommonRepositoryInterface;
 use Modules\University\Imports\StudentAttendanceImport as UniversityStudentAttendanceImport;
@@ -193,17 +193,12 @@ class SmStudentAttendanceController extends Controller
                 }
                 $attendance->save();
 
-                $std = SmStudent::find($attendance->student_id);
-                $parent_id = !empty($std) && !empty($std->parents) && !empty($std->parents->parent_user) ? $std->parents->parent_user->id:null;
+                $student_user_id = SmStudent::find($attendance->student_id)->user_id;
                 $data['class_id'] = $attendance->class_id;
                 $data['section_id'] = $attendance->section_id;
                 $data['attendance_type'] = $attendance->attendance_type;
                 try{
-                    $this->sent_notifications('Student_Attendance', [$std->user_id], $data, ['Student', 'Parent']);
-                    if(!empty($parent_id))
-                    {
-                        $this->sent_notifications('Student_Attendance', [$parent_id], $data, ['Parent']);
-                    }
+                    $this->sent_notifications('Student_Attendance', [$student_user_id], $data, ['Student', 'Parent']);
                 }
                 catch (\Exception $e) {
                     Log::info($e->getMessage());

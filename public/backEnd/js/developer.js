@@ -263,7 +263,7 @@
         });
     });
     $(document).ready(function() {
-        $("#languageChange, #languageChange_mbl").on("change", function() {
+        $("#languageChange").on("change", function() {
 
             var url = $("#url").val();
             var formData = {
@@ -308,7 +308,7 @@
     });
 
     $(document).ready(function() {
-        $("#infix_session, #infix_session_mbl").on("change", function() {
+        $("#infix_session").on("change", function() {
             var url = $("#url").val();
             var formData = {
                 id: $(this).val(),

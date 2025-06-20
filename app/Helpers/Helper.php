@@ -28,7 +28,6 @@ use App\SmClassTeacher;
 use App\SmEmailSetting;
 use App\SmExamSchedule;
 use App\SmNotification;
-use BaconQrCode\Writer;
 use App\SmAssignSubject;
 use App\SmExamAttendance;
 use App\SmPaymentMethhod;
@@ -68,21 +67,18 @@ use AfricasTalking\SDK\AfricasTalking;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Larabuild\Pagebuilder\Models\Page;
-use BaconQrCode\Renderer\ImageRenderer;
 use Illuminate\Support\Facades\Storage;
 use Modules\Lms\Entities\CourseSetting;
-use App\Models\FeesCarryForwardSettings;
 use Modules\Forum\Entities\ForumSetting;
+use App\Models\FeesCarryForwardSettings;
 use App\Models\SmStudentRegistrationField;
 use App\Models\DirectFeesInstallmentAssign;
 use Modules\MenuManage\Entities\MenuManage;
 use Modules\University\Entities\UnAcademicYear;
 use Modules\Fees\Entities\FmFeesInvoiceSettings;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use Modules\University\Entities\UnFeesInstallmentAssign;
 use Modules\ParentRegistration\Entities\SmStudentRegistration;
-use Modules\QRCodeAttendance\Entities\QRCodeAttendanceSetting;
+
 function sendEmailBio($data, $to_name, $to_email, $email_sms_title)
 {
     $systemSetting = DB::table('sm_general_settings')->select('school_name', 'email')->find(1);
@@ -525,13 +521,6 @@ if (!function_exists('dateTimeConvert')) {
         } catch (\Throwable $th) {
             return $input_date_time;
         }
-    }
-}
-
-if (!function_exists('convertTime')) {
-    function convertTime($time)
-    {
-        return date("g:i A", strtotime($time));
     }
 }
 
@@ -1352,6 +1341,7 @@ if (!function_exists('generalSetting')) {
         }
 
         session()->put('generalSetting', $generalSetting);
+
         return session()->get('generalSetting');
     }
 }
@@ -1539,15 +1529,9 @@ if (!function_exists('academicYears')) {
 if (!function_exists('subjectFullMark')) {
     function subjectFullMark($examtype, $subject, $class_id = null, $section_id = null)
     {
-        $school_id = 1;
-        if (Auth::check()) {
-            $school_id = Auth::user()->school_id;
-        } elseif (app()->bound('school')) {
-            $school_id = app('school')->id;
-        }
         try {
             $full_mark = SmExam::withOutGlobalScopes();
-            $full_mark->where('school_id', $school_id) 
+            $full_mark->where('school_id', Auth::user()->school_id)
                 ->where('exam_type_id', $examtype);
             if (moduleStatusCheck('University')) {
 
@@ -1560,6 +1544,8 @@ if (!function_exists('subjectFullMark')) {
             } else {
                 $full_mark = $full_mark->where('class_id', $class_id)->where('section_id', $section_id)->first('exam_mark')->exam_mark;
             }
+
+
             return $full_mark;
         } catch (\Exception $e) {
             return 0;
@@ -1900,22 +1886,14 @@ if (!function_exists('termWiseAddOptionalMark')) {
 }
 
 if (!function_exists('gradeName')) {
-    
     function gradeName($total_gpa, $academic_id = null)
     {
-        $school_id = 1;
-        if (Auth::check()) {
-            $school_id = Auth::user()->school_id;
-        } elseif (app()->bound('school')) {
-            $school_id = app('school')->id;
-        }
-        
         if (!$academic_id) {
             $academic_id = getAcademicId();
         }
         try {
             $grade_name = SmMarksGrade::where('academic_id', $academic_id)
-                ->where('school_id', $school_id)
+                ->where('school_id', Auth::user()->school_id)
                 ->where('from', '<=', $total_gpa)
                 ->where('up', '>=', $total_gpa)
                 ->first('grade_name')->grade_name;
@@ -1929,19 +1907,12 @@ if (!function_exists('gradeName')) {
 if (!function_exists('remarks')) {
     function remarks($total_gpa, $academic_id = null)
     {
-        $school_id = 1;
-        if (Auth::check()) {
-            $school_id = Auth::user()->school_id;
-        } elseif (app()->bound('school')) {
-            $school_id = app('school')->id;
-        }
-
         if (!$academic_id) {
             $academic_id = getAcademicId();
         }
         try {
             $description = SmMarksGrade::where('academic_id', $academic_id)
-                ->where('school_id', $school_id)
+                ->where('school_id', Auth::user()->school_id)
                 ->where('from', '<=', $total_gpa)
                 ->where('up', '>=', $total_gpa)
                 ->first('description')->description;
@@ -1955,17 +1926,10 @@ if (!function_exists('remarks')) {
 if (!function_exists('subjectHighestMark')) {
     function subjectHighestMark($exam_id, $subject_id, $class_id, $section_id)
     {
-        $school_id = 1;
-        if (Auth::check()) {
-            $school_id = Auth::user()->school_id;
-        } elseif (app()->bound('school')) {
-            $school_id = app('school')->id;
-        }
-
         try {
             $highest_mark = SmResultStore::where([['class_id', $class_id], ['exam_type_id', $exam_id], ['section_id', $section_id]])
                 ->where('subject_id', $subject_id)
-                ->where('school_id', $school_id)
+                ->where('school_id', Auth::user()->school_id)
                 ->where('academic_id', getAcademicId())
                 ->max('total_marks');
             return $highest_mark;
@@ -4079,6 +4043,7 @@ if (!function_exists('_trans')) {
                 return _translation($value);
             }
         } catch (Exception $exception) {
+            dd($exception);
             return $value;
         }
     }
@@ -4254,83 +4219,3 @@ if (!function_exists('get_logo')) {
     }
 }
 
-
-if(!function_exists('generateQRCode'))
-{
-    function generateQRCode($text)
-    {
-        
-        try{            
-            if(!file_exists(public_path('qr_codes/'.$text.'-qrcode.png')))
-            {
-                $qr_renderer = new ImageRenderer(
-                    new RendererStyle(400,1),
-                    new ImagickImageBackEnd()
-                );
-                $writer = new Writer($qr_renderer);                
-                $writer->writeFile($text, public_path('qr_codes/'.$text.'-qrcode.png'));
-                return asset('public/qr_codes/'.$text.'-qrcode.png');
-            }
-        }catch(\Exception $e){
-            Log::error("Error on QR code Generate ".$e->getMessage());
-        }
-    }
-}
-
-
-if(!function_exists('qrAttendanceSetting'))
-{
-    function qrAttendanceSetting($class, $section, $subject = null)
-    {
-        $setting = new QRCodeAttendanceSetting();
-        $setting = $setting->where('class_id',$class)
-                           ->where('section_id',$section)
-                           ->where('school_id',auth()->user()->school_id);
-        if($subject)
-        {
-            $setting = $setting->where('subject_id',$subject);
-        }
-
-        return $setting->first();
-        
-    }
-}
-
-if (!function_exists('toastrError')) {
-    function toastrError($message = 'Operation Failed', $title = 'Failed')
-    {
-        $toastr = app('Brian2694\Toastr\Toastr');
-        $toastr->error($message, $title);
-    }
-}
-
-if (!function_exists('toastrSuccess')) {
-    function toastrSuccess($message = 'Operation Success', $title = 'Success')
-    {
-        $toastr = app('Brian2694\Toastr\Toastr');
-        $toastr->success($message, $title);
-    }
-}
-
-if (!function_exists('toastrWarning')) {
-    function toastrWarning($message = 'Operation Warning', $title = 'Warning')
-    {
-        $toastr = app('Brian2694\Toastr\Toastr');
-        $toastr->warning($message, $title);
-    }
-}
-
-if (!function_exists('ad')) {
-    function ad(mixed ...$vars)
-    {
-        if (config('app.debug')) {
-            foreach ($vars as $key => $value) {
-                 Log::info(is_int($key) ? "Variable {$key}" : $key, [
-                    'dump' => print_r($value, true),
-                ]);
-            }
-
-             dd(...$vars);
-        }
-    }
-}

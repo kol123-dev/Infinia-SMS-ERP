@@ -20,8 +20,6 @@ class LeaveController extends Controller
             ->where('sm_leave_requests.active_status', 1)
             ->where('sm_leave_requests.approve_status', 'P')
             ->where('sm_leave_requests.school_id', $request->user()->school_id)
-            ->orderBy('id', 'DESC')
-            ->orderBy('id', 'DESC')
             ->get();
 
         $data = LeaveListResource::collection($pendingRequest);
@@ -48,7 +46,6 @@ class LeaveController extends Controller
             ->where('sm_leave_requests.active_status', 1)
             ->where('sm_leave_requests.approve_status', 'A')
             ->where('sm_leave_requests.school_id', $request->user()->school_id)
-            ->orderBy('id', 'DESC')
             ->get();
         $data = LeaveListResource::collection($aprroveRequest);
         if (!$data) {
@@ -72,7 +69,6 @@ class LeaveController extends Controller
             ->where('sm_leave_requests.active_status', 1)
             ->where('sm_leave_requests.approve_status', 'C')
             ->where('sm_leave_requests.school_id', $request->user()->school_id)
-            ->orderBy('id', 'DESC')
             ->get();
         $data = LeaveListResource::collection($rejectedRequest);
 

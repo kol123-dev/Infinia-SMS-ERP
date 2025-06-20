@@ -70,6 +70,8 @@
         $second_element_margin_top= intval($page_height)* 0.2;
         $second_element_margin_top= $second_element_margin_top.'px';
 
+        // dd(pxToMm($page_height));
+
         $certificate_height = floatval($certificate->height);
         $certificate_width = floatval($certificate->width);
         $half_of_a4_sheet = 297 / 2;

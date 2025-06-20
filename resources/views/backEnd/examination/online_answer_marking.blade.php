@@ -53,7 +53,7 @@
                                     <div class="col-lg-5 mt-20">
                                         {{-- <p class="mb-2"><strong>@lang('exam.exam_has_to_be_submitted_within'): </strong>{{@$take_online_exam->onlineExam !=""?@$take_online_exam->onlineExam->date:""}} {{@$take_online_exam->onlineExam!=""?@$take_online_exam->onlineExam->end_time:""}}</p> --}}
                                         <p class="mb-2">
-                                            <strong>@lang('common.date') & @lang('common.time'): </strong>{{@$take_online_exam->onlineExam !=""?dateConvert(@$take_online_exam->onlineExam->date):""}} {{ convertTime(@$take_online_exam->onlineExam->start_time)}} <strong>-</strong> {{@$take_online_exam->onlineExam!=""?  dateConvert(@$take_online_exam->onlineExam->end_date_time):""}} {{@$take_online_exam->onlineExam!=""?  convertTime(@$take_online_exam->onlineExam->end_time):""}}
+                                            <strong>@lang('common.date') & @lang('common.time'): </strong>{{@$take_online_exam->onlineExam !=""?dateConvert(@$take_online_exam->onlineExam->date):""}} {{@$take_online_exam->onlineExam!=""?dateConvert(@$take_online_exam->onlineExam->end_time):""}}
                                         </p>
                                       
                                     </div>
@@ -260,18 +260,13 @@
                                 @endforeach
                                 @if ($online_take_exam_mark->status==2)
                                     <tr>
-                                        @php
-                                            $previousUrl    = url()->previous();
-                                            $parsedUrl      = parse_url($previousUrl);
-                                            $segments       = explode('/', $parsedUrl['path']);
-                                            $examId         = $segments[2] ?? null;
-                                            $redirectUrl    = url('online-exam-marks-register/' . $examId);
-                                        @endphp
+
                                         <td colspan="3" class="text-center">
                                             <div class="alert alert-warning" role="alert">
                                                 @lang('exam.exam_marks_already_submitted')
                                               </div>
-                                            <a href="{{ $redirectUrl }}" class="primary-btn fix-gr-bg">
+                                            <a href="{{ url()->previous() }}" class="primary-btn fix-gr-bg">
+                                                {{-- <span class="ti-check"></span> --}}
                                                 @lang('exam.already_submitted')
                                             </a>
                                         </td>

@@ -23,7 +23,7 @@ class SmHeaderMenuManagerController extends Controller
                 $static_pages = SmPage::where('school_id', app('school')->id)->where('is_dynamic', 0)->get();
                 $courses = SmCourse::where('school_id', app('school')->id)->get();
                 $courseCategories = SmCourseCategory::where('school_id', app('school')->id)->get();
-                $news = SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)->get();
+                $news = SmNews::where('school_id', app('school')->id)->get();
                 $news_categories = SmNewsCategory::where('school_id', app('school')->id)->get();
                 $menus = SmHeaderMenuManager::with('childs')->where('school_id', app('school')->id)->where('theme', 'default')->where('parent_id', null)->orderBy('position')->get();
                 return view('backEnd.frontSettings.headerMenuManager', compact('pages', 'static_pages', 'courses', 'courseCategories', 'news_categories', 'news', 'menus'));
@@ -260,7 +260,7 @@ class SmHeaderMenuManagerController extends Controller
             $static_pages = SmPage::where('is_dynamic', 0)->where('school_id', app('school')->id)->get();
             $courses = SmCourse::where('school_id', app('school')->id)->get();
             $courseCategories = SmCourseCategory::where('school_id', app('school')->id)->get();
-            $news = SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)->get();
+            $news = SmNews::where('school_id', app('school')->id)->get();
             $news_categories = SmNewsCategory::where('school_id', app('school')->id)->get();
             $menus = SmHeaderMenuManager::with('childs')->where('parent_id', null)->where('school_id', app('school')->id)->where('theme', 'default')->orderBy('position')->get();
             return view('backEnd.frontSettings.headerSubmenuList', compact('pages', 'static_pages', 'courses', 'courseCategories', 'news_categories', 'news', 'menus'));

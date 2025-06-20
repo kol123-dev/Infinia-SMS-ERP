@@ -209,6 +209,7 @@
                                     <?php
 
                                         $subModule= DB::table('infix_module_infos')->where('parent_id',$module_info->id)->where('active_status', 1)->get();
+                                        // dump($subModule);
                                     ?>
                                         @foreach($subModule as $row2)
 

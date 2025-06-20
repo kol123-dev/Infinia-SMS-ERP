@@ -251,8 +251,7 @@ class ExamController extends Controller
             ->where('status', 1)
             ->where('class_id', $record->class_id)
             ->where('section_id', $record->section_id)
-            ->where('school_id', auth()->user()->school_id)
-            ->orderBy('id','DESC')->get();
+            ->where('school_id', auth()->user()->school_id)->get();
 
         $data = StudentOnlineExamResource::collection($online_exam);
 
@@ -282,7 +281,6 @@ class ExamController extends Controller
             })
             ->where('student_id', $request->student_id)
             ->where('school_id', auth()->user()->school_id)
-            ->orderBy('id', 'DESC')
             ->get();
 
         $data = OnlineExamResultResource::collection($result);

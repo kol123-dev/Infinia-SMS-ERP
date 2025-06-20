@@ -8,6 +8,7 @@
     }
 
     @media (max-width: 767px) {
+
         .custom-checkbox-position {
             margin-top: -66px !important;
             margin-left: 52px !important;
@@ -124,12 +125,12 @@
                         <p class="text-uppercase fw-500 mb-10"></p>
                         <div class="d-flex radio-btn-flex">
                             <div class="mr-30">
-                                <input type="radio" name="trueOrFalse" id="relationFatherEdit cursor-change" value="T" class="common-radio relationButton" {{@$question_bank->trueFalse == 'T'? 'checked': ''}} disabled="">
                                 <label for="relationFatherEdit">@lang('exam.true')</label>
+                                <input type="radio" name="trueOrFalse" id="relationFatherEdit cursor-change" value="T" class="common-radio relationButton" {{@$question_bank->trueFalse == 'T'? 'checked': ''}} disabled="">
                             </div>
                             <div class="mr-30">
-                                <input type="radio" name="trueOrFalse" id="relationMotherEdit cursor-change" value="F" class="common-radio relationButton" {{@$question_bank->trueFalse == 'F'? 'checked': ''}} disabled="">
                                 <label for="relationMotherEdit">@lang('exam.false')</label>
+                                <input type="radio" name="trueOrFalse" id="relationMotherEdit cursor-change" value="F" class="common-radio relationButton" {{@$question_bank->trueFalse == 'F'? 'checked': ''}} disabled="">
                             </div>
                         </div>
                     </div>

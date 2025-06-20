@@ -113,6 +113,7 @@ class SeatPlanSettingController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+        // dd($request->all());
         try {
 
             $exam = SmExamSchedule::query();
@@ -254,6 +255,7 @@ class SeatPlanSettingController extends Controller
 
     function universitySeatPlanGenerate($request)
     {
+        // dd($request->all());
         try {
             $student_records = [];
             $studentRecord = null;

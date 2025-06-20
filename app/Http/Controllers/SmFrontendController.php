@@ -103,7 +103,7 @@ class SmFrontendController extends Controller
 
             $home_data = [
                 'exams' => SmExam::where('school_id', app('school')->id)->get(),
-                'news' => SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)->orderBy('order', 'asc')->limit(3)->get(),
+                'news' => SmNews::where('school_id', app('school')->id)->orderBy('order', 'asc')->limit(3)->get(),
                 'testimonial' => SmTestimonial::where('school_id', app('school')->id)->get(),
                 'academics' => SmCourse::where('school_id', app('school')->id)->orderBy('id', 'asc')->limit(3)->get(),
                 'exam_types' => SmExamType::where('school_id', app('school')->id)->get(),
@@ -114,6 +114,7 @@ class SmFrontendController extends Controller
                 'section' => SmSection::where('school_id', app('school')->id)->where('active_status', 1)->get(),
                 'homePage' => SmHomePageSetting::where('school_id', app('school')->id)->first(),
             ];
+            dd('home_data');
 
             $url = explode('/', $setting->website_url);
 
@@ -158,8 +159,8 @@ class SmFrontendController extends Controller
                 ->where(function ($q) {
                     $q->where('role_id', 4)->orWhere('previous_role_id', 4);
                 })->where('school_id', app('school')->id)->get();
-            $history = SmNews::with('category')->where('mark_as_archive',0)->histories()->limit(3)->where('school_id', app('school')->id)->get();
-            $mission = SmNews::with('category')->missions()->where('mark_as_archive',0)->limit(3)->where('school_id', app('school')->id)->get();
+            $history = SmNews::with('category')->histories()->limit(3)->where('school_id', app('school')->id)->get();
+            $mission = SmNews::with('category')->missions()->limit(3)->where('school_id', app('school')->id)->get();
 
             return view('frontEnd.home.light_about', compact('exams', 'classes', 'subjects', 'exams_types', 'sections', 'about', 'testimonial', 'totalStudents', 'totalTeachers', 'history', 'mission'));
         } catch (\Exception $e) {
@@ -260,7 +261,7 @@ class SmFrontendController extends Controller
     public function newsDetails($id)
     {
         $news = SmNews::where('school_id', app('school')->id)->findOrFail($id);
-        $otherNews = SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)->orderBy('id', 'asc')->whereNotIn('id', [$id])->limit(3)->get();
+        $otherNews = SmNews::where('school_id', app('school')->id)->orderBy('id', 'asc')->whereNotIn('id', [$id])->limit(3)->get();
         $notice_board = SmNoticeBoard::where('publish_on', '<=', date('Y-m-d'))->where('school_id', app('school')->id)->where('is_published', 1)->orderBy('created_at', 'DESC')->take(3)->get();
 
         return view('frontEnd.home.light_news_details', compact('news', 'notice_board', 'otherNews'));
@@ -269,7 +270,7 @@ class SmFrontendController extends Controller
     public function newsPage()
     {
         try {
-            $news = SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)->paginate(8);
+            $news = SmNews::where('school_id', app('school')->id)->paginate(8);
             $newsPage = SmNewsPage::where('school_id', app('school')->id)->first();
             return view('frontEnd.home.light_news', compact('news', 'newsPage'));
         } catch (\Exception $e) {
@@ -281,10 +282,10 @@ class SmFrontendController extends Controller
     public function loadMorenews(Request $request)
     {
         try {
-            $count = SmNews::where('mark_as_archive',0)->count();
+            $count = SmNews::count();
             $skip = $request->skip;
             $limit = $count - $skip;
-            $due_news = SmNews::skip($skip)->where('school_id', app('school')->id)->where('mark_as_archive',0)->take(4)->get();
+            $due_news = SmNews::skip($skip)->where('school_id', app('school')->id)->take(4)->get();
             return view('frontEnd.home.loadMoreNews', compact('due_news', 'skip', 'count'));
         } catch (\Exception $e) {
             return response('error');
@@ -426,7 +427,7 @@ class SmFrontendController extends Controller
         try {
             $exams = SmExam::where('school_id', app('school')->id)->get();
             $course = SmCourse::where('school_id', app('school')->id)->paginate(3);
-            $news = SmNews::where('school_id', app('school')->id)->where('mark_as_archive',0)->orderBy('order', 'asc')->limit(4)->get();
+            $news = SmNews::where('school_id', app('school')->id)->orderBy('order', 'asc')->limit(4)->get();
             $exams_types = SmExamType::where('school_id', app('school')->id)->get();
             $coursePage = SmCoursePage::where('school_id', app('school')->id)->first();
             $classes = SmClass::where('school_id', app('school')->id)->where('active_status', 1)->get();

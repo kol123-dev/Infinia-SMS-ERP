@@ -342,9 +342,9 @@ return [
 
 "expaire_date" => "Date d'expiration",
 
-"infix_edu" => "Infix Edu",
+"infix_edu" => "infinia Edu",
 
-"infix_clasified" => "Infix classifié",
+"infix_clasified" => "infinia classifié",
 
 "date_|_day" => "Date | Jour",
 

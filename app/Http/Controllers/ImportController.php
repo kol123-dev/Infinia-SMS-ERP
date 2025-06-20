@@ -49,23 +49,6 @@ class ImportController extends Controller
             DB::beginTransaction();
             Excel::import(new StaffsImport, $request->file('file'), 's3', \Maatwebsite\Excel\Excel::XLSX);
             $bulk_staffs = StaffImportBulkTemporary::where('user_id', Auth::user()->id)->get();
-
-            $emailCounts = $bulk_staffs->groupBy('email')->map(function ($rows) {
-                return $rows->count();
-            });
-            
-            $duplicateEmails = $emailCounts->filter(function ($count) {
-                return $count > 1;
-            });
-            
-            if ($duplicateEmails->isNotEmpty()) {
-                foreach ($duplicateEmails as $email => $count) {
-                    toastr()->error('Duplicate email found: ' . $email);
-                }
-                StaffImportBulkTemporary::where('user_id', Auth::user()->id)->delete();
-                return redirect()->back();
-            }
-
             if (!empty($bulk_staffs)) {
                 foreach ($bulk_staffs as $key => $singleStaff) {
 

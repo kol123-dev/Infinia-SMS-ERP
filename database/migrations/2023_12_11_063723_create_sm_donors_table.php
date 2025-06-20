@@ -48,7 +48,7 @@ return new class extends Migration
         $religion = SmBaseSetup::where('base_group_id', '=', '2')->where('base_setup_name', 'Islam')->first();
         $gender = SmBaseSetup::where('base_group_id', '=', '1')->where('base_setup_name', 'Male')->first();
         $datas = [
-            ['Abdur Rahman', 'Doctor', date("Y-m-d", strtotime('1990-12-12')), "abdurrahman@infixedu.com", '+881235854', $bloodgroup->id, $religion->id, $gender->id],
+            ['Abdur Rahman', 'Doctro', date("Y-m-d", strtotime('1990-12-12')), "abdurrahman@infixedu.com", '+881235854', $bloodgroup->id, $religion->id, $gender->id],
             [' Md Rahim ', 'Farmer', date("Y-m-d", strtotime('1993-08-05')), "rahim@infixedu.com", '+8855525412', $bloodgroup->id, $religion->id, $gender->id],
             ['Md Malek', 'Engineer', date("Y-m-d", strtotime('1990-12-12')), "malek@infixedu.com", '+8852526698', $bloodgroup->id, $religion->id, $gender->id],
         ];
@@ -64,7 +64,7 @@ return new class extends Migration
             $storeData->bloodgroup_id = $data[5];
             $storeData->religion_id = $data[6];
             $storeData->gender_id = $data[7];
-            $storeData->photo = "public/uploads/theme/edulia/donor/default_donor.jpg";
+            $storeData->photo = "public/uploads/theme/edulia/donor/donor-$key.jpg";
             $storeData->current_address = "Dhaka, Bangladesh";
             $storeData->permanent_address = "Dhaka, Bangladesh";
             $storeData->school_id = 1;

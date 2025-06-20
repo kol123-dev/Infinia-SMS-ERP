@@ -663,8 +663,8 @@
                                                                 <img class="logo-img" src="{{ generalSetting()->logo }}" alt="{{generalSetting()->school_name }}">
                                                             </div>
                                                             <div class="col-xl-8  col-sm-8 text-center">
-                                                                <h3 class="text-white" style="font-size: 30px;margin-bottom: 0px;"> {{isset(generalSetting()->school_name)?generalSetting()->school_name:'Infix School Management ERP'}} </h3>
-                                                                <p class="text-white mb-0" style="font-size: 16px;">  {{isset(generalSetting()->address)?generalSetting()->address:'Infix School Address'}} </p>
+                                                                <h3 class="text-white" style="font-size: 30px;margin-bottom: 0px;"> {{isset(generalSetting()->school_name)?generalSetting()->school_name:'infinia School Management ERP'}} </h3>
+                                                                <p class="text-white mb-0" style="font-size: 16px;">  {{isset(generalSetting()->address)?generalSetting()->address:'infinia School Address'}} </p>
                                                                 <p class="text-white mb-0" style="font-size: 16px;">
                                                                     @lang('common.email'): <span class="text-lowercase">{{isset(generalSetting()->email)?generalSetting()->email:'hello@aorasoft.com'}}</span>,
                                                                     @lang('common.phone'): {{isset(generalSetting()->phone)?generalSetting()->phone:'+96897002784'}} </p>
@@ -881,9 +881,9 @@
     
                                                                         <p>
                                                                             @if (@$generalsettingsResultType == 'mark')
-                                                                                {{ round(@singleSubjectMark($data->student_record_id,$data->subject_id,$data->exam_type_id)[0])}}
+                                                                                {{@singleSubjectMark($data->student_record_id,$data->subject_id,$data->exam_type_id)[0]}}
                                                                             @else
-                                                                                {{ round(@$data->total_marks)}}
+                                                                                {{@$data->total_marks}}
                                                                             @endif
     
                                                                             @php
@@ -1044,7 +1044,7 @@
                                                                         </td>
                                                                     @endif
                                                                     <td>@lang('exam.total_mark')</td>
-                                                                    <td>{{ round(@$total_mark)}}</td>
+                                                                    <td>{{@$total_mark}}</td>
                                                                 </tr>
                                                                 @if ($average_passing_mark)
                                                                     <tr>

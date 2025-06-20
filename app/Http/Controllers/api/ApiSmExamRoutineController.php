@@ -257,7 +257,7 @@ class ApiSmExamRoutineController extends Controller
             $class_ids = $records->pluck('class_id') ? $records->pluck('class_id') : [] ;
             $section_ids = $records->pluck('section_id') ? $records->pluck('section_id') : [];
             
-            $exam_type_ids = SmExam::withoutGlobalScopes()->where('school_id', $student_detail->school_id)
+             $exam_type_ids = SmExam::withoutGlobalScope(StatusAcademicSchoolScope::class, GlobalAcademicScope::class)->where('school_id', $student_detail->school_id)
                 ->where('academic_id', SmAcademicYear::API_ACADEMIC_YEAR($student_detail->school_id))
                 ->whereIn('class_id', $class_ids)->whereIn('section_id',$section_ids)
                 ->where('active_status', 1)->pluck('exam_type_id');

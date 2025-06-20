@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Jitsi\Entities\JitsiMeeting;
 use Modules\Jitsi\Entities\JitsiVirtualClass;
 use App\Http\Resources\v2\Class\Student\Jitsi\MeetingResource;
-use Modules\Jitsi\Entities\JitsiSetting;
 
 class JitsiController extends Controller
 {
@@ -255,15 +254,5 @@ class JitsiController extends Controller
             'message' => 'Operation successful.'
         ];
         return response()->json($response, 200);
-    }
-
-    public function settings()
-    {
-        try {
-            $data = JitsiSetting::first();
-            return ApiBaseMethod::sendResponse($data, null);
-        } catch (\Exception $e) {
-            return ApiBaseMethod::sendError('Error.', $e->getMessage());
-        }
     }
 }

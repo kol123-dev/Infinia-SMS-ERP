@@ -1,10 +1,3 @@
-<style>
-    
-    .hero_area_container_slide_item {
-        padding-left: 12px!important;
-        padding-right: 12px!important;
-    }
-</style>
 <section class="hero_area_slider  owl-carousel">
     @if ($homeSliders->isEmpty())
         <div class="hero_area" id='slider-1'>
@@ -19,9 +12,9 @@
             </div>
         </div>
     @else
-        @foreach ($homeSliders as $index => $homeSlider)
-            <div class="hero_area" id="slider-{{ $index + 1 }}">
-                <div class="container-fluid hero_area_container_slide_item">
+        @foreach ($homeSliders as $homeSlider)
+            <div class="hero_area" id='slider-1'>
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12 p-0">
                             <div class="hero_area_inner">

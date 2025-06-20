@@ -1,6 +1,6 @@
 <section class="section_padding_off notice-section">
   <div class="container">
-      <div class="row m-0">
+      <div class="row">
           <div class="col-lg-12 col-xl-10 offset-xl-1 offset-0">
               <div class="row text-center" id='noticeContent'>
                   <div class="notice-board-header d-flex justify-content-between align-items-center mb-3">

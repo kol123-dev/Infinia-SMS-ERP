@@ -14,9 +14,6 @@ return [
     'about_area' => 'About Area',
     'only_allowed_and_max_size_is_3MB' => 'only .jpg,.png allowed and max size is 3MB',
     'about_area_main_image' => 'About Area Main Image',
-    'about_area_img_medium' => 'About Area Medium Image',
-    'about_area_img_large' => 'About Area Large Image',
-    'about_area_img_small' => 'About Area Small Image',
     'about_area_medium_image' => 'About Area Medium Image',
     'about_area_small_image' => 'About Area Small Image',
     'main_heading' => 'Main Heading',
@@ -480,8 +477,5 @@ return [
     'is_show_school_registration' => 'Is Show School Registration?',
     'is_show_parent_registration' => 'Is Show Parent Registration?',
     'schools' => 'Schools',
-    'blog_details' => 'Blog Details',
-    'no_data_available' => 'No Data Available',
-    'add_blog' => 'Add Blog',
-    'no_more_data_available' => 'No More Data Available',
+
 ];

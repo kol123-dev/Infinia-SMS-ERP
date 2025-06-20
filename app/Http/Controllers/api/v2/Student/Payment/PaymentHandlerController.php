@@ -91,7 +91,9 @@ class PaymentHandlerController extends Controller
                   
                     $feesInvoiceChilds = FmFeesInvoiceChield::where('fees_invoice_id', $invoice->id)
                         ->where('school_id', auth()->user()->school_id)
-                        ->get(); 
+                        ->get();
+                    #dd($feesInvoiceChilds);
+                        
 
                     foreach ($feesInvoiceChilds as $feesInvoiceChild) {
                         #$storeTransactionChield = new FmFeesTransactionChield();

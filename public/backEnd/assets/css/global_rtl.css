@@ -152,14 +152,10 @@ html[dir="rtl"] .primary-btn.small .ti-search {
     top: 0px!important;
 }
 
-@media only screen and (max-width:575px) {
-    .header_right .infix_session:not(.dropdown .infix_session),
-    .header_right .languageChange:not(.dropdown .languageChange) {
+@media only screen and (max-width: 575px) {
+    html[dir="rtl"] .header_right .nice_Select {
         display: none !important;
     }
-}
-html[dir="rtl"] .nice-select{
-    text-align: right !important;
 }
 
 @media (max-width: 991.98px) {

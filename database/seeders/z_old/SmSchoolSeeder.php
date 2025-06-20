@@ -967,7 +967,7 @@ class SmSchoolSeeder extends Seeder
                 $s->link_label1 = 'About Infix';
                 $s->link_href1  = 'http://infixedu.com';
         
-                $s->link_label2 = 'Infix Home';
+                $s->link_label2 = 'infinia Home';
                 $s->link_href2  = 'http://infixedu.com/home';
         
                 $s->link_label3 = 'Business';

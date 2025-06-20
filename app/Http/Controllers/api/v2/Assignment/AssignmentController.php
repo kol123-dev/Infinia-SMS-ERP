@@ -21,29 +21,23 @@ class AssignmentController extends Controller
             ->where('id', $request->record_id)
             ->firstOrFail();
 
-            $assignment = SmTeacherUploadContent::withoutGlobalScope(GlobalAcademicScope::class)
+        $assignment = SmTeacherUploadContent::withoutGlobalScope(GlobalAcademicScope::class)
             ->with('classes', 'sections')
             ->where('content_type', 'as')
             ->whereNull('course_id')
             ->whereNull('chapter_id')
             ->whereNull('lesson_id')
             ->where('academic_id', $record->academic_id)
-            ->where('available_for_admin', 0)
             ->where('school_id', auth()->user()->school_id)
-            ->where(function ($query) use ($record) {
-                $query->where('available_for_all_classes', 1)
-                      ->orWhere(function ($q) use ($record) {
-                          $q->where(function ($que) use ($record) {
-                              $que->where('class', $record->class_id)
-                                  ->orWhereNull('class');
-                          })
-                          ->where(function ($que) use ($record) {
-                              $que->where('section', $record->section_id)
-                                  ->orWhereNull('section');
-                          });
-                      });
+            ->where(function ($que) use ($record) {
+                return $que->where('class', $record->class_id)
+                    ->orWhereNull('class');
             })
-            ->get();        
+            ->where(function ($que) use ($record) {
+                return $que->where('section', $record->section_id)
+                    ->orWhereNull('section');
+            })
+            ->get();
 
         $data = AssignmentResource::collection($assignment);
 

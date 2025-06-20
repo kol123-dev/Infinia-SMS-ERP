@@ -431,6 +431,7 @@ class SmAcademicsController extends Controller
     
                 $assign_class_teacher = [];
                 $fees_assigns = UnFeesInstallmentAssign::whereIn("student_id", $student_ids)->get();
+                // dd($fees_assigns);
                 $fees_master_ids=$fees_assigns->pluck('fees_master_id')->toArray();
     
                 $fees_masters = SmFeesMaster::whereIn('id', $fees_master_ids)->pluck('fees_type_id')->toArray();
@@ -465,6 +466,7 @@ class SmAcademicsController extends Controller
     
                 return view('backEnd.reports.class_report', compact('total_due', 'students','applied_discount', 'assign_subjects', 'assign_class_teachers', 'total_collection', 'total_assign', 'sectionInfo', 'section_id','class_id'));
             } catch (\Exception $e) {
+                dd($e);
                 Toastr::error('Operation Failed', 'Failed');
                 return redirect()->back();
             }

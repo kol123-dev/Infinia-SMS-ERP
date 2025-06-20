@@ -35,7 +35,7 @@
 @endif
 
 @if (moduleStatusCheck('Lms') == true)
-    @if (userPermission('lms'))
+    @if (userPermission('lms') && menuStatus(1500))
         <li data-position="{{ menuPosition(1500) }}" class="sortable_li">
             <a href="javascript:void(0)" class="has-arrow" aria-expanded="false">
                 <div class="nav_icon_small">
@@ -55,7 +55,7 @@
                             </a>
                         </li>
                     @endif
-                    @if (userPermission('lms.courseDetail') && menuStatus(1509))
+                    @if (userPermission(1509) && menuStatus(1509))
                         <li data-position="{{ menuPosition(1509) }}" class="sortable_li">
                             <a href="{{ route('lms.enrolledCourse', [$children->user_id]) }}">{{ $children->full_name }}
                                 - @lang('lms::lms.course')</a>

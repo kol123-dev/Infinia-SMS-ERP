@@ -51,12 +51,18 @@ class SmStudent extends Model
     protected static function boot()
     {
         parent::boot();
+
+
         static::addGlobalScope(new SchoolScope);
+
     }
     public function parents()
     {
-        return $this->belongsTo('App\SmParent', 'parent_id', 'id')->withDefault()->with('parent_user')->withOutGlobalScope(SchoolScope::class);
+        return $this->belongsTo('App\SmParent', 'parent_id', 'id')->withDefault()->with('parent_user')->withOutGlobalScope(SchoolScope::class);;
     }
+
+   
+
     public function getOptionalSubjectSetupAttribute()
     {
         return SmClassOptionalSubject::where('class_id', $this->class_id)->first();
@@ -123,12 +129,12 @@ class SmStudent extends Model
     //student class name
     public function class()
     {
-        return $this->belongsTo('App\SmClass', 'class_id', 'id')->withoutGlobalScopes();
+        return $this->belongsTo('App\SmClass', 'class_id', 'id')->withoutGlobalScope(StatusAcademicSchoolScope::class);
     }
 
     public function section()
     {
-        return $this->belongsTo('App\SmSection', 'section_id', 'id')->withoutGlobalScopes();
+        return $this->belongsTo('App\SmSection', 'section_id', 'id')->withoutGlobalScope(StatusAcademicSchoolScope::class);
     }
 
     public function route()
@@ -570,18 +576,17 @@ class SmStudent extends Model
 
     public static function getExamResult($exam_id, $record)
     {
-        $eligible_subjects = SmAssignSubject::withOutGlobalScopes()
-                            ->where('class_id', $record->class_id)
+        $eligible_subjects = SmAssignSubject::where('class_id', $record->class_id)
                             ->where('section_id', $record->section_id)
                             
-                            ->where('academic_id', SmAcademicYear::API_ACADEMIC_YEAR($record->school_id))
+                            ->where('academic_id', getAcademicId())
                             ->where('school_id', Auth::user()->school_id)
                             ->select('subject_id')
                             ->distinct(['section_id', 'subject_id'])
                             ->get();
 
         foreach ($eligible_subjects as $subject) {
-            $getMark = SmResultStore::withOutGlobalScopes()->where([
+            $getMark = SmResultStore::where([
                 ['exam_type_id', $exam_id],   
                 ['student_id', $record->student_id],
                 ['student_record_id', $record->id],
@@ -592,7 +597,7 @@ class SmStudent extends Model
                 continue;
             }
 
-            $result = SmResultStore::withOutGlobalScopes()->where([
+            $result = SmResultStore::where([
                 ['exam_type_id', $exam_id],
                 ['student_id', $record->student_id],
                 ['student_record_id', $record->id],
@@ -657,13 +662,6 @@ class SmStudent extends Model
         return $this->hasOne(SmOptionalSubjectAssign::class, 'student_id')->where('academic_id', getAcademicId());
     }
 
-    public function subjectAssigns()
-    {
-        return $this->hasMany(SmOptionalSubjectAssign::class, 'student_id')
-                    ->where('academic_id', getAcademicId())
-                    ->latest('id');
-    }
-    
     public function scopeStatus($query)
     {
         return $query->where('active_status', 1)->where('school_id', Auth::user()->school_id);

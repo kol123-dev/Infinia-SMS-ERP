@@ -2,11 +2,6 @@
 @section('title')
     @lang('front_settings.speech_slider')
 @endsection
-
-@push('css')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
-@endpush
-
 @section('mainContent')
     <section class="sms-breadcrumb mb-20">
         <div class="container-fluid">
@@ -93,25 +88,10 @@
                                 <div class="row mt-10">
                                     <div class="col-lg-12">
                                         <div class="primary_input">
-                                            <label class="primary_input_label" for="">@lang('front_settings.title') </label>
-                                            <input
-                                                class="primary_input_field form-control{{ $errors->has('title') ? ' is-invalid' : '' }}"
-                                                type="text" name="title" autocomplete="off"
-                                                value="{{ isset($add_speech_slider) ? @$add_speech_slider->title : old('title') }}">
-                                            @if ($errors->has('title'))
-                                                <span class="text-danger d-block">
-                                                    {{ $errors->first('title') }}
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-10">
-                                    <div class="col-lg-12">
-                                        <div class="primary_input">
-                                            <label class="primary_input_label" for="">@lang('front_settings.speech') <span class="text-danger"> *</span></label>
-                                            <textarea class="primary_input_field form-control{{ $errors->has('speech') ? ' is-invalid' : '' }}" id="summernote"
-                                                      name="speech" autocomplete="off"  cols="30" rows="4">{{ isset($add_speech_slider) ? @$add_speech_slider->speech : old('speech') }}</textarea>
+                                            <label class="primary_input_label" for="">@lang('front_settings.speech') <span
+                                                    class="text-danger"> *</span></label>
+                                            <textarea class="primary_input_field form-control{{ $errors->has('speech') ? ' is-invalid' : '' }}" type="text"
+                                                name="speech" autocomplete="off" id="" cols="30" rows="4">{{ isset($add_speech_slider) ? @$add_speech_slider->speech : old('speech') }}</textarea>
                                             @if ($errors->has('speech'))
                                                 <span class="text-danger d-block">
                                                     {{ $errors->first('speech') }}
@@ -119,7 +99,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>                              
+                                </div>
                                 <div class="row mt-10">
                                     <div class="col-lg-12">
                                         <div class="primary_input">
@@ -185,7 +165,7 @@
                                             <th>@lang('common.sl')</th>
                                             <th>@lang('front_settings.name')</th>
                                             <th>@lang('front_settings.designation')</th>
-                                            <th>@lang('front_settings.title')</th>
+                                            <th>@lang('front_settings.speech')</th>
                                             <th>@lang('front_settings.image')</th>
                                             <th>@lang('common.action')</th>
                                         </tr>
@@ -196,7 +176,7 @@
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ @$value->name }}</td>
                                                 <td>{{ @$value->designation }}</td>
-                                                <td>{{ @$value->title }}</td>
+                                                <td>{{ mb_strimwidth(@$value->speech, 0, 50, "...") }}</td>
                                                 <td><img src="{{ asset(@$value->image) }}" width="60px"
                                                     height="50px"></td>
                                                 <td>
@@ -228,26 +208,5 @@
     </section>
 @endsection
 
-@push('script')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            height: 200, // Set the height of the editor
-            placeholder: 'Enter the speech content here...',
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-    });
-</script>
-
-    
-@endpush
+@include('backEnd.partials.data_table_js')
+@include('backEnd.partials.date_picker_css_js')

@@ -20,7 +20,6 @@ use Illuminate\Http\Request;
 use App\Models\StudentRecord;
 use App\SmFeesAssignDiscount;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Validation\Rule;
 use App\SmPaymentGatewaySetting;
 use Illuminate\Support\Facades\DB;
 use App\Scopes\AcademicSchoolScope;
@@ -42,10 +41,10 @@ use App\Http\Resources\FmFeesInvoiceViewResource;
 use Modules\Fees\Entities\FmFeesTransactionChield;
 use App\Http\Resources\v2\FeesInstallmentListResource;
 use App\Http\Resources\FmFeesInvoiceChieldViewResource;
+use Illuminate\Validation\Rule;
 use Modules\University\Entities\UnFeesInstallmentAssign;
 use Modules\CcAveune\Http\Controllers\CcAveuneController;
 use Modules\Fees\Http\Controllers\FeesExtendedController;
-use Modules\ToyyibPay\Http\Controllers\ToyyibPayController;
 use Modules\University\Entities\UnFeesInstallAssignChildPayment;
 
 class StudentFeesController extends Controller
@@ -80,7 +79,6 @@ class StudentFeesController extends Controller
             ->where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
             ->where('school_id', auth()->user()->school_id)
             ->with('studentInfo', 'recordDetail.class', 'recordDetail.section')
-            ->orderBy('id', 'DESC')
             ->get();
 
         $data['fees_invoice'] = FmFeesInvoiceResource::collection($records);
@@ -359,18 +357,18 @@ class StudentFeesController extends Controller
                     $storeTransactionChield = new FmFeesTransactionChield();
                     $storeTransactionChield->fees_transaction_id = $storeTransaction->id;
                     $storeTransactionChield->fees_type = $type;
-                    $storeTransactionChield->paid_amount = $request->paid_amount[$key] - $request->extraAmount[$key];
+                    $storeTransactionChield->paid_amount = $request->paid_amount[$key] . '-' . $request->extraAmount[$key];
                     $storeTransactionChield->service_charge = chargeAmount($request->payment_method, $request->paid_amount[$key]);
                     $storeTransactionChield->note = $request->note[$key];
                     $storeTransactionChield->school_id = auth()->user()->school_id;
-
+            
                     if (moduleStatusCheck('University')) {
                         $storeTransactionChield->un_academic_id = SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR();
                     } else {
                         $storeTransactionChield->academic_id = SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR();
                     }
                     $storeTransactionChield->save();
-                }
+                }                
             }
 
             if (moduleStatusCheck('MercadoPago')) {
@@ -392,9 +390,9 @@ class StudentFeesController extends Controller
             $storeTransaction->paid_status = 'pending';
             $storeTransaction->school_id = auth()->user()->school_id;
             if (moduleStatusCheck('University')) {
-                $storeTransaction->un_academic_id = getAcademicId();
+                $storeTransaction->un_academic_id = SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR();
             } else {
-                $storeTransaction->academic_id = getAcademicId();
+                $storeTransaction->academic_id = SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR();
             }
             $storeTransaction->save();
 
@@ -407,11 +405,11 @@ class StudentFeesController extends Controller
                     $storeTransactionChield->paid_amount = $request->paid_amount[$key] - $request->extraAmount[$key];
                     $storeTransactionChield->service_charge = chargeAmount($request->payment_method, $request->paid_amount[$key]);
                     $storeTransactionChield->note = $request->note[$key];
-                    $storeTransactionChield->school_id = Auth::user()->school_id;
+                    $storeTransactionChield->school_id = auth()->user()->school_id;
                     if (moduleStatusCheck('University')) {
-                        $storeTransactionChield->un_academic_id = getAcademicId();
+                        $storeTransactionChield->un_academic_id = SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR();
                     } else {
-                        $storeTransactionChield->academic_id = getAcademicId();
+                        $storeTransactionChield->academic_id = SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR();
                     }
                     $storeTransactionChield->save();
                 }
@@ -435,27 +433,21 @@ class StudentFeesController extends Controller
             } elseif ($data['payment_method'] == 'CcAveune') {
                 $ccAvenewPaymentController = new CcAveuneController();
                 $ccAvenewPaymentController->studentFeesPay($data['amount'], $data['transcationId'], $data['type']);
-            } elseif ($data['payment_method'] == 'ToyyibPay') {
-                if (moduleStatusCheck('ToyyibPay')) {
-                    $toyyibPayController = new ToyyibPayController();
-                    $data = [
-                        'amount' => $request->total_paid_amount,
-                        'transcationId' => $storeTransaction->id,
-                        'type' => 'Fees',
-                        'student_id' => $request->student_id,
-                        'user_id' => $storeTransaction->user_id,
-                        'service_charge' => chargeAmount($request->payment_method, $request->total_paid_amount),
-                        'invoice_id' => $request->invoice_id,
-                        'payment_method' => $request->payment_method,
-                        // 'invoice_id' => $request->invoice_id
-
-                    ];
-                    $data_store = $toyyibPayController->studentFeesPay($data);
-                    // return redirect($data_store);
-                }
             } else {
-                $feesExtendedController = new FeesExtendedController();
-                $feesExtendedController->addFeesAmount($storeTransaction->id, $request->total_paid_amount);
+                $classMap = config('paymentGateway.' . $data['payment_method']);
+                $make_payment = new $classMap();
+                $url = $make_payment->handle($data);
+                if (!$url) {
+                    $url = url('fees/student-fees-list');
+                    if (auth()->check() && auth()->user()->role_id == 3) {
+                        $url = url('fees/student-fees-list', $record->student_id);
+                    }
+                }
+                if ($request->wantsJson()) {
+                    return response()->json(['goto' => $url]);
+                } else {
+                    return redirect($url);
+                }
             }
         }
 

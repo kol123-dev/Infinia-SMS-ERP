@@ -255,10 +255,10 @@
                                                 </div>
                                                 <div class="col-lg-6 ml-30">
                                                     <h3 class="text-white">
-                                                        {{isset(generalSetting()->school_name)?generalSetting()->school_name:'Infix School Management ERP'}}
+                                                        {{isset(generalSetting()->school_name)?generalSetting()->school_name:'infinia School Management ERP'}}
                                                     </h3>
                                                     <p class="text-white mb-0">
-                                                        {{isset(generalSetting()->address)?generalSetting()->address:'Infix School Address'}}
+                                                        {{isset(generalSetting()->address)?generalSetting()->address:'infinia School Address'}}
                                                     </p>
                                                     <p class="text-white mb-0">@lang('common.email'):
                                                         {{isset(generalSetting()->email)?generalSetting()->email:'hello@aorasoft.com'}},
@@ -384,11 +384,11 @@
                                                             @endforeach
                                                     
                                                             @php
-                                                                $gpa = ($number_of_subjects_without_optional != 0) ? number_format((float)$total_grade_point / $number_of_subjects_without_optional, 2, '.', '') : 0;
+                                                                $gpa = number_format((float)$total_grade_point / $number_of_subjects_without_optional, 2, '.', '');
                                                                 if ($gpa > 5) {
                                                                     $gpa = 5.00;
                                                                 }
-                                                                $gpa_without_optional = $number_of_subjects_without_optional ? number_format((float)$total_grade_point / $number_of_subjects, 2, '.', '') : $failgpa;
+                                                                $gpa_without_optional = $number_of_subjects_without_optional ? number_format((float)$total_grade_point_without_optional / $number_of_subjects_without_optional, 2, '.', '') : $failgpa;
                                                             @endphp
                                                     
                                                             <tr>

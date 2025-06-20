@@ -33,12 +33,9 @@
                 </div>
                 <div class="col-xl-8 offset-xl-1 col-md-8 col-sm-12">
                     <div class="teacher_details">
-                        {{-- <h4 class="mb-3">@lang('edulia.message_from') {{ $singleSpeechSlider->designation }}</h4> --}}
-                        <h4 class="mb-3">
-                            {{ $singleSpeechSlider->title }}
-                        </h4>
+                        <h4 class="mb-3">@lang('edulia.message_from') {{ $singleSpeechSlider->designation }}</h4>
                         <div class="teacher_details_content">
-                            <p>{!! $singleSpeechSlider->speech !!}</p>
+                            <p>{{ $singleSpeechSlider->speech }}</p>
                         </div>
                     </div>
                 </div>

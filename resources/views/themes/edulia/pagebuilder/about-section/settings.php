@@ -7,7 +7,7 @@ return [
     'tab' => "General",
     'fields' => [
         [
-            'id'            => 'about_area_img_small',
+            'id'            => 'about_area_img_1',
             'type'          => 'file',
             'field_desc' => __('edulia.only_allowed_and_max_size_is_3MB'),
             'max_size' => 3, // size in MB
@@ -15,29 +15,7 @@ return [
                 'jpg',
                 'png',
             ],
-            'label_title'   => __('edulia.about_area_img_small')
-        ],
-        [
-            'id'            => 'about_area_img_medium',
-            'type'          => 'file',
-            'field_desc' => __('edulia.only_allowed_and_max_size_is_3MB'),
-            'max_size' => 3, // size in MB
-            'ext' => [
-                'jpg',
-                'png',
-            ],
-            'label_title'   => __('edulia.about_area_img_medium')
-        ],
-        [
-            'id'            => 'about_area_img_large',
-            'type'          => 'file',
-            'field_desc' => __('edulia.only_allowed_and_max_size_is_3MB'),
-            'max_size' => 3, // size in MB
-            'ext' => [
-                'jpg',
-                'png',
-            ],
-            'label_title'   => __('edulia.about_area_img_large')
+            'label_title'   => __('edulia.about_area_main_image')
         ],
         [
             'id'            => 'alignment_left_right',

@@ -12,7 +12,7 @@
 
 <div class="card-body">
     <p class="text-center">
-        {{ __('service::install.confirm_description') }}
+        {{ __('service::install.confirm_description') }} 
     </p>
     <p class="text-center">
         Your Super Admin email : <b> {{ $user }} </b> <br>

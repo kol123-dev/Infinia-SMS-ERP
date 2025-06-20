@@ -9,14 +9,12 @@ use App\SmUserLog;
 use App\SmBaseSetup;
 use App\ApiBaseMethod;
 use App\SmDesignation;
-use App\SmLeaveDefine;
 use App\SmLeaveRequest;
 use App\SmGeneralSettings;
 use App\SmHumanDepartment;
 use App\SmStudentDocument;
 use App\SmStudentTimeline;
 use App\InfixModuleManager;
-use Illuminate\Support\Str;
 use App\SmHrPayrollGenerate;
 use App\Traits\CustomFields;
 use Illuminate\Http\Request;
@@ -37,12 +35,10 @@ use Modules\MultiBranch\Entities\Branch;
 use CreateSmStaffRegistrationFieldsTable;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Admin\Hr\staffRequest;
+use App\SmLeaveDefine;
 use Illuminate\Validation\ValidationException;
 use Modules\RolePermission\Entities\InfixRole;
-use BaconQrCode\Renderer\ImageRenderer;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-use BaconQrCode\Writer;
+
 class SmStaffController extends Controller
 {
     use CustomFields;
@@ -298,10 +294,8 @@ class SmStaffController extends Controller
 
                 // leaver define data  insert for staff
                 $results = $staff->save();
-                generateQRCode('staff-'.$staff->id);
                 $staff->toArray();
 
-                
                 $st_role_id = $request->role_id; 
                 $school_id = Auth::user()->school_id; 
                 $academic_id = getAcademicId(); 
@@ -789,19 +783,6 @@ class SmStaffController extends Controller
                 } else {
                     $custom_field_values = null;
                 }
-               
-                $qr_code_path = public_path('qr_codes/staff-'.$staffDetails->id.'-qrcode.png');
-                
-                if(!file_exists($qr_code_path))
-                {
-                    $qr_renderer = new ImageRenderer(
-                        new RendererStyle(400),
-                        new ImagickImageBackEnd()
-                    );
-                    $writer = new Writer($qr_renderer);                
-                    $qrcode = $writer->writeFile('staff-'.$staffDetails->id, $qr_code_path);
-                }
-                
                 return view('backEnd.humanResource.viewStaff', compact('staffDetails', 'staffPayrollDetails', 'staffLeaveDetails', 'staffDocumentsDetails', 'timelines', 'custom_field_values'));
             } else {
                 Toastr::error('Something went wrong, please try again', 'Failed');

@@ -1,6 +1,3 @@
-
-
-
 @extends('backEnd.master')
 @section('title')
     @if (isset($id_card))
@@ -175,8 +172,6 @@
                         $("#hMotherName").hide();
                     }
                 }
-
-                
             if (userType == "0") {
                 $('.text').html('@lang('admin.id')');
                 $('.hStaffId').html('ID : 001');
@@ -197,7 +192,7 @@
                 $("#vAcademic").hide();
                 $("#vSemester").hide();
 
-                //$(".classHide").hide();
+                $(".classHide").hide();
                 $(".staffInfo").addClass('d-block');
                 $('#gHorizontal').addClass('d-none');
                 $('#gVertical').addClass('d-none');
@@ -210,9 +205,8 @@
                 $(".bloodGroup").addClass('d-none');
                 $("#hBloodGroup").addClass('d-none');
                 $("#vBloodGroup").addClass('d-none');
-                
             } else if (userType == "3") {
-                $(".classHide").addClass('d-none');
+                $(".classHide").hide();
                 $(".admissionNo").addClass('d-none');
                 $(".fatherName").addClass('d-none');
                 $(".motherName").addClass('d-none');
@@ -221,32 +215,12 @@
                 $("#hBloodGroup").addClass('d-none');
                 $("#vBloodGroup").addClass('d-none');
             }
-            if(userType == 2){
-                $(".addmissionText").html('Admission No : 83638');
-            }else{
-                $(".addmissionText").html('Staff ID : 83638');
-            }
-
-            if(userType == 2){
-                if(pageLayout == 'horizontal'){
-                    $("#hClass").show();
-                    $("#hStaffDepartment").hide();
-                    $("#hStaffDesignation").hide();
-                    
-                }else{
-                    
-                    $("#vClass").show();
-                    $("#vStaffDepartment").hide();
-                    $("#vStaffDesignation").hide();
-                }               
-            }
 
 
             $("body").on("change", "#applicableUser", function(e) {
                 e.preventDefault();
                 window.userType = $(this).val();
                 let name_text = $(this).find('option:selected').text()+ ' Name';
-                
                 $('.role_name_text').text(name_text)
                 if (userType == "0") {
                     $('.text').html('@lang('admin.id')');
@@ -267,7 +241,7 @@
                     $("#vAcademic").hide();
                     $("#vSemester").hide();
 
-                    //$(".classHide").hide();
+                    $(".classHide").hide();
                     $(".staffInfo").addClass('d-block');
                     $('#gHorizontal').addClass('d-none');
                     $('#gVertical').addClass('d-none');
@@ -280,15 +254,6 @@
                     $(".bloodGroup").addClass('d-none');
                     $("#hBloodGroup").addClass('d-none');
                     $("#vBloodGroup").addClass('d-none');
-                    $("#staff_department").removeClass('d-none');
-                    $("#staff_designation").removeClass('d-none');
-
-
-                    $("#gVertical").removeClass('d-block');
-                    $("#gVertical").addClass('d-none');
-                    $("#gHorizontal").removeClass('d-block');
-                    $("#gHorizontal").addClass('d-none');
-
                     if (pageLayout == "horizontal") {
                         $('#horizontal').removeClass('d-none');
                         // $('#vertical').addClass('d-none');
@@ -300,9 +265,6 @@
                         $('#pHeight').html('(@lang('admin.default') 89 mm)');
                         $('#profileWidth').html('(@lang('admin.default') 21 mm)');
                         $('#profileHeight').html('(@lang('admin.default') 21 mm)');
-                        
-                        $("#hStaffDesignation").show();
-                        $("#hStaffDepartment").show();
                     } else {
                         $('#horizontal').addClass('d-none');
                         $('#vertical').removeClass('d-none');
@@ -311,23 +273,19 @@
                         $('#pHeight').html('(@lang('admin.default') 57 mm)');
                         $('#profileWidth').html('(@lang('admin.default') 13 mm)');
                         $('#profileHeight').html('(@lang('admin.default') 13 mm)');
-                        $("#vStaffDesignation").show();
-                        $("#vStaffDepartment").show();
                     }
                 } else if (userType == "3") {
-                    $('#horizontal').removeClass('d-block');
-                    $('#vertical').removeClass('d-block');
-                    $('#horizontal').addClass('d-none');
-                    $('#vertical').addClass('d-none');
                     if (pageLayout == "horizontal") {
-                        
                         $('#gHorizontal').removeClass('d-none');
+                        $('#horizontal').addClass('d-none');
+                        $('#vertical').addClass('d-none');
                         $('#pWidth').html('(@lang('admin.default') 60 mm)');
                         $('#pHeight').html('(@lang('admin.default') 106 mm)');
                         $('#profileWidth').html('(@lang('admin.default') 21 mm)');
                         $('#profileHeight').html('(@lang('admin.default') 21 mm)');
                     } else {
-                        
+                        $('#horizontal').addClass('d-none');
+                        $('#vertical').addClass('d-none');
                         $('#gVertical').removeClass('d-none');
                         $('#pWidth').html('(@lang('admin.default') 106 mm)');
                         $('#pHeight').html('(@lang('admin.default') 55 mm)');
@@ -362,7 +320,7 @@
                     $("#vAcademic").show();
                     $("#vSemester").show();
 
-                    //$(".classHide").show();
+                    $(".classHide").show();
                     $(".staffInfo").removeClass('d-block');
                     $('#gHorizontal').addClass('d-none');
                     $('#gVertical').addClass('d-none');
@@ -373,9 +331,6 @@
                     $(".mobile").addClass('d-none');
                     $(".dateOfBirth").removeClass('d-none');
                     $(".bloodGroup").removeClass('d-none');
-
-                    $("#staff_department").addClass('d-none');
-                    $("#staff_designation").addClass('d-none');
                     if (pageLayout == "horizontal") {
                         $('#horizontal').removeClass('d-none');
                         $('#gHorizontal').addClass('d-none');
@@ -393,31 +348,6 @@
                         $('#profileWidth').html('(@lang('admin.default') 13 mm)');
                         $('#profileHeight').html('(@lang('admin.default') 13 mm)');
                     }
-
-                    
-                }
-                if(userType == 2){
-                    $(".addmissionText").html('Admission No : 83638');
-                }else{
-                    $(".addmissionText").html('Staff ID : 83638');
-                }
-                if(userType == 2){
-                    $(".staffInfo").addClass('d-none');
-                    $(".common-checkbox").removeAttr('checked');
-                    $("#gVertical").removeClass('d-block');
-                    $("#gVertical").addClass('d-none');
-                    $("#gHorizontal").removeClass('d-block');
-                    $("#gHorizontal").addClass('d-none');
-                    if(pageLayout == 'horizontal'){
-                        $("#hClass").show();
-                        $("#hStaffDepartment").hide();
-                        $("#hStaffDesignation").hide();
-                    }else{
-                        
-                        $("#vClass").show();
-                        $("#vStaffDepartment").hide();
-                        $("#vStaffDesignation").hide();
-                    }               
                 }
             });
         });
@@ -611,42 +541,6 @@
                 }
             });
 
-            
-            //Staff Department 
-
-            changeStaffDepartment = (status) => {
-                   if (pageLayout == "horizontal") {
-                        if (status == "1") {
-                            $("#hStaffDepartment").show();
-                        } else {
-                            $("#hStaffDepartment").hide();
-                        }
-                    } else {
-                        if (status == "1") {
-                            $("#vStaffDepartment").show();
-                        } else {
-                            $("#vStaffDepartment").hide();
-                        }
-                    }
-            }
-
-
-            changeStaffDesignation = (status) => {
-                    if (pageLayout == "horizontal") {
-                        if (status == "1") {
-                            $("#hStaffDesignation").show();
-                        } else {
-                            $("#hStaffDesignation").hide();
-                        }
-                    } else {
-                        if (status == "1") {
-                            $("#vStaffDesignation").show();
-                        } else {
-                            $("#vStaffDesignation").hide();
-                        }
-                    }
-            }
-
             // Radio Button
             studentName = (status) => {
                 if (userType == "3") {
@@ -814,7 +708,6 @@
             }
 
             motherName = (status) => {
-                
                 if (pageLayout == "horizontal") {
                     if (status == "1") {
                         $("#hMotherName").show();
@@ -847,7 +740,6 @@
             }
 
             bloodGroup = (status) => {
-                
                 if (pageLayout == "horizontal") {
                     if (status == "1") {
                         $("#hBloodGroup").show();
@@ -873,9 +765,9 @@
                         }
                     } else {
                         if (status == "1") {
-                            $("#gVphone").show();
+                            $("#gVAddress").show();
                         } else {
-                            $("#gVphone").hide();
+                            $("#gVAddress").hide();
                         }
                     }
                 }
@@ -920,12 +812,11 @@
                 } else {
                     if (pageLayout == "horizontal") {
                         if (status == "1") {
-                            $(".hAddress").show();
+                            $("#hAddress").show();
                         } else {
-                            $(".hAddress").hide();
+                            $("#hAddress").hide();
                         }
                     } else {
-                        
                         if (status == "1") {
                             $(".vAddress").show();
                         } else {
@@ -934,48 +825,6 @@
                     }
                 }
             }
-
-            profilePhoto = (status) => {
-                if (pageLayout == "horizontal") {
-                    if (status == "1") {
-                        $(".hImg").show();
-                    } else {
-                        $(".hImg").hide();
-                    }
-                } else {
-                    if (status == "1") {
-                        $(".vImg").show();
-                    } else {
-                        $(".vImg").hide();
-                    }
-                }
-           }
-
-           changeSignature = (status) => {
-                const reuired_placeholder = "{{ isset($id_card) ? ($id_card->signature != '' ? getFilePath3($id_card->signature) : trans('admin.signature') . ' *') : trans('admin.signature') . ' *' }}"; 
-                const nullable_placeholder = "{{ isset($id_card) ? ($id_card->signature != '' ? getFilePath3($id_card->signature) : trans('admin.signature') . ' *') : trans('admin.signature') }}"; 
-                if (pageLayout == "horizontal") {
-                    if (status == "1") {
-                        $(".hSign").show();
-                        $("#placeholderFileFourName").attr('placeholder',reuired_placeholder);
-                    } else {
-                        $(".hSign").hide();
-                        $("#placeholderFileFourName").attr('placeholder',nullable_placeholder);
-
-                    }
-                } else {
-                    if (status == "1") {
-                        $(".vSign").show();
-                        $("#placeholderFileFourName").attr('placeholder',reuired_placeholder);
-                    } else {
-                        $(".vSign").hide();
-                        $("#placeholderFileFourName").attr('placeholder',nullable_placeholder);
-                    }
-                }
-           }
-
-            
-            
         });
 
         // Image Show
@@ -984,13 +833,12 @@
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     if (pageLayout == "horizontal") {
-                        $('.hr_bg').css('background-image', 'url(' + e.target.result +')');
+                        $('.horizontal__card').css('background-image', 'url(' + e.target.result +')');
                     } else {
-                        $('.vr_bg').css('background-image', 'url(' + e.target.result +')');
+                        $('.vertical__card').css('background-image', 'url(' + e.target.result +')');
                     }
                 };
                 reader.readAsDataURL(input.files[0]);
-                $("#old_bg").val(1);
             }
         }
 
@@ -1005,7 +853,6 @@
                     }
                 };
                 reader.readAsDataURL(input.files[0]);
-                $("#old_profile").val(1);
             }
         }
 
@@ -1020,7 +867,6 @@
                     }
                 };
                 reader.readAsDataURL(input.files[0]);
-                $("#old_logo").val(1);
             }
         }
 
@@ -1035,7 +881,6 @@
                     }
                 };
                 reader.readAsDataURL(input.files[0]);
-                $("#old_sign").val(1);
             }
         }
 
@@ -1044,15 +889,12 @@
             $('#placeholderFileFiveName').removeAttr('placeholder');
             $('#placeholderFileFiveName').attr("placeholder", "@lang('admin.background_image')");
             $('#document_file_5').val('');
-            $("#old_bg").val(0);
             if (pageLayout == "horizontal") {
-                
-                $('.hr_bg').attr('style',
-                    'line-height:1.02; background-image: url({{ asset("public/backEnd/id_card/img/horizontal_bg.png") }}); width: 86mm; height: 54mm; margin: auto; background-size: 100% 100%; background-position: center center; position: relative;');
+                $('.horizontal__card').css('background-image',
+                    'url({{ asset('public/backEnd/id_card/img/vertical_bg.png') }})');
             } else {
-                
-                $('.vr_bg').attr('style',
-                    'line-height:1.02; background-image: url({{ asset("public/backEnd/id_card/img/vertical_bg.png") }}); width: 57.15mm; height: 88.9mm; margin: auto; background-size: 100% 100%; background-position: center center; position: relative; background-color: #fff; display: flex; flex-direction: column;');
+                $('.vertical__card').css('background-image',
+                    'url({{ asset('public/backEnd/id_card/img/horizontal_bg.png') }})');
             }
         });
 
@@ -1060,7 +902,6 @@
             $('#placeholderFileSixName').removeAttr('placeholder');
             $('#placeholderFileSixName').attr("placeholder", "@lang('admin.profile_image')");
             $('#document_file_6').val('');
-            $("#old_profile").val(0);
             if (pageLayout == "horizontal") {
                 $('.hImg').css('background-image', 'url({{ asset('public/backEnd/id_card/img/thumb.png') }})');
             } else {
@@ -1072,7 +913,6 @@
             $('#placeholderFileThreeName').removeAttr('placeholder');
             $('#placeholderFileThreeName').attr("placeholder", "@lang('common.logo')");
             $('#document_file_3').val('');
-            $("#old_logo").val(0);
             if (pageLayout == "horizontal") {
                 $('.hLogo').css('background-image', 'url({{ asset('public/backEnd/img/logo.png') }})');
             } else {
@@ -1084,15 +924,12 @@
             $('#placeholderFileFourName').removeAttr('placeholder');
             $('#placeholderFileFourName').attr("placeholder", "@lang('admin.signature')");
             $('#document_file_4').val('');
-            $("#old_sign").val(0);
             if (pageLayout == "horizontal") {
-                
                 $('.hSign').css('background-image',
-                'url({{ asset("public/backEnd/id_card/img/Signature.png") }})');
+                'url({{ asset('public/backEnd/id_card/img/Signature.png') }})');
             } else {
-                console.log($('.vSign'));
                 $('.vSign').css('background-image',
-                'url({{ asset("public/backEnd/id_card/img/Signature.png") }})');
+                'url({{ asset('public/backEnd/id_card/img/Signature.png') }})');
             }
         });
     </script>

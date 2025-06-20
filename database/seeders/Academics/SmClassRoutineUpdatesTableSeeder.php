@@ -31,7 +31,6 @@ class SmClassRoutineUpdatesTableSeeder extends Seeder
                     'class_id' => $classSectionSubject->class_id,
                     'section_id' => $classSectionSubject->section_id,
                     'subject_id' => $classSectionSubject->subject_id,
-                    'teacher_id' => $classSectionSubject->teacher_id,
                 ], $school_academic));
             }
         }

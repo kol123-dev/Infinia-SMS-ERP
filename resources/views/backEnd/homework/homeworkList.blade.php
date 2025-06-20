@@ -128,6 +128,8 @@
                                         @endif
                                     </div>
                                 </div>
+
+
                             </div>
                         @endif
 
@@ -164,7 +166,7 @@
                                     <table id="table_id" class="table data-table" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>SL</th>
+                                                <th>Si</th>
                                                 @if (moduleStatusCheck('University'))
                                                     <th>@lang('university::un.semester_label')</th>
                                                     <th>@lang('university::un.department')</th>

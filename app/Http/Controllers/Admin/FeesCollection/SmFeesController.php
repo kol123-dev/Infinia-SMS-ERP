@@ -473,6 +473,7 @@ class SmFeesController extends Controller
 
             $fees_assigns = UnFeesInstallmentAssign::get();
             foreach ($fees_assigns as $assignFees) {
+                // dd($assignFees);
                 $discount_amount = $assignFees->discount_amount;
                 $total_amount = $assignFees->amount;
                 $amount = $assignFees->paid_amount;
@@ -480,6 +481,7 @@ class SmFeesController extends Controller
 
                 if ($total_amount > $paid) {
                     $due_date= strtotime($assignFees->due_date);
+                    // dd($due_date);
                     $now =strtotime(date('Y-m-d'));
                     if ($due_date > $now ) {
                         continue;
@@ -487,6 +489,7 @@ class SmFeesController extends Controller
                     $fees_due_ids[] = $assignFees->id;
                 }
             }
+            // dd($fees_assigns);
             $fees_dues = $fees_assigns->whereIn('id', $fees_due_ids);
             return view('backEnd.feesCollection.search_fees_due', compact('fees_masters', 'fees_dues'));
         } catch (\Exception $e) {
@@ -577,7 +580,9 @@ class SmFeesController extends Controller
         }
         try {
             if(moduleStatusCheck('University')){
+                // dump($request->all());
                 $rangeArr = $request->date_range ? explode('-', $request->date_range) : "".date('m/d/Y')." - ".date('m/d/Y')."";
+                // dd($rangeArr);
                 $date_from = new \DateTime(trim(date('m/d/Y')));
                 $date_to =  new \DateTime(trim(date('m/d/Y')));
 
@@ -701,6 +706,7 @@ class SmFeesController extends Controller
 
 
         } catch (\Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }
@@ -932,6 +938,7 @@ class SmFeesController extends Controller
     function universityFineReportSearch($request)
     {
         $rangeArr = $request->date_range ? explode('-', $request->date_range) : "".date('m/d/Y')." - ".date('m/d/Y')."";
+        // dd($request->all());
         try {
 
             if($request->date_range){

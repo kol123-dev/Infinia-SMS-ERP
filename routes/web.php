@@ -22,6 +22,7 @@ Route::get('resdg', function () {
         $setting->for_staff = 0;  
         $setting->for_admin = 0;  
         $setting->update();
+        dd(13);
 });
 
 if (config('app.app_sync')) {

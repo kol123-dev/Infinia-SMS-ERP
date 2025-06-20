@@ -7,28 +7,25 @@ use App\SmClass;
 use App\SmRoute;
 use App\SmStaff;
 use App\SmParent;
+use App\SmLeaveType;
 use App\SmSchool;
 use App\SmStudent;
 use App\SmVehicle;
 use Carbon\Carbon;
 use App\SmExamType;
 use App\SmBaseSetup;
-use App\SmLeaveType;
 use App\SmFeesMaster;
 use App\SmMarksGrade;
 use App\ApiBaseMethod;
-use App\SmLeaveDefine;
 use App\SmAcademicYear;
 use App\SmClassTeacher;
 use App\SmEmailSetting;
 use App\SmExamSchedule;
 use App\SmStudentGroup;
-use BaconQrCode\Writer;
 use App\SmDormitoryList;
 use App\SmGeneralSettings;
 use App\SmStudentCategory;
 use App\SmStudentTimeline;
-use Illuminate\Support\Str;
 use App\CustomResultSetting;
 use App\SmStudentAttendance;
 use App\SmSubjectAttendance;
@@ -41,7 +38,6 @@ use App\Imports\StudentsImport;
 use App\Traits\FeesAssignTrait;
 use Modules\Lead\Entities\Lead;
 use App\Traits\NotificationSend;
-use App\Rules\FileValidationRule;
 use Modules\Lead\Entities\Source;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
@@ -55,7 +51,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Traits\DirectFeesAssignTrait;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
-use BaconQrCode\Renderer\ImageRenderer;
 use Modules\Saas\Entities\SmPackagePlan;
 use App\Scopes\StatusAcademicSchoolScope;
 use Illuminate\Support\Facades\Validator;
@@ -65,8 +60,6 @@ use Modules\University\Entities\UnAcademicYear;
 use Modules\University\Entities\UnAssignSubject;
 use Modules\University\Entities\UnSemesterLabel;
 use Modules\University\Entities\UnSubjectComplete;
-use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
-use BaconQrCode\Renderer\RendererStyle\RendererStyle;
 use Modules\BehaviourRecords\Entities\AssignIncident;
 use Modules\ParentRegistration\Entities\SmStudentField;
 use Modules\University\Entities\UnSubjectAssignStudent;
@@ -74,12 +67,14 @@ use App\Http\Controllers\Admin\Hr\StaffAsParentController;
 use Modules\BehaviourRecords\Entities\BehaviourRecordSetting;
 use Modules\ParentRegistration\Entities\SmStudentRegistration;
 use App\Http\Requests\Admin\StudentInfo\SmStudentAdmissionRequest;
-use Illuminate\Support\Facades\Session;
-use Modules\University\Http\Controllers\UnStudentPromoteController; 
+use Modules\University\Http\Controllers\UnStudentPromoteController;
 use Modules\University\Repositories\Interfaces\UnCommonRepositoryInterface;
 use Modules\University\Repositories\Interfaces\UnSubjectRepositoryInterface;
 use Modules\University\Repositories\Interfaces\UnDepartmentRepositoryInterface;
 use Modules\University\Repositories\Interfaces\UnSemesterLabelRepositoryInterface;
+use App\Rules\FileValidationRule;
+use App\SmLeaveDefine;
+
 class SmStudentAdmissionController extends Controller
 {
     use CustomFields;
@@ -381,11 +376,6 @@ class SmStudentAdmissionController extends Controller
             //end lead convert to student
             $student->save();
 
-            $paren_s = $parent;
-            $childrens = $paren_s->childrens;
-            Session::put('childrens', $childrens);
-
-            generateQRCode('student-'.$student->id);
             // instert into student define leave
             $st_role_id = 2; 
             $school_id = Auth::user()->school_id; 
@@ -862,10 +852,6 @@ class SmStudentAdmissionController extends Controller
 
             $studentBehaviourRecords = (moduleStatusCheck('BehaviourRecords')) ? AssignIncident::where('student_id', $id)->with('incident', 'user', 'academicYear')->get() : null;
             $behaviourRecordSetting = BehaviourRecordSetting::where('id', 1)->first();
-            
-
-            //generate barcode
-           generateQRCode('student-'.$student_detail->id);
 
             if (moduleStatusCheck('University')) {
                 $next_labels = null;
@@ -885,7 +871,6 @@ class SmStudentAdmissionController extends Controller
                 $studentDetails = SmStudent::find($student_id);
                 $studentRecordDetails = StudentRecord::where('student_id', $student_id);
                 $studentRecords = StudentRecord::where('student_id', $student_id)->distinct('un_academic_id')->get();
-                
                 return view('backEnd.studentInformation.student_view', compact('timelines', 'student_detail', 'driver_info', 'exams', 'siblings', 'grades', 'academic_year', 'exam_terms', 'max_gpa', 'fail_gpa_name', 'custom_field_values', 'sessions', 'records', 'next_labels', 'type', 'studentRecordDetails', 'studentDetails', 'studentRecords', 'result_setting', 'assinged_exam_types', 'studentBehaviourRecords', 'behaviourRecordSetting'));
             } else {
                 return view('backEnd.studentInformation.student_view', compact('timelines', 'student_detail', 'driver_info', 'exams', 'siblings', 'grades', 'academic_year', 'exam_terms', 'max_gpa', 'fail_gpa_name', 'custom_field_values', 'sessions', 'records', 'next_labels', 'type', 'result_setting', 'attendance', 'subjectAttendance', 'days', 'year', 'month', 'studentBehaviourRecords', 'behaviourRecordSetting'));
@@ -1423,22 +1408,6 @@ class SmStudentAdmissionController extends Controller
                 $path = $request->file('file');
                 Excel::import(new StudentsImport, $request->file('file'), \Maatwebsite\Excel\Excel::XLSX);
                 $data = StudentBulkTemporary::where('user_id', Auth::user()->id)->get();
-
-                $emailCounts = $data->groupBy('email')->map(function ($rows) {
-                    return $rows->count();
-                });
-                
-                $duplicateEmails = $emailCounts->filter(function ($count) {
-                    return $count > 1;
-                });
-                
-                if ($duplicateEmails->isNotEmpty()) {
-                    foreach ($duplicateEmails as $email => $count) {
-                        toastr()->error('Duplicate email found: ' . $email);
-                    }
-                    StudentBulkTemporary::where('user_id', Auth::user()->id)->delete();
-                    return redirect()->back();
-                }
 
                 $shcool_details = SmGeneralSettings::where('school_id', auth()->user()->school_id)->first();
                 $school_name = explode(' ', $shcool_details->school_name);

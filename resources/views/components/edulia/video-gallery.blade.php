@@ -1,19 +1,3 @@
-<style>
-    .gallery_item_title {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-                line-clamp: 1; 
-        -webkit-box-orient: vertical;
-    }
-    .gallery_item_desc {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 3; 
-                line-clamp: 3; 
-        -webkit-box-orient: vertical;
-    }
-</style>
 <div class="video-gallery">
     <div class="row">
         @if ($videoGalleries->isEmpty() && auth()->check() && auth()->user()->role_id == 1)
@@ -47,8 +31,8 @@
                                     alt="video thumbnail">
                             </div>
                             <div class="gallery_item_inner">
-                                <h4 class="gallery_item_title">{{ mb_strimwidth($videoGallery->name, 0, 50, '...') }}</h4>
-                                <p class="gallery_item_desc">{{ mb_strimwidth($videoGallery->description, 0, 150, '...') }}</p>
+                                <h4>{{ mb_strimwidth($videoGallery->name, 0, 50, '...') }}</h4>
+                                <p>{{ mb_strimwidth($videoGallery->description, 0, 150, '...') }}</p>
                             </div>
                         </a>
                     </div>

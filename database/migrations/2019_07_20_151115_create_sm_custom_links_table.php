@@ -73,10 +73,10 @@ class CreateSmCustomLinksTable extends Migration
         $s->title3 = 'About Our System';
         $s->title4 = 'Resources';
 
-        $s->link_label1 = 'About Infix';
+        $s->link_label1 = 'About infinia ';
         $s->link_href1  = 'http://infixedu.com';
 
-        $s->link_label2 = 'Infix Home';
+        $s->link_label2 = 'infinia  Home';
         $s->link_href2  = 'http://infixedu.com/home';
 
         $s->link_label3 = 'Business';
@@ -124,7 +124,7 @@ class CreateSmCustomLinksTable extends Migration
 
         // $s->facebook_url = 'https://www.facebook.com/SchoolManagementSoftwarePro/';
         // $s->twitter_url  = 'https://twitter.com/infix_official';
-        // $s->dribble_url  = 'https://dribbble.com/codethemes';
+        // $s->dribble_url  = 'https://dribbble.com/infinia ';
         // $s->linkedin_url  = 'https://www.linkedin.com/in/infix-edu-875458190/';
         // $s->behance_url  = '';
         $s->save();

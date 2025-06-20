@@ -22,7 +22,7 @@ return new class extends Migration
             ['name'  => "gradient_1", 'default_value' => "#7c32ff" , 'lawn_green' =>'#03e396', 'is_color'=>1, 'status'=>1],
             ['name'  => "gradient_2", 'default_value' => "#7c32ff" , 'lawn_green' =>'#03e396', 'is_color'=>1, 'status'=>1],
             ['name'  => "gradient_3", 'default_value' => "#7c32ff" , 'lawn_green' =>'#03e396', 'is_color'=>1, 'status'=>1],
-    
+
             ['name'  => "scroll_color", 'default_value' => "#828bb2" , 'lawn_green' =>'#7e7172', 'is_color'=>1, 'status'=>1],
             ['name'  => "text-color", 'default_value' => "#828bb2" , 'lawn_green' =>'#828bb2', 'is_color'=>1, 'status'=>1],
             ['name'  => "text_white", 'default_value' => "#ffffff" , 'lawn_green' =>'#ffffff', 'is_color'=>1, 'status'=>1],
@@ -31,11 +31,11 @@ return new class extends Migration
             ['name'  => "bg_black", 'default_value' => "#000000" , 'lawn_green' =>'#000000', 'is_color'=>1, 'status'=>1],
             ['name'  => "border_color", 'default_value' => "#EFF2F8" , 'lawn_green' =>'#03e396', 'is_color'=>1, 'status'=>1],
             ['name'  => "input_bg", 'default_value' => "#FFFFFF" , 'lawn_green' =>'#ffffff', 'is_color'=>1, 'status'=>0],
-    
+
             ['name'  => "success", 'default_value' => "#4BCF90" , 'lawn_green' =>'#51A351', 'is_color'=>1, 'status'=>1],
             ['name'  => "warning", 'default_value' => "#E09079" , 'lawn_green' =>'#E09079', 'is_color'=>1, 'status'=>1],
             ['name'  => "danger", 'default_value' => "#FF6D68" , 'lawn_green' =>'#FF6D68', 'is_color'=>1, 'status'=>1],
-    
+
             ['name'  => "primary_color", 'default_value' => '#415094' , 'lawn_green' =>'#415094', 'is_color'=>1, 'status'=>0],
             ['name'  => "primary_color2", 'default_value' => '#222222' , 'lawn_green' =>'#222222', 'is_color'=>1, 'status'=>0],
             ['name'  => "title_color", 'default_value' => '#828bb2' , 'lawn_green' =>'#415094', 'is_color'=>1, 'status'=>1],
@@ -50,9 +50,8 @@ return new class extends Migration
             ['name'  => "areachartlinecolor2", 'default_value' => 'rgba(242, 82, 120, 0.5)', 'lawn_green' =>'rgba(242, 82, 120, 0.5)', 'is_color'=>1, 'status'=>0],
             ['name'  => "dashboardbackground", 'default_value' => '#FAFAFA', 'lawn_green' =>'', 'is_color'=>0, 'status'=>0],
             ['name'  => "box_shadow", 'default_value' => 'rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px', 'lawn_green' =>'', 'is_color'=>1, 'status'=>0],
-            
             ['name'  => "primary-color", 'default_value' => '#7c32ff' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
-    
+
             ['name'  => "sidebar-section", 'default_value' => '#636674' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "sidebar-nav-link", 'default_value' => '#9a9cae' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "transparent", 'default_value' => 'transparent' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
@@ -64,7 +63,7 @@ return new class extends Migration
             ['name'  => "modalLink_color", 'default_value' => '#2f2f3be6' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "profile_text_hover", 'default_value' => '#2d3253' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "table_header", 'default_value' => 'rgb(246, 248, 250)' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
-    
+
             ['name'  => "card-gradient-cyan_one", 'default_value' => '#06b6d4' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "card-gradient-cyan_two", 'default_value' => '#22d3ee' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "card-gradient-violet_one", 'default_value' => '#8b5cf6' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
@@ -73,7 +72,7 @@ return new class extends Migration
             ['name'  => "card-gradient-blue_two", 'default_value' => '#60a5fa' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "card-gradient-fuchsia_one", 'default_value' => '#d946ef' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "card-gradient-fuchsia_two", 'default_value' => '#e879f9' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
-    
+
             ['name'  => "card-gradient-cyan_one_hover", 'default_value' => '#06b6d4' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "card-gradient-cyan_two_hover", 'default_value' => '#22d3ee' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "card-gradient-violet_one_hover", 'default_value' => '#8b5cf6' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
@@ -83,30 +82,54 @@ return new class extends Migration
             ['name'  => "card-gradient-fuchsia_one_hover", 'default_value' => '#d946ef' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
             ['name'  => "card-gradient-fuchsia_two_hover", 'default_value' => '#e879f9' , 'lawn_green' =>'', 'is_color'=>1, 'status'=>1],
         ];
-    
-        $existingDatas = DB::table('colors')->pluck('name')->toArray();
-    
+
         foreach ($sql as $color) {
-            if (!in_array($color['name'], $existingDatas)) {
-                $colorId = DB::table('colors')->insertGetId([
-                    'name'          => $color['name'],
+            DB::table('colors')->updateOrInsert(
+                ['name' => $color['name']],
+                [
                     'default_value' => $color['default_value'],
                     'lawn_green'    => $color['lawn_green'],
                     'is_color'      => $color['is_color'],
-                    'status'        => $color['status'],
-                ]);
-    
-                $themes = DB::table('themes')->pluck('id');
-                foreach ($themes as $themeId) {
-                    DB::table('color_theme')->insert([
-                        'color_id'      => $colorId,
-                        'theme_id'      => $themeId,
-                        'value'         => $color['default_value'],
-                        'updated_at'    => now(),
-                    ]);
-                }
+                    'status'        => $color['status']
+                ]
+            );
+        }
+
+        $themes_update = \App\Models\Theme::withOutGlobalScopes()->get();
+        $sql_update = [];
+        foreach($themes_update as $theme){
+            if($theme->title == 'Default') { 
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 30, 'value'  => "#7c32ff"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 31, 'value'  => "#636674"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 32, 'value'  => "#9a9cae"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 33, 'value'  => "transparent"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 34, 'value'  => "#d33333"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 35, 'value'  => "#161931"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 36, 'value'  => "rgb(14, 23, 38)"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 37, 'value'  => "#3b3f5c99"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 38, 'value'  => "#2f2f3be6"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 39, 'value'  => "#2d3253"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 40, 'value'  => "rgb(246, 248, 250)"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 41, 'value'  => "#06b6d4"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 42, 'value'  => "#22d3ee"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 43, 'value'  => "#8b5cf6"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 44, 'value'  => "#a78bfa"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 45, 'value'  => "#3b82f6"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 46, 'value'  => "#60a5fa"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 47, 'value'  => "#d946ef"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 48, 'value'  => "#e879f9"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 49, 'value'  => "#06b6d4"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 50, 'value'  => "#22d3ee"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 51, 'value'  => "#8b5cf6"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 52, 'value'  => "#a78bfa"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 53, 'value'  => "#3b82f6"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 54, 'value'  => "#60a5fa"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 55, 'value'  => "#d946ef"];
+                $sql_update[] = ['theme_id'  => $theme->id, 'color_id' => 56, 'value'  => "#e879f9"];
             }
         }
+
+        DB::table('color_theme')->insert($sql_update);
     }
 
     /**

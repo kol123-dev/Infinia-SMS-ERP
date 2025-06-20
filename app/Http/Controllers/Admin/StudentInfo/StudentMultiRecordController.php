@@ -62,7 +62,8 @@ class StudentMultiRecordController extends Controller
     }
     public function multiRecordStore(Request $request)
     {
-        try {
+        // dd($request->all());
+        // try {
             $class_list = [];
             $section_list = [];
             $default_id = $request->default ? (int)$request->default : null;
@@ -146,11 +147,11 @@ class StudentMultiRecordController extends Controller
                 $message = __('student.Record info updated');
                 return response()->json(['status' => $status, 'message' => $message, 'validation' => $validation]);
             }
-        } catch (\Throwable $th) {
-            $status = false;
-            $message = __('student.Record info updated Failed');
-            return response()->json(['status' => $status, 'message' => $th->getMessage()]);
-        }
+        // } catch (\Throwable $th) {
+        //     $status = false;
+        //     $message = __('student.Record info updated Failed');
+        //     return response()->json(['status' => $status, 'message' => $th->getMessage()]);
+        // }
     }
     public function insertStudentRecord($request, $pre_record = null)
     {
@@ -318,6 +319,7 @@ class StudentMultiRecordController extends Controller
                 }
 
                 if ($model) {
+                    // dump($model);
                     if ($type == 'delete') {
 
                         $model->Delete();

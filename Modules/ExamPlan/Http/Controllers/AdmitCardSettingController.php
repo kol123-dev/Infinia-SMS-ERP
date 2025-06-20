@@ -214,6 +214,7 @@ class AdmitCardSettingController extends Controller
                     ->withErrors($validator)
                     ->withInput();
             }
+            // dd($request->all());
             $exam = SmExamSchedule::query();
             $exam_id = $request->exam_type;
             $class_id = $request->class;
@@ -255,6 +256,8 @@ class AdmitCardSettingController extends Controller
                 }
 
                 $records = $student_records->get();
+
+                // dd($records);
                 
                 return view('examplan::admitCard', compact('records', 'exam_id', 'class_id', 'old_admit_ids'));
             } else {
@@ -465,6 +468,7 @@ class AdmitCardSettingController extends Controller
                         ->where('exam_term_id', $request->exam_type_id)->orderBy('date', 'ASC')->get();
     
                     if ($setting->admit_layout == 2) {
+    
                         return view('examplan::admitcardPrint_2', compact('setting', 'assign_subjects', 'exam_routines', 'admitcards'));
                     } elseif ($setting->admit_layout == 1) {
                         return view('examplan::admitcardPrint', compact('setting', 'assign_subjects', 'exam_routines', 'admitcards'));

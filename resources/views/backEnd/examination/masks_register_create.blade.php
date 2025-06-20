@@ -342,7 +342,6 @@
                         </div>
 
                         {{ Form::open(['class' => 'form-horizontal', 'route' => 'marks_register_store', 'method' => 'POST', 'id' => 'marks_register_store']) }}
-                        @csrf
                         <input type="hidden" name="exam_id" value="{{ $exam_id }}">
                         <input type="hidden" name="class_id" value="{{ $class_id }}">
                         <input type="hidden" name="section_id" value="{{ $section_id }}">

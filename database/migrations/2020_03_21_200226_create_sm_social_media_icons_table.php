@@ -32,22 +32,22 @@ class CreateSmSocialMediaIconsTable extends Migration
 
         DB::table('sm_social_media_icons')->insert([
             [
-                'url' => 'https://www.facebook.com/Spondonit',
+                'url' => 'https://www.facebook.com/infinia ',
                 'icon' => 'fa fa-facebook',
                 'status' => 1,
             ],
             [
-                'url' => 'https://www.facebook.com/Spondonit',
+                'url' => 'https://www.facebook.com/infinia ',
                 'icon' => 'fa fa-twitter',
                 'status' => 1,
             ],
             [
-                'url' => 'https://www.facebook.com/Spondonit',
+                'url' => 'https://www.facebook.com/infinia ',
                 'icon' => 'fa fa-dribbble',
                 'status' => 1,
             ],
             [
-                'url' => 'https://www.facebook.com/Spondonit',
+                'url' => 'https://www.facebook.com/infinia ',
                 'icon' => 'fa fa-linkedin',
                 'status' => 1,
             ],

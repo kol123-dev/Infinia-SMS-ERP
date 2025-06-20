@@ -1207,15 +1207,6 @@ table.dataTable.dtr-inline.collapsed {
 
 
 // RTL
-@media (max-width: 420px) {
-    html[dir="rtl"] .Menu_NOtification_Wrap.active {
-        max-width: 300px;
-        transform: translateY(16px) translateX(-50%) !important;
-        position: fixed;
-        left: 50%;
-    }
-}
-
 html[dir="rtl"]{
 	.footer-area.new-footer{
 		margin-left: 0;

@@ -89,20 +89,17 @@ class SmFeesAssign extends Model
         }
     }
 
-    public static function feesPayment($type_id, $student_id, $record_id)
-    {
+    public static function feesPayment($type_id, $student_id, $record_id){
         try {
-            $payments = SmFeesPayment::where('active_status', 1)
-                ->where('fees_type_id', $type_id)
-                ->where('student_id', $student_id)
-                ->where(function ($query) use ($record_id) {
-                    $query->where('record_id', $record_id)
-                          ->orWhereNull('record_id');
-                })
-                ->get();
+            $payments = SmFeesPayment::where('active_status',1)
+                        ->where('fees_type_id', $type_id)
+                        ->where('student_id', $student_id)
+                        ->where('record_id', $record_id)
+                        ->get();
             return $payments;
         } catch (\Exception $e) {
-            return [];
+            $data=[];
+            return $data;
         }
     }
     public static function studentFeesTypeDiscount($group_id, $student_id,$discount_amount,$record_id){

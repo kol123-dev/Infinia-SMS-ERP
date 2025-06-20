@@ -14892,7 +14892,3 @@ section.sms-breadcrumb .row {
 .gap-2{
     gap: 16px;
 }
-
-#sidebar_menu>li:last-child {
-    padding-bottom: 50px;
-}

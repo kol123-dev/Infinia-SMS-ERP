@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Scopes\StatusAcademicSchoolScope;
-use App\SmSubject;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -165,16 +164,16 @@ class ApiSmExamController extends Controller
             $data = [];
             $student_id = SmStudent::where('user_id', $user_id)->value('id');
             $record = StudentRecord::where('student_id', $student_id)->where('id', $record_id)->first();
-            $exam = \App\SmExamType::withOutGlobalScopes()->find($exam_id);
-            
+            $exam = \App\SmExamType::find($exam_id);
             $get_results = \App\SmStudent::getExamResult(@$exam->id, @$record);
+            $result = [];
 
             if($get_results){
                 foreach($get_results as $mark){
                     $result[] =  [
                     'id' => $mark->id,
                     'exam_name' => @$exam->title,
-                    'subject_name' => SmSubject::withOutGlobalScopes()->where('id', @$mark->subject_id)->first()->subject_name,
+                    'subject_name' => @$mark->subject->subject_name,
                     'obtained_marks' => @$mark->total_marks,
                     'total_marks' => @subjectFullMark($mark->exam_type_id, $mark->subject_id, $record->class_id, $record->section_id),
                     'grade' => @$mark->total_gpa_grade,
@@ -550,34 +549,15 @@ class ApiSmExamController extends Controller
                 ->where('sm_student_take_online_exams.school_id', $school_id)->get();
             $gradeArray = [];
             foreach ($exam_result as $row) {
-                $online_exam_question = SmOnlineExam::withOutGlobalScopes()->find($exam_id);
-                
-                $total_marks = 0;
-                foreach ($online_exam_question->assignQuestions as $assignQuestion) {
-                    $total_marks = $total_marks + $assignQuestion->questionBank->marks;
-                }
-                
-                $obtained_marks = SmOnlineExam::obtainedMarks($online_exam_question->id, $record_id);
-                
 
                 $mark = floor($row->obtained_marks);
-
-                $show_result =  "";
-                $result = $obtained_marks->total_marks * 100 / $total_marks;
-                
-                if ($result >= $online_exam_question->percentage) {
-                    $show_result = "Pass";
-                } else {
-                    $show_result = "Fail";
-                }
-
                 $grades = DB::table('sm_marks_grades')
                     ->where('percent_from', '<=', $mark)
                     ->where('percent_upto', '>=', $mark)
                     ->select('grade_name')
                     ->where('school_id', $school_id)->first();
                 $gradeArray[] = array(
-                    "grade" => $show_result,
+                    "grade" => $grades->grade_name,
                     "exam_id" => $row->exam_id,
                     "total_marks" => $row->total_marks,
                     "subject_name" => $row->subject_name,

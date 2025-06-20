@@ -446,6 +446,7 @@ class SmStudentAdmissionController extends Controller
 
     public function studentStore(Request $request)
     {
+        #dd($request->all());
         // custom field validation start
         $validator = Validator::make($request->all(), $this->generateValidateRules("student_registration"));
         if ($validator->fails()) {
@@ -2524,6 +2525,7 @@ class SmStudentAdmissionController extends Controller
             } else {
                 $student_detail = SmStudent::withOutGlobalScope(StatusAcademicSchoolScope::class)->where('id', $request->id)->where('school_id', Auth::user()->school_id)->first();
             }
+            // dd($student_detail->studentRecord->class_id, $student_detail->studentRecord->section_id);
 
             $student_detail->active_status = 1;
 

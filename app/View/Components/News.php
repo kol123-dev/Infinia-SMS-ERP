@@ -26,7 +26,7 @@ class News extends Component
     public function render(): View|Closure|string
     {
         $news = SmNews::query();
-        $news->where('school_id', app('school')->id)->where('status', 1)->where('mark_as_archive',0);
+        $news->where('school_id', app('school')->id)->where('status', 1);
 
         if($this->sorting =='asc'){
             $news->orderBy('id','asc');

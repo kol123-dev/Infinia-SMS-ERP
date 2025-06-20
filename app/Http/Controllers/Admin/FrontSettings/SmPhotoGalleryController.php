@@ -14,7 +14,7 @@ class SmPhotoGalleryController extends Controller
     public function index()
     {
         try {
-            $photoGalleries = SmPhotoGallery::where('parent_id', '=', null)->where('school_id', app('school')->id)->orderBy('position', 'asc')->get();
+            $photoGalleries = SmPhotoGallery::where('parent_id', '=', null)->where('school_id', app('school')->id)->orderBy('position', 'desc')->get();
             return view('backEnd.frontSettings.photo_gallery.photo_gallery', compact('photoGalleries'));
         } catch (\Exception $e) {
             Toastr::error('Operation Failed', 'Failed');

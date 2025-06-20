@@ -349,7 +349,123 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            {{-- @if (isset($uploadContents))
+                                                @foreach ($uploadContents as $key => $value)
+                                                    <tr>
+                                                        <td>{{$key+1}}</td>
+                                                        <td>{{@$value->content_title}}</td>
+                                                        <td>
+                                                            @if (@$value->content_type == 'as')
+                                                                @lang('study.assignment')
+                                                            @elseif(@$value->content_type == 'st')
+                                                                @lang('study.study_material')
+                                                            @elseif(@$value->content_type == 'sy')
+                                                                @lang('study.syllabus')
+                                                            @else
+                                                                @lang('study.other_download')
+                                                            @endif
+                                                        </td>
+                                                        <td  data-sort="{{strtotime(@$value->upload_date)}}" >
+                                                            {{@$value->upload_date != ""? dateConvert(@$value->upload_date):''}} 
+                                                        </td>
+                                                        <td>
+                                                            @if (moduleStatusCheck('University'))
+                                                                @if (@$value->available_for_admin == 1)
+                                                                    @lang('study.all_admins')
+                                                                @else
+                                                                    @lang('study.all_students_of') {{ @$value->semesterLabel->name  . '(' . @$value->undepartment->name . ')' }}
+                                                                @endif
+                                                            @else 
+                                                                @if (@$value->available_for_admin == 1)
+                                                                    @lang('study.all_admins')<br>
+                                                                @endif
+                                                                @if (@$value->available_for_all_classes == 1)
+                                                                    @lang('study.all_classes_student')
+                                                                @endif
+                                                                @if (@$value->classes != '' && $value->sections != '')
+                                                                    @lang('study.all_students_of') ({{@$value->classes->class_name.'->'.@$value->sections->section_name}})
+                                                                @endif
+                                                                @if (@$value->classes != '' && $value->section == null)
+                                                                    @lang('study.all_students_of') ({{@$value->classes->class_name.'->'}} @lang('study.all_sections'))
+                                                                @endif
+                                                            @endif 
+                                                        </td>
+                                                        <td>
+                                                            @if (moduleStatusCheck('University'))
+                                                                @if (!@$value->available_for_admin == 1)
+                                                                    {{ $value->semesterLabel->name }} -({{@$value->unAcademic->name}})
+                                                                @endif
+                                                            @else 
+                                                                @if (@$value->classes != '')
+                                                                    {{@$value->classes->class_name}}
+                                                                @endif
+                                                                @if ($value->sections != '')
+                                                                    ({{@$value->sections->section_name}})
+                                                                @endif
+                                                                @if ($value->section == null)
+                                                                    ( @lang('study.all_sections') )
+                                                                @endif
+                                                            @endif
+                                                        </td>
+                                                        @if (moduleStatusCheck('University'))
+                                                            <td>{{@$value->unSection->section_name}}</td>
+                                                        @endif
+                                                        <td>
+                                                            
+                                                            @php
+                                                            $routeList = [
+    
+                                                                '<a data-modal-size="modal-lg" title="'. __('study.view_content_details').'" class="dropdown-item modalLink" href="'.route('upload-content-view', $value->id).'">'.__('common.view').'</a>',
+                                                                    moduleStatusCheck('VideoWatch')== TRUE ?
+                                                                        '<a class="dropdown-item" href="'.url('videowatch/view-log/'.$value->id).'">'.__('study.seen').'</a>' : null,
+                                                                    
+                                                                    userPermission("upload-content-edit") ? 
+                                                                        '<a class="dropdown-item" href="'.route('upload-content-edit',$value->id).'">'.__('common.edit').'</a>':null,
+    
+                                                                    userPermission("delete-upload-content") ?
+                                                                        '<a class="dropdown-item" data-toggle="modal" data-target="#deleteApplyLeaveModal'.$value->id.'" href="#">'.__('common.delete').'</a>':null,
+    
+                                                                    userPermission("download-content-document") && $value->upload_file != "" ?
+                                                                            '<a class="dropdown-item" href="'.url($value->upload_file).'" download>
+                                                                                '.__('common.download').' 
+                                                                                <span class="pl ti-download"></span></a>'
+                                                                        :null
+                                                            ]
+                                                        @endphp
+                                                            <x-drop-down-action-component :routeList="$routeList" />
+                                                        </td>
+                                                    </tr>
+                                                    <div class="modal fade admin-query" id="deleteApplyLeaveModal{{@$value->id}}">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">@lang('study.delete_upload_content')</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal">
+                                                                        &times;
+                                                                    </button>
+                                                                </div>
+    
+                                                                <div class="modal-body">
+                                                                    <div class="text-center">
+                                                                        <h4>@lang('common.are_you_sure_to_delete')</h4>
+                                                                    </div>
+    
+                                                                    <div class="mt-40 d-flex justify-content-between">
+                                                                        <button type="button" class="primary-btn tr-bg"
+                                                                                data-dismiss="modal">@lang('common.cancel')</button>
+                                                                                {{ Form::open(['route' =>'delete-upload-content', 'method' => 'POST']) }}
+                                                                                    <input type="hidden" name="id" value="{{@$value->id}}">
+                                                                                    <button class="primary-btn fix-gr-bg" type="submit">@lang('common.delete')</button>
+                                                                                {{ Form::close() }}
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+    
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif --}}
                                         </tbody>
                                     </table>
                                 </x-table>

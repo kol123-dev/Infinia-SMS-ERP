@@ -2,15 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class SmStaffAttendence extends Model
 {
     use HasFactory;
     protected $table = "sm_staff_attendences";
-
-    protected $guarded = [];
 
     public function StaffInfo()
     {

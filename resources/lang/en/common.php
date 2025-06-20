@@ -280,8 +280,8 @@
     "select_package" => "Select Package",
     "purchase_date" => "Purchase Date",
     "expaire_date" => "Expaire Date",
-    "infix_edu" => "Infix Edu",
-    "infix_clasified" => "Infix Classified",
+    "infix_edu" => "infinia Edu",
+    "infix_clasified" => "infinia Classified",
     "date_|_day" => "Date | Day",
     "purchase_list" => "Purchase List",
     "welcome_to" => "Welcome To",
@@ -664,6 +664,5 @@
     'enable_all' => 'Enable All',
     'disable_all' => 'Disable All',
     'role_based_sidebar' => 'Role Based Sidebar',
-    'mark_as_archive' => 'Mark As Archive',
     ]
 ?>

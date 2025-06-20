@@ -28,19 +28,19 @@ return new class extends Migration
             [
                 'name' => "Science Fair",
                 'description' => "A showcase of student experiments and scientific discoveries",
-                'video_link' => "https://www.youtube.com/watch?v=4zR-uaZjZ2U",
+                'video_link' => "https://www.youtube.com",
                 'position' => 1,
             ],
             [
                 'name' => "Cultural Carnival",
                 'description' => "A lively celebration of diverse traditions, arts, and festivities.",
-                'video_link' => "https://www.youtube.com/watch?v=k61cLi1_Zd0&ab_channel=Infixdev",
+                'video_link' => "https://www.youtube.com/watch",
                 'position' => 2,
             ],
             [
                 'name' => "Student Leadership Summit",
                 'description' => "Empowering future leaders through collaboration and inspiration.",
-                'video_link' => "https://www.youtube.com/watch?v=4zR-uaZjZ2U&ab_channel=Infixdev",
+                'video_link' => "https://www.youtube.com/watch",
                 'position' => 3,
             ],
         ]);

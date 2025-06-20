@@ -78,7 +78,7 @@ http://localhost/infixedu/lms-design -->
                                     </div>
                                     <div class="video_palyer_lHEad d-flex align-items-center position-relative">
                                         <span class="lisson_arrow">
-                                            <i class="ti-book"></i>
+                                            <i class="ti-arrow-left"></i>
                                         </span>
                                         <h4 class="m-0">05 Leasson</h4>
                                     </div>

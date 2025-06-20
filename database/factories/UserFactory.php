@@ -30,8 +30,8 @@ class UserFactory extends Factory
 
         return [
             'full_name'         => $this->faker->firstNameMale ?? $this->faker->firstNameFemale,
-            'email'             => 'user_'.$userIndex.'@infixedu.com',
-            'username'          => 'user_'.$userIndex.'@infixedu.com',
+            'email'             => 'user_'.$userIndex.'@infinia.com',
+            'username'          => 'user_'.$userIndex.'@infinia.com',
             'role_id'           => $this->faker->numberBetween(4, 9),
             'is_administrator'  => 'no',
             'password'          => Hash::make('123456'),

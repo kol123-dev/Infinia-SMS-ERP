@@ -95,148 +95,148 @@ class CreateSmStylesTable extends Migration
         $s->save();
 
 
-        // $s = new  SmStyle();
-        // $s->style_name = 'Sky Blue';
-        // $s->path_main_style = 'blue_version/style.css';
-        // $s->path_infix_style = 'blue_version/infix.css';
-        // $s->primary_color = '#415094';
-        // $s->primary_color2 = '#2c7be5';
-        // $s->title_color = '#222222';
-        // $s->text_color = '#828bb2';
-        // $s->white = '#ffffff';
-        // $s->black = '#000000';
-        // $s->sidebar_bg = '#e7ecff';
+        $s = new  SmStyle();
+        $s->style_name = 'Sky Blue';
+        $s->path_main_style = 'blue_version/style.css';
+        $s->path_infix_style = 'blue_version/infix.css';
+        $s->primary_color = '#415094';
+        $s->primary_color2 = '#2c7be5';
+        $s->title_color = '#222222';
+        $s->text_color = '#828bb2';
+        $s->white = '#ffffff';
+        $s->black = '#000000';
+        $s->sidebar_bg = '#e7ecff';
 
-        // $s->barchart1 = '#8a33f8';
-        // $s->barchart2 = '#f25278';
+        $s->barchart1 = '#8a33f8';
+        $s->barchart2 = '#f25278';
 
-        // $s->barcharttextcolor = '#415094';
-        // $s->barcharttextfamily = 'HKGroteskRegular';
+        $s->barcharttextcolor = '#415094';
+        $s->barcharttextfamily = 'HKGroteskRegular';
 
-        // $s->areachartlinecolor1 = 'rgba(124, 50, 255, 0.5)';
-        // $s->areachartlinecolor2 = 'rgba(242, 82, 120, 0.5)';
-        // $s->dashboardbackground = '#e7ecff';
-        // $s->save();
-
-
+        $s->areachartlinecolor1 = 'rgba(124, 50, 255, 0.5)';
+        $s->areachartlinecolor2 = 'rgba(242, 82, 120, 0.5)';
+        $s->dashboardbackground = '#e7ecff';
+        $s->save();
 
 
-        //            Orange Color Theme
-        // $s = new  SmStyle();
-        // $s->style_name = 'Orange';
-        // $s->path_main_style = 'orange_version/style.css';
-        // $s->path_infix_style = 'orange_version/infix.css';
-        // $s->primary_color = '#415094';
-        // $s->primary_color2 = '#f2662f';
-        // $s->title_color = '#222222';
-        // $s->text_color = '#828bb2';
-        // $s->white = '#ffffff';
-        // $s->black = '#000000';
-        // $s->sidebar_bg = '#e7ecff';
-
-        // $s->barchart1 = '#415094';
-        // $s->barchart2 = '#f2662f';
-
-        // $s->barcharttextcolor = '#f2662f';
-        // $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
-
-        // $s->areachartlinecolor1 = '#415094';
-        // $s->areachartlinecolor2 = '#f25278';
-        // $s->dashboardbackground = '#e7ecff';
-        // $s->save();
-
-        // $s = new  SmStyle();
-        // $s->style_name = 'Paste';
-        // $s->path_main_style = 'paste_version/style.css';
-        // $s->path_infix_style = 'paste_version/infix.css';
-        // $s->primary_color = '#415094';
-        // $s->primary_color2 = '#05dce9';
-        // $s->title_color = '#222222';
-        // $s->text_color = '#828bb2';
-        // $s->white = '#ffffff';
-        // $s->black = '#000000';
-        // $s->sidebar_bg = '#e7ecff';
-
-        // $s->barchart1 = '#415094';
-        // $s->barchart2 = '#05dce9';
-
-        // $s->barcharttextcolor = '#05dce9';
-        // $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
-
-        // $s->areachartlinecolor1 = '#415094';
-        // $s->areachartlinecolor2 = '#05dce9';
-        // $s->dashboardbackground = '#e7ecff';
-        // $s->save();
-
-        // $s = new  SmStyle();
-        // $s->style_name = 'Dark Blue';
-        // $s->path_main_style = 'darkblue_version/style.css';
-        // $s->path_infix_style = 'darkblue_version/infix.css';
-        // $s->primary_color = '#415094';
-        // $s->primary_color2 = '#4046f4';
-        // $s->title_color = '#222222';
-        // $s->text_color = '#828bb2';
-        // $s->white = '#ffffff';
-        // $s->black = '#000000';
-        // $s->sidebar_bg = '#e7ecff';
-
-        // $s->barchart1 = '#415094';
-        // $s->barchart2 = '#4046f4';
-
-        // $s->barcharttextcolor = '#4046f4';
-        // $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
-
-        // $s->areachartlinecolor1 = '#415094';
-        // $s->areachartlinecolor2 = '#4046f4';
-        // $s->dashboardbackground = '#e7ecff';
-        // $s->save();
-
-        // $s = new  SmStyle();
-        // $s->style_name = 'Pink';
-        // $s->path_main_style = 'pink_version/style.css';
-        // $s->path_infix_style = 'pink_version/infix.css';
-        // $s->primary_color = '#415094';
-        // $s->primary_color2 = '#ff1e6d';
-        // $s->title_color = '#222222';
-        // $s->text_color = '#828bb2';
-        // $s->white = '#ffffff';
-        // $s->black = '#000000';
-        // $s->sidebar_bg = '#e7ecff';
-
-        // $s->barchart1 = '#415094';
-        // $s->barchart2 = '#ff1e6d';
-
-        // $s->barcharttextcolor = '#ff1e6d';
-        // $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
-
-        // $s->areachartlinecolor1 = '#415094';
-        // $s->areachartlinecolor2 = '#ff1e6d';
-        // $s->dashboardbackground = '#e7ecff';
-        // $s->save();
 
 
-        // $s = new  SmStyle();
-        // $s->style_name = 'Dark';
-        // $s->path_main_style = 'dark_version/style.css';
-        // $s->path_infix_style = 'dark_version/infix.css';
-        // $s->primary_color = '#000';
-        // $s->primary_color2 = '#000';
-        // $s->title_color = '#222222';
-        // $s->text_color = '#000';
-        // $s->white = '#ffffff';
-        // $s->black = '#000000';
-        // $s->sidebar_bg = '#dcdcdf';
+             //      Orange Color Theme
+        $s = new  SmStyle();
+        $s->style_name = 'Orange';
+        $s->path_main_style = 'orange_version/style.css';
+        $s->path_infix_style = 'orange_version/infix.css';
+        $s->primary_color = '#415094';
+        $s->primary_color2 = '#f2662f';
+        $s->title_color = '#222222';
+        $s->text_color = '#828bb2';
+        $s->white = '#ffffff';
+        $s->black = '#000000';
+        $s->sidebar_bg = '#e7ecff';
 
-        // $s->barchart1 = '#000';
-        // $s->barchart2 = '#000';
+        $s->barchart1 = '#415094';
+        $s->barchart2 = '#f2662f';
 
-        // $s->barcharttextcolor = '#000';
-        // $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
+        $s->barcharttextcolor = '#f2662f';
+        $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
 
-        // $s->areachartlinecolor1 = '#000';
-        // $s->areachartlinecolor2 = '#222';
-        // $s->dashboardbackground = '#e7ecff';
-        // $s->save();
+        $s->areachartlinecolor1 = '#415094';
+        $s->areachartlinecolor2 = '#f25278';
+        $s->dashboardbackground = '#e7ecff';
+        $s->save();
+
+        $s = new  SmStyle();
+        $s->style_name = 'Paste';
+        $s->path_main_style = 'paste_version/style.css';
+        $s->path_infix_style = 'paste_version/infix.css';
+        $s->primary_color = '#415094';
+        $s->primary_color2 = '#05dce9';
+        $s->title_color = '#222222';
+        $s->text_color = '#828bb2';
+        $s->white = '#ffffff';
+        $s->black = '#000000';
+        $s->sidebar_bg = '#e7ecff';
+
+        $s->barchart1 = '#415094';
+        $s->barchart2 = '#05dce9';
+
+        $s->barcharttextcolor = '#05dce9';
+        $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
+
+        $s->areachartlinecolor1 = '#415094';
+        $s->areachartlinecolor2 = '#05dce9';
+        $s->dashboardbackground = '#e7ecff';
+        $s->save();
+
+        $s = new  SmStyle();
+        $s->style_name = 'Dark Blue';
+        $s->path_main_style = 'darkblue_version/style.css';
+        $s->path_infix_style = 'darkblue_version/infix.css';
+        $s->primary_color = '#415094';
+        $s->primary_color2 = '#4046f4';
+        $s->title_color = '#222222';
+        $s->text_color = '#828bb2';
+        $s->white = '#ffffff';
+        $s->black = '#000000';
+        $s->sidebar_bg = '#e7ecff';
+
+        $s->barchart1 = '#415094';
+        $s->barchart2 = '#4046f4';
+
+        $s->barcharttextcolor = '#4046f4';
+        $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
+
+        $s->areachartlinecolor1 = '#415094';
+        $s->areachartlinecolor2 = '#4046f4';
+        $s->dashboardbackground = '#e7ecff';
+        $s->save();
+
+        $s = new  SmStyle();
+        $s->style_name = 'Pink';
+        $s->path_main_style = 'pink_version/style.css';
+        $s->path_infix_style = 'pink_version/infix.css';
+        $s->primary_color = '#415094';
+        $s->primary_color2 = '#ff1e6d';
+        $s->title_color = '#222222';
+        $s->text_color = '#828bb2';
+        $s->white = '#ffffff';
+        $s->black = '#000000';
+        $s->sidebar_bg = '#e7ecff';
+
+        $s->barchart1 = '#415094';
+        $s->barchart2 = '#ff1e6d';
+
+        $s->barcharttextcolor = '#ff1e6d';
+        $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
+
+        $s->areachartlinecolor1 = '#415094';
+        $s->areachartlinecolor2 = '#ff1e6d';
+        $s->dashboardbackground = '#e7ecff';
+        $s->save();
+
+
+        $s = new  SmStyle();
+        $s->style_name = 'Dark';
+        $s->path_main_style = 'dark_version/style.css';
+        $s->path_infix_style = 'dark_version/infix.css';
+        $s->primary_color = '#000';
+        $s->primary_color2 = '#000';
+        $s->title_color = '#222222';
+        $s->text_color = '#000';
+        $s->white = '#ffffff';
+        $s->black = '#000000';
+        $s->sidebar_bg = '#dcdcdf';
+
+        $s->barchart1 = '#000';
+        $s->barchart2 = '#000';
+
+        $s->barcharttextcolor = '#000';
+        $s->barcharttextfamily = '"Cerebri Sans", Helvetica, Arial, sans-serif';
+
+        $s->areachartlinecolor1 = '#000';
+        $s->areachartlinecolor2 = '#222';
+        $s->dashboardbackground = '#e7ecff';
+        $s->save();
     }
 
     /**

@@ -401,34 +401,11 @@ class StudentRecord extends Model
 
     public function getStudentCoursesAttribute()
     {
-        // return Course::where(function ($q) {
-        //     return $q->where('class_id', $this->class_id)->orWhere('class_id', null)->orWhere('class_id', 0);
-        // })->where(function ($q) {
-        //     return $q->where('section_id', $this->section_id)->orWhere('section_id', null);
-        // })->withCount('chapters', 'lessons')->where('active_status', 1)->where('publish', 1)->get();
-
         return Course::where(function ($q) {
-            return $q->where('courses.class_id', $this->class_id)
-                     ->orWhere('courses.class_id', null)
-                     ->orWhere('courses.class_id', 0);
-        })
-        ->where(function ($q) {
-            return $q->where('courses.section_id', $this->section_id)
-                     ->orWhere('courses.section_id', null);
-        })
-        ->where('courses.active_status', 1)
-        ->where('courses.publish', 1)
-        ->with(['category', 'subCategory'])
-        ->withCount(['chapters', 'lessons'])
-        ->leftJoin('course_categories as parent', 'courses.category_id', '=', 'parent.id')
-        ->leftJoin('course_categories as child', 'courses.sub_category_id', '=', 'child.id')
-        ->orderByRaw("
-            COALESCE(parent.position_order, 9999),
-            COALESCE(child.position_order, 9999),
-            courses.id
-        ")
-        ->select('courses.*')
-        ->get();
+            return $q->where('class_id', $this->class_id)->orWhere('class_id', null);
+        })->where(function ($q) {
+            return $q->where('section_id', $this->section_id)->orWhere('section_id', null);
+        })->withCount('chapters', 'lessons')->where('active_status', 1)->where('publish', 1)->get();
     }
     public function feesInvoice()
     {

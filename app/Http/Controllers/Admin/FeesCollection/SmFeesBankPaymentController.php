@@ -236,19 +236,15 @@ class SmFeesBankPaymentController extends Controller
                 ->where('sm_fees_masters.fees_type_id',$bank_payment->fees_type_id)
                 ->where('sm_fees_assigns.student_id',$bank_payment->student_id)->first();
     
-                $fees_assign = SmFeesAssign::where('fees_master_id', $get_master_id->fees_master_id)
-                    ->where('student_id', $bank_payment->student_id)
-                    ->where('school_id', Auth::user()->school_id)
-                    // ->where(function ($query) use ($bank_payment) {
-                    //     $query->where('record_id', $bank_payment->record_id)
-                    //         ->orWhereNull('record_id');
-                    // })
-                    ->first();
-            
-                if ($bank_payment->amount > $fees_assign->fees_amount) {
-                    Toastr::warning('Due amount less than bank payment', 'Warning');
-                    return redirect()->back();
-                }
+                $fees_assign=SmFeesAssign::where('fees_master_id',$get_master_id->fees_master_id)
+                            ->where('record_id',$bank_payment->record_id)
+                            ->where('student_id',$bank_payment->student_id)
+                            ->where('school_id',Auth::user()->school_id)
+                            ->first();
+                            if ($bank_payment->amount > $fees_assign->fees_amount) {
+                                Toastr::warning('Due amount less than bank payment', 'Warning');
+                                return redirect()->back();
+                            }
             }
 
             $user = Auth::user();

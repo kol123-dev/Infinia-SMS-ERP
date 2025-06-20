@@ -5,8 +5,6 @@ namespace Database\Seeders\OnlineExam;
 use App\SmOnlineExam;
 use App\SmAssignSubject;
 use Faker\Factory as Faker;
-use Carbon\Carbon;
-
 use Illuminate\Database\Seeder;
 
 class SmOnlineExamTableSeeder extends Seeder
@@ -29,10 +27,8 @@ class SmOnlineExamTableSeeder extends Seeder
             $store->section_id = $question_detail->section_id;
             $store->title = $faker->realText($maxNbChars = 30, $indexSize = 1);
             $store->date = date('Y-m-d');
-            // $store->start_time = '10:00 AM';
-            // $store->end_time = '11:00 AM';
-            $store->start_time = Carbon::now()->setTimezone('Asia/Dhaka')->format('h:i A');
-            $store->end_time = Carbon::now()->setTimezone('Asia/Dhaka')->addHours(3)->format('h:i A');
+            $store->start_time = '10:00 AM';
+            $store->end_time = '11:00 AM';
             $store->end_date_time = date('Y-m-d') . " 11:00 AM";
             $store->percentage = 50;
             $store->instruction = $faker->realText($maxNbChars = 100, $indexSize = 1);

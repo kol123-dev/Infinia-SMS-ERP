@@ -9,7 +9,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Modules\University\Console\PaymentReminder;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\QrcodeAttendnceAbsenseCommand;
+
 class Kernel extends ConsoleKernel
 {
     public function __construct(Application $app, Dispatcher $events)
@@ -31,8 +31,7 @@ class Kernel extends ConsoleKernel
      */
 
     protected $commands = [
-        Commands\DemoCron::class,
-        QrcodeAttendnceAbsenseCommand::class,
+        Commands\DemoCron::class
     ];
 
 
@@ -65,10 +64,6 @@ class Kernel extends ConsoleKernel
             if (moduleStatusCheck("University") == true) {
                 $schedule->command('payment:reminder')->everyTenMinutes()->withoutOverlapping();
             }
-            if (moduleStatusCheck("QRCodeAttendance") == true) {
-                $schedule->command('qrcode:attendance')->everyOddHour()->withoutOverlapping();
-            }
-           
         }
     }
 

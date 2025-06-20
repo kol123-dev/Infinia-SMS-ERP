@@ -104,6 +104,7 @@ class CreateDirectFeesSettingsTable extends Migration
                 }
             }
         } catch (\Throwable $th) {
+            dd($th);
         }
     }
 }

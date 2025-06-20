@@ -177,7 +177,7 @@ $css = 'background:' . $login_background->color;
 					<p>{!! $setting->copyright_text !!}</p> 
 					</p>
 					@else
-					<p>Copyright © {{date('Y')}} All rights reserved | This application is made with <span class="ti-heart"></span>  by Codethemes</p> 
+					<p>Copyright © {{date('Y')}} All rights reserved | This application is made with <span class="ti-heart"></span>  by infinia </p> 
 					</p>
 					@endif
 				</div>

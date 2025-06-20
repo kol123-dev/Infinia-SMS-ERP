@@ -3,7 +3,7 @@
         @foreach ($menus as $menu)
             @if (count($menu->childs) > 0)
                 <li class="heading_main_menu_list">
-                    <a href="" class="heading_main_menu_list_link">
+                    <a href="index.php" class="heading_main_menu_list_link">
                         {{ $menu->title }}
                     </a>
                     <ul class="heading_main_menu_list_dropdown">

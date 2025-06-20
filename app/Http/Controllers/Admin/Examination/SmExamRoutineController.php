@@ -441,6 +441,7 @@ class SmExamRoutineController extends Controller
     }
     function universityExamRoutineReportSearch($request)
     {
+        // dd($request->all());
         $request->validate([
             'exam' => 'required',
             'un_semester_label_id' => 'required',

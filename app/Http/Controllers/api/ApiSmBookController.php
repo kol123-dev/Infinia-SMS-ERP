@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Scopes\ActiveStatusSchoolScope;
-use Exception;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ApiSmBookController extends Controller
@@ -46,44 +44,31 @@ class ApiSmBookController extends Controller
             return ApiBaseMethod::sendError('Error.', $e->getMessage());
         }
     }
-
     public function saas_Library_index(Request $request, $school_id)
     {
+
         try {
-            $books = SmBook::withoutGlobalScope(ActiveStatusSchoolScope::class)
-                ->where('school_id', $school_id)
-                ->get()
-                ->map(function ($book) {
-                    return [
-                        'id'                => $book->id,
-                        'book_title'        => $book->book_title,
-                        'book_number'       => $book->book_number,
-                        'isbn_no'           => $book->isbn_no,
-                        'category_name'     => optional($book->bookCategoryApi)->category_name,
-                        'publisher_name'    => $book->publisher_name,
-                        'author_name'       => $book->author_name,
-                        'quantity'          => $book->quantity,
-                        'book_price'        => $book->book_price,
-                        'subject_name'      => optional($book->bookSubjectApi)->subject_name,
-                        'rack_number'       => $book->rack_number,
-                    ];
-                });
-    
-            if ($books->isEmpty()) {
-                return ApiBaseMethod::sendResponse([], 'No books found.');
-            }
-    
-            return ApiBaseMethod::sendResponse($books, 'Books retrieved successfully.');
-        } catch (Exception $e) {
-            Log::error('Error in saas_Library_index: ' . $e->getMessage());
-    
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong, please try again.'
-            ], 500);
+
+            $books = SmBook::withOutGlobalScope(ActiveStatusSchoolScope::class)->where('school_id', $school_id)->get()->map(function ($q) {
+                return ([
+                    'id'=>$q->id,
+                    'book_title'=>$q->book_title,
+                    'book_number'=>$q->book_number,
+                    'isbn_no'=>$q->isbn_no,
+                    'category_name'=>$q->bookCategoryApi->category_name,
+                    'publisher_name'=>$q->publisher_name,
+                    'author_name'=>$q->author_name,
+                    'quantity'=>$q->quantity,
+                    'book_price'=>$q->book_price,
+                    'subject_name'=>$q->bookSubjectApi->subject_name
+                ]);
+            });
+            return ApiBaseMethod::sendResponse($books, null);
+
+        } catch (\Exception $e) {
+            return ApiBaseMethod::sendError('Error.', $e->getMessage());
         }
     }
-
     public function saveBookData(Request $request)
     {
         $input = $request->all();

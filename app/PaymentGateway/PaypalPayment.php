@@ -191,7 +191,7 @@ class PaypalPayment{
                     
                     Session::put('success', 'Payment success');
                     Toastr::success('Operation successful', 'Success');
-                    return redirect()->to(url('fees/student-fees-payment',$transcation->fees_invoice_id));
+                    return redirect()->to(url('fees/student-fees-list',$transcation->student_id));
                 }
                 elseif(Session::get('payment_type') == "Lms"){
                     
@@ -412,7 +412,7 @@ class PaypalPayment{
         } elseif (Session::get('payment_type') == "Fees") {
             $transaction = FmFeesTransaction::find(Session::get('fees_payment_id'));
             if ($transaction) {
-                return redirect()->to(url('fees/student-fees-payment', $transaction->fees_invoice_id));
+                return redirect()->to(url('fees/student-fees-list', $transaction->student_id));
             } else {
                 return redirect()->route('admin-dashboard');
             }

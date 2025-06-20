@@ -38,7 +38,7 @@
                                         </tr>
                                         <tr>
                                             <td>@lang('system_settings.check_update')</td>
-                                            <td><a href="https://codecanyon.net/user/codethemes/portfolio" target="_blank"> <i class="ti-new-window"> </i> Update </a> </td>
+                                            <td><a href="https://codecanyon.net/user/infinia /portfolio" target="_blank"> <i class="ti-new-window"> </i> Update </a> </td>
                                         </tr> 
                                         <tr>
                                             <td> @lang('system_settings.PHP_version')</td>

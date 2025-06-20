@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title> Infix school management software & School management system </title>
-    <meta name="description" content="Infix is 100+ unique feature enable school management software system. It can manage all type of school, academy and any educational institution. ">
+    <title> infinia school management software & School management system </title>
+    <meta name="description" content="infinia is 100+ unique feature enable school management software system. It can manage all type of school, academy and any educational institution. ">
     <meta name="keywords" content="School Management Software, School Management System, School ERP software, school ERP system, Academy management software">
     <meta name="ahrefs-site-verification" content="578d1aa1e01051e3ac46df77d602eb6846f676a092e33c9befa5ce2395403bd2">
     <meta name="google-site-verification" content="oXBw6wz6Ie5UTDB4h1JRUXHDZE2n-uGO2lm1HVYcA-c" />
@@ -30,7 +30,7 @@
         [ {
           "@context" : "http://schema.org",
           "@type" : "SoftwareApplication",
-          "name" : "INFIX - Best School Management software system",
+          "name" : "infinia - Best School Management software system",
           "url" : "http://infixedu.com/",
           "author" : {
             "@type" : "Company",
@@ -39,7 +39,7 @@
           "datePublished" : "2019-05-28",
           "publisher" : {
             "@type" : "School Management ERP software",
-            "name" : "Infix"
+            "name" : infinia 
           },
           "applicationCategory" : "ERP Software",
           "downloadUrl" : "http://infixedu.com",
@@ -68,7 +68,7 @@
     <meta name="twitter:creator" content="@InfixEdu"/>
     <meta name="twitter:url" content="//infix.com/"/>
     <meta name="twitter:title" The Ultimate Education Management System For School,  Institute & Academy"/>
-    <meta name="twitter:description" content="Infix is a well known School management system and its ERP based Software. So try the free demo today!. Cause Infix offers 100+  featured, well-documented and latest academic management software system.. By this multipurpose software system, you can easily manage your school,  university or any kind of organization educational institute. So we can provide you speedy, Secure and clean coded Flexible academy and school management system at affordable prices!"/>
+    <meta name="twitter:description" content="infinia is a well known School management system and its ERP based Software. So try the free demo today!. Cause infinia offers 100+  featured, well-documented and latest academic management software system.. By this multipurpose software system, you can easily manage your school,  university or any kind of organization educational institute. So we can provide you speedy, Secure and clean coded Flexible academy and school management system at affordable prices!"/>
     <meta property="og:image" content="http://infixedu.com/public/landing/img/dashboard_preview.png"/>
 
 
@@ -78,8 +78,8 @@
     <meta property="og:image" content="//infixedu.com/public/landing/img/dashboard_preview.png"/>
     <meta property="og:title" content="School Management ERP Software & School Management System - Infix"/>
 
-    <meta property="og:description" content="Infix is a well known School management system and its ERP based Software. So try the free demo today!. Cause Infix offers 100+  featured, well-documented and latest academic management software system.. By this multipurpose software system, you can easily manage your school,  university or any kind of organization educational institute. So we can provide you speedy, Secure and clean coded Flexible academy and school management system at affordable prices!"/>
-    <meta property="og:site_name" content="Infix" />
+    <meta property="og:description" content="infinia is a well known School management system and its ERP based Software. So try the free demo today!. Cause infinia offers 100+  featured, well-documented and latest academic management software system.. By this multipurpose software system, you can easily manage your school,  university or any kind of organization educational institute. So we can provide you speedy, Secure and clean coded Flexible academy and school management system at affordable prices!"/>
+    <meta property="og:site_name" content=infinia  />
 
     <link rel="canonical" href="http://infixedu.com" hreflang="en-us" />
 
@@ -108,10 +108,10 @@
                     <div class="banner_text_iner">
                         <h1>The Ultimate Education Management System for School,  Institute & Academy </h1>
                         <p>Managing various administrative tasks in one place is now quite easy and time
-                            savior with this INFIX and Give your valued time to your institute that will
+                            savior with this infinia and Give your valued time to your institute that will
                             increase next generation productivity for our society.</p>
                         @if(!moduleStatusCheck('Saas'))
-                            <a  class="btn_1" target="_blank" href="mailto:hello@aorasoft.com?subject=Request for InfixEdu SaaS Application Demo!&body=Could you please arrange a demo for the InfixEdu SaaS application at your earliest convenience?"> <i class="ti-email"></i> For Saas Demo</a>
+                            <a  class="btn_1" target="_blank" href="mailto:hello@aorasoft.com?subject=Request for infinia  SaaS Application Demo!&body=Could you please arrange a demo for the infinia  SaaS application at your earliest convenience?"> <i class="ti-email"></i> For Saas Demo</a>
                         @endif
                         <a href="{{url('/home')}}" class="btn_2" target="_blank"> <i class="ti-package"></i> Try Live Demo</a>
                     </div>
@@ -185,7 +185,7 @@
                     <div class="single_feature_part">
                         <span class="single_feature_icon"><i class="ti-layout-grid3"></i></span>
                         <h4>Tons of Features</h4>
-                        <p>INFIX has all in one place. You’ll find everything what you are looking into education
+                        <p>infinia has all in one place. You’ll find everything what you are looking into education
                             management system software. </p>
                     </div>
                 </div>
@@ -205,7 +205,7 @@
                     <div class="single_feature_part">
                         <span class="single_feature_icon"><i class="ti-layers"></i></span>
                         <h4>Proper Documentation</h4>
-                        <p>You know! Smart Idea always comes to well planners. And Our INFIX is Smart for its Well
+                        <p>You know! Smart Idea always comes to well planners. And Our infinia is Smart for its Well
                             Documentation.
                         </p>
                     </div>
@@ -247,7 +247,7 @@
 
             <div class="col-md-5 col-lg-5">
                 <div class="video_section_text">
-                    <h2>Take A look Our INFIX Overview in Video</h2>
+                    <h2>Take A look Our infinia Overview in Video</h2>
 
                     <img src="{{asset('public/landing/img/Line.png')}}" alt="">
                     <p>What’s query you have in mind? How it works? Have look a Look in our videos you’ll crystal
@@ -495,7 +495,7 @@
                 <div class="section_tittle text-center">
                     <h5>AMazing Features</h5>
                     <h2>More Features Has INFIX</h2>
-                    <p>it's vast! Infix has more additional feature that will expect in a complete solution.</p>
+                    <p>it's vast! infinia has more additional feature that will expect in a complete solution.</p>
                 </div>
             </div>
         </div>
@@ -659,7 +659,7 @@
             <div class="col-xl-7 col-md-8">
                 <div class="section_tittle text-center">
                     <h5>Application Support</h5>
-                    <h2>INFIX Support Centre</h2>
+                    <h2>infinia Support Centre</h2>
                     <p>Need faster help? Ask your queries here. You’ll get instant help from us.</p>
                 </div>
             </div>
@@ -701,7 +701,7 @@
 
                     <img src="{{asset('public/landing/img/logo.png')}}" alt="">
                     <h2>So Finally You Are Here! Now, All You Know About Our Features.</h2>
-                    <p>We Believe! It won’t a wrong decision in Purchasing our INFIX for your Institute.</p>
+                    <p>We Believe! It won’t a wrong decision in Purchasing our infinia for your Institute.</p>
                     <!-- <a href="http://salespanel.infixedu.com/" class="footer_btn"> <i class="ti-shopping-cart-full"></i> -->
                     <a href="https://aorasoft.com" target="_blank" class="footer_btn"> <i class="ti-shopping-cart-full"></i>
                         <h3>Purchase infix</h3>
@@ -713,7 +713,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="copyright_text">
-                    <p> <img src="{{asset('public/landing/img/copyright.svg')}}" alt="#"> 2019-2020 InfixEdu - Ultimate Education ERP. All Rights
+                    <p> <img src="{{asset('public/landing/img/copyright.svg')}}" alt="#"> 2019-2020 infinia  - Ultimate Education ERP. All Rights
                         Reserved to <a href="#">Codetheme </a> .</p>
                 </div>
             </div>

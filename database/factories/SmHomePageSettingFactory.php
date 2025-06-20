@@ -25,7 +25,7 @@ class SmHomePageSettingFactory extends Factory
         return [
             'title' => 'THE ULTIMATE EDUCATION ERP',
             'long_title' => 'INFIX',
-            'short_description' => 'Managing various administrative tasks in one place is now quite easy and time savior with this INFIX and Give your valued time to your institute that will increase next generation productivity for our society.',
+            'short_description' => 'Managing various administrative tasks in one place is now quite easy and time savior with this infinia and Give your valued time to your institute that will increase next generation productivity for our society.',
             'link_label' => 'Learn More About Us',
             'link_url' => 'http://infixedu.com/about',
             'image' => 'public/backEnd/img/client/home-banner1.jpg',

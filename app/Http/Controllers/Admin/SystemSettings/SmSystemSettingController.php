@@ -1492,14 +1492,6 @@ class SmSystemSettingController extends Controller
                 $file = $request->file('main_school_logo');
                 $main_school_logo = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
                 $file->move('public/uploads/settings/', $main_school_logo);
-
-                # ID Card Default Logo Set Start
-                $uploadedFilePath = 'public/uploads/settings/' . $main_school_logo;
-                $destinationPath  = 'public/backEnd/id_card/img/';
-                $copiedFilePath   = $destinationPath . 'logo.png';
-                \File::copy($uploadedFilePath, $copiedFilePath);
-                # ID Card Default Logo Set End
-                
                 $main_school_logo = 'public/uploads/settings/' . $main_school_logo;
                 $generalSettData = SmGeneralSettings::where('school_id', Auth::user()->school_id)->first();
                 $generalSettData->logo = $main_school_logo;
@@ -3548,10 +3540,5 @@ class SmSystemSettingController extends Controller
             }
         }
         return response()->json(['success' => true]);
-    }
-
-    public function cronJob ()
-    {
-        return view('backEnd.systemSettings.cron_job');
     }
 }

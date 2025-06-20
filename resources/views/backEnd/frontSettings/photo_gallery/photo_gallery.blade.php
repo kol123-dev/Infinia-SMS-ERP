@@ -68,17 +68,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Summernote CSS and JS -->
-                                <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" rel="stylesheet">
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
-
                                 <div class="row mt-20">
                                     <div class="col-lg-12">
                                         <div class="primary_input">
-                                            <label class="primary_input_label" for="">@lang('front_settings.description') <span class="text-danger"> *</span></label>
-                                            <textarea class="primary_input_field form-control{{ $errors->has('description') ? ' is-invalid' : '' }} newsSummerNote" cols="0"
+                                            <label class="primary_input_label" for="">@lang('front_settings.description') <span
+                                                    class="text-danger"> *</span></label>
+                                            <textarea class="primary_input_field form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" cols="0"
                                                 rows="4" name="description" id="address">{{ isset($add_photo_gallery) ? @$add_photo_gallery->description : old('description') }}</textarea>
                                             @if ($errors->has('description'))
                                                 <span class="text-danger d-block">
@@ -210,6 +205,7 @@
                                         <tr>
                                             <th>@lang('common.sl')</th>
                                             <th>@lang('front_settings.name')</th>
+                                            <th>@lang('front_settings.description')</th>
                                             <th>@lang('front_settings.image')</th>
                                             <th>@lang('common.action')</th>
                                         </tr>
@@ -221,6 +217,7 @@
                                             <tr e_id="{{$value->id}}">
                                                 <td><span class="mr-2" style="cursor: grab"><i class="ti-menu"></i></span>{{ $key + 1 }}</td>
                                                 <td>{{ @$value->name }}</td>
+                                                <td>{{ @$value->description }}</td>
                                                 <td><img src="{{ asset(@$value->feature_image) }}" width="60px"
                                                         height="50px">
                                                 </td>
@@ -272,25 +269,6 @@
 
 @include('backEnd.partials.data_table_js')
 @push('script')
-
-    <script>
-        $(document).ready(function() {
-            $('.newsSummerNote').summernote({
-                height: 200,
-                placeholder: 'Enter description here...',
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['height', ['height']],
-                    ['insert', ['link', 'picture', 'video']]
-                ]
-            });
-        });
-    </script>
-    
     <script type="text/javascript">
         function getPhotoGallery(galleryId) {
             var url = $('#url').val();

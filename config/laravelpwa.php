@@ -1,17 +1,17 @@
 <?php
 
 return [
-    'name' => env('APP_NAME', 'InfixEdu'),
+    'name' => env('APP_NAME', 'Infinia'),
     'manifest' => [
-        'name' => env('APP_NAME', 'InfixEdu'),
-        'short_name' => env('APP_NAME', 'InfixEdu'),
+        'name' => env('APP_NAME', 'Infinia'),
+        'short_name' => env('APP_NAME', 'Infinia'),
         'start_url' => env('APP_URL', '/'),
         'background_color' => '#ffffff',
         'theme_color' => '#000000',
         'display' => 'standalone',
         'orientation'=> 'any',
         'status_bar'=> 'black',
-        'icons' => [
+        'icons' => [                    
             '72x72' => [
                 'path' => asset_path('images/icons/icon-72x72.png'),
                 'purpose' => 'any'

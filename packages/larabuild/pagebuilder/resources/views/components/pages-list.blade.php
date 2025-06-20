@@ -16,7 +16,7 @@
                         <tbody>
                             @foreach ($pages as $key => $page)
                                 <tr>
-                                    <td data-label=""><span>{{ $loop->iteration }}</span></td>
+                                    <td data-label=""><span>{{ $key + 1 }}</span></td>
                                     <td data-label="{{ __('pagebuilder::pagebuilder.name') }}">
                                         <span>{!! $page->name !!}</span> @if($page->home_page) <span class="badge badge-primary">Home</span> @endif 
                                     </td>

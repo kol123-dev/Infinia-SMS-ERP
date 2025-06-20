@@ -47,23 +47,17 @@ class SmStudentIdCardRequest extends FormRequest
             'dob'=>'nullable',
             'blood' =>'nullable',
             'phone_number'=>'nullable',
-            // 'signature_status' => 'nullable',
-            // 'photo' => 'nullable',
             'background_img'=> 'nullable|image|mimes:jpeg,png,jpg,svg|max:'.$maxFileSize,
             'profile_image'=> 'nullable|image|mimes:jpeg,png,jpg,svg|max:'.$maxFileSize,
             'logo'=> 'nullable|image|mimes:jpeg,png,jpg,svg|max:'.$maxFileSize,
             'signature'=> 'nullable|image|mimes:jpeg,png,jpg,svg|max:'.$maxFileSize,
-            'old_sign' => "nullable",
-            "old_logo" => "nullable",
-            "old_bg" => "nullable",
-            "old_profile" => "nullable"
         ];
         if ($this->id) {         
             $rules['logo'] = 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:'.$maxFileSize;
             $rules['signature'] = 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:'.$maxFileSize;
         } else {
             $rules['logo'] = 'sometimes|nullable|image|mimes:jpeg,png,jpg,gif,svg|max:'.$maxFileSize;
-            $rules['signature'] = 'required_if:signature_status,==,1|image|mimes:jpeg,png,jpg,gif,svg|max:'.$maxFileSize;
+            $rules['signature'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:'.$maxFileSize;
         }
 
         return $rules;

@@ -612,6 +612,7 @@ class DatatableQueryController extends Controller
     public function emailSmsLogAjax()
     {
         $emailSmsLogs = SmEmailSmsLog::where('academic_id', getAcademicId())->where('school_id', Auth::user()->school_id);
+        // dd($emailSmsLogs->get());
         return Datatables::of($emailSmsLogs)
             ->addIndexColumn()
             ->addColumn('date', function ($row) {
@@ -732,35 +733,30 @@ class DatatableQueryController extends Controller
                 ->addColumn('slip', function ($row) {
                     if (!empty($row->slip)) {
                         $btn = '<a class="text-color" data-toggle="modal" data-target="#showCertificateModal(' . $row->id . ');" href="#">' . app('translator')->get('common.approve') . '</a>';
-                        return $btn;
-
                     } else {
-                        
-                    }
-                })
-                ->addColumn('action', function ($row) {
-                    if ($row->approve_status == 0) {
-                        $btn = '<div class="dropdown CRM_dropdown">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">' . app('translator')->get('common.select') . '</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                            <a onclick="enableId(' . $row->id . ');" class="dropdown-item" href="#" data-toggle="modal" data-target="#enableStudentModal" data-id="' . $row->id . '"  >' . app('translator')->get('common.approve') . '</a>' .
-                                            '<a onclick="rejectPayment(' . $row->id . ');" class="dropdown-item" href="#" data-toggle="modal" data-id="' . $row->id . '"  >' . app('translator')->get('common.reject') . '</a>' .
-                                    '</div>
-                                </div>';
-                    } elseif ($row->approve_status == 1) {
-                        $btn = '<div class="dropdown">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">' . app('translator')->get('common.select') . '</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#">' . app('translator')->get('common.approved') . '</a>' .
-                                    '</div>
-                                </div>';
-                    } elseif ($row->approve_status == 2) {
-                        $btn = '<div class="dropdown">
-                                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">' . app('translator')->get('common.select') . '</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                            <a onclick="viewReason(' . $row->id . ');" class="dropdown-item ' . "reason" . $row->id . '" href="#" data-reason="' . $row->reason . '"  >' . app('translator')->get('common.view') . '</a>' .
-                                    '</div>
-                                </div>';
+                        if ($row->approve_status == 0) {
+                            $btn = '<div class="dropdown CRM_dropdown">
+                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">' . app('translator')->get('common.select') . '</button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                                <a onclick="enableId(' . $row->id . ');" class="dropdown-item" href="#" data-toggle="modal" data-target="#enableStudentModal" data-id="' . $row->id . '"  >' . app('translator')->get('common.approve') . '</a>' .
+                                                '<a onclick="rejectPayment(' . $row->id . ');" class="dropdown-item" href="#" data-toggle="modal" data-id="' . $row->id . '"  >' . app('translator')->get('common.reject') . '</a>' .
+                                        '</div>
+                                    </div>';
+                        } elseif ($row->approve_status == 1) {
+                            $btn = '<div class="dropdown">
+                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">' . app('translator')->get('common.select') . '</button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#">' . app('translator')->get('common.approved') . '</a>' .
+                                        '</div>
+                                    </div>';
+                        } elseif ($row->approve_status == 2) {
+                            $btn = '<div class="dropdown">
+                                        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">' . app('translator')->get('common.select') . '</button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                                <a onclick="viewReason(' . $row->id . ');" class="dropdown-item ' . "reason" . $row->id . '" href="#" data-reason="' . $row->reason . '"  >' . app('translator')->get('common.view') . '</a>' .
+                                        '</div>
+                                    </div>';
+                        }
                     }
                     return $btn;
                 })
@@ -768,7 +764,7 @@ class DatatableQueryController extends Controller
                 ->rawColumns(['status', 'action', 'slip'])
                 ->make(true);
         } catch (\Throwable $th) {
-
+            dd($th);
         }
     }
 
@@ -1695,7 +1691,6 @@ class DatatableQueryController extends Controller
                 })
             
                 ->addColumn('status', function ($row) {
-                    $btn = '';
                     if ($row->approve_status == 'P') {
                     $btn = '<button class="primary-btn bg-warning text-white border-0 small tr-bg">' . app('translator')->get('common.pending') . '</button>';
                         } elseif ($row->approve_status == 'A') {
@@ -1742,7 +1737,6 @@ class DatatableQueryController extends Controller
                     $all_homeworks->when($request->section, function ($query) use ($request) {
                         $query->where('section_id', $request->section);
                     });
-                    $all_homeworks->whereNull('course_id');
 
                     if(moduleStatusCheck('University')){
                         $all_homeworks->with('semesterLabel','unSession','unSemester');

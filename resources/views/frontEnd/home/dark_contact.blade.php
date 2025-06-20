@@ -133,7 +133,7 @@
                                 
                             </div>
                             <div class="primary_input mt-20">
-                                <input class="primary_input_field form-control" placeholder="info@codethemes.com" type="text" id="">
+                                <input class="primary_input_field form-control" placeholder="info@infinia .com" type="text" id="">
                                 
                             </div>
                             <div class="primary_input mt-20">
@@ -181,11 +181,11 @@
 							<h4>Health Care</h4>
 						</div>
 						<ul>
-							<li><a href="#"></a>Infix Health Care</a></li><a href="#">
-                            <li><a href="#"></a>Infix Children’s Health</a></li>
+							<li><a href="#"></a>infinia Health Care</a></li><a href="#">
+                            <li><a href="#"></a>infinia Children’s Health</a></li>
 							<li><a href="#"></a>Interdisciplinary Research</a></li>
-							<li><a href="#"></a>Infix Online</a></li>
-							<li><a href="#"></a>Infix Research Centers</a></li>
+							<li><a href="#"></a>infinia Online</a></li>
+							<li><a href="#"></a>infinia Research Centers</a></li>
 						</ul>
 					</aside>
 				</div>
@@ -195,11 +195,11 @@
 							<h4>About Infix</h4>
 						</div>
 						<ul>
-							<li><a href="#"></a>Infix Health Care</a></li><a href="#">
-                            <li><a href="#"></a>Infix Children’s Health</a></li>
+							<li><a href="#"></a>infinia Health Care</a></li><a href="#">
+                            <li><a href="#"></a>infinia Children’s Health</a></li>
 							<li><a href="#"></a>Interdisciplinary Research</a></li>
-							<li><a href="#"></a>Infix Online</a></li>
-							<li><a href="#"></a>Infix Research Centers</a></li>
+							<li><a href="#"></a>infinia Online</a></li>
+							<li><a href="#"></a>infinia Research Centers</a></li>
 						</ul>
 					</aside>
 				</div>

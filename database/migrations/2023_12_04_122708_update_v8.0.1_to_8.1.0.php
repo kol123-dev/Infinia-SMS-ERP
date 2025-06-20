@@ -80,8 +80,8 @@ return new class extends Migration
             }
         });
 
-        Schema::table('infixedu__pages', function (Blueprint $table) {
-            if (!Schema::hasColumn('infixedu__pages', 'is_default')) {
+        Schema::table('infinia__pages', function (Blueprint $table) {
+            if (!Schema::hasColumn('infinia__pages', 'is_default')) {
                 $table->boolean('is_default')->default(0);
             }
         });

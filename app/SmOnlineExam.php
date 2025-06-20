@@ -53,7 +53,7 @@ class SmOnlineExam extends Model
 
     public function assignQuestions()
     {
-        return $this->hasMany('App\SmOnlineExamQuestionAssign', 'online_exam_id', 'id')->withOutGlobalScopes();
+        return $this->hasMany('App\SmOnlineExamQuestionAssign', 'online_exam_id', 'id');
     }
 
     public static function obtainedMarks($exam_id, $student_id, $record_id = null)

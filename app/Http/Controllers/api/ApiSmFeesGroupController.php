@@ -94,38 +94,47 @@ class ApiSmFeesGroupController extends Controller
     }
     public function saas_fees_group_store(Request $request, $school_id)
     {
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'name' => "required|unique:sm_fees_groups|max:200",
+        ]);
+
+        if ($validator->fails()) {
+            if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+                return ApiBaseMethod::sendError('Validation Error.', $validator->errors());
+            }
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         try {
-            $request->validate([
-                'name' => "required|unique:sm_fees_groups,name|max:200",
-            ]);
-    
-            $feesGroup = new SmFeesGroup();
-            $feesGroup->name = $request->name;
-            $feesGroup->description = $request->description;
-            $feesGroup->school_id = $school_id;
-            $feesGroup->academic_id = SmAcademicYear::API_ACADEMIC_YEAR($school_id);
-            $result = $feesGroup->save();
-    
-            return response()->json([
-                'success' => true,
-                'data' => null,
-                'message' => 'Fees Group has been created successfully.'
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'data' => null,
-                'message' => collect($e->errors())->flatten()->first()
-            ], 422);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'data' => null,
-                'message' => 'Something went wrong. Please try again.'
-            ]);
+            $visitor = new SmFeesGroup();
+            $visitor->name = $request->name;
+            $visitor->description = $request->description;
+            $visitor->school_id = $school_id;
+            $visitor->academic_id = SmAcademicYear::API_ACADEMIC_YEAR($school_id);
+            $result = $visitor->save();
+
+            if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+                if ($result) {
+                    return ApiBaseMethod::sendResponse(null, 'Fees Group has been created successfully.');
+                } else {
+                    return ApiBaseMethod::sendError('Something went wrong, please try again.');
+                }
+            } else {
+                if ($result) {
+                    Toastr::success('Operation successful', 'Success');
+                    return redirect()->back();
+                } else {
+                    Toastr::error('Operation Failed', 'Failed');
+                    return redirect()->back();
+                }
+            }
+        } catch (\Exception$e) {
+            return ApiBaseMethod::sendError('Error.', $e->getMessage());
         }
     }
-    
     public function fees_group_edit(Request $request, $id)
     {
 

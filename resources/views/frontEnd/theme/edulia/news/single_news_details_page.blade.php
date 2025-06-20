@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="bradcrumb_area_inner">
-                        <h1>{{__('edulia.blog_details')}} <span><a href="{{url('/')}}">{{__('edulia.home')}}</a> / {{__('edulia.blog_details')}}</span></h1>
+                        <h1>{{__('edulia.news_details')}} <span><a href="{{url('/')}}">{{__('edulia.home')}}</a> / {{__('edulia.news_details')}}</span></h1>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,6 @@
             </div>
         </div>
     </section>
-    {{ footerContent() }}
 @endsection
 @pushonce(config('pagebuilder.site_script_var'))
 <script>

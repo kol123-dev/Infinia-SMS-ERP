@@ -3,6 +3,7 @@
 {{@$pt}}
 @endsection
 @section('mainContent')
+
     <section class="sms-breadcrumb mb-20">
         <div class="container-fluid">
             <div class="row justify-content-between">
@@ -26,9 +27,6 @@
                            <div class="row p-0">
                                <div class="col-lg-12">
                                    <h3 class="text-center">{{@$pt}}</h3>
-                                   <p class="text-center">
-                                       <code><a href="https://dashboard.tawk.to/login">https://dashboard.tawk.to/login</a></code>
-                                   </p>
                                    <hr>
                                    <div class="row mb-40 mt-40">
                                         <div class="col-lg-5 d-flex">
@@ -63,6 +61,7 @@
                                                                <label for="applicable_for_{{$role->id}}" id="applicable_for_{{$role->id}}">{{$role->name}}</label>
                                                            </div>
                                                        @endforeach  
+   
                                                    </div>
                                                </div>
                                            </div>
@@ -93,6 +92,7 @@
                                              </div>
                                          </div>
                                          
+
                                         <div class="col-xl-6 mt-4">
                                              <p class="primary_input_label">
                                                   {{ __('system_settings.availability') }}</p>
@@ -150,6 +150,8 @@
                                              </div>
                                          </div>
                                          
+
+
                                         <div class="col-xl-6 mt-4">
                                              <p class="primary_input_label">
                                                   {{ __('system_settings.showing_page') }}</p>
@@ -208,9 +210,6 @@
                                             <div class="primary_input">
                                                 <label class="primary_input_label" for="">@lang('system_settings.Short Code') </label>
                                                 <textarea class="primary_input_field form-control" name="short_code" autocomplete="off">{!! isset($setting) ? $setting->short_code : '' !!}</textarea>
-                                                <p>
-                                                    Please put the unique code of <strong>Direct Chat Link</strong> on here except the : <code>https://tawk.to/chat/</code>
-                                                </p>
                                             </div> 
                                         </div>
                                     </div>
@@ -232,14 +231,19 @@
                </div>
           </div>
     </section>
+
+
 @endsection
 
 @section('script')
     <script language="JavaScript">
+
         $('#selectAll').click(function () {
             $('input:checkbox').prop('checked', this.checked);
 
         });
+
+
     </script>
 @endsection
 

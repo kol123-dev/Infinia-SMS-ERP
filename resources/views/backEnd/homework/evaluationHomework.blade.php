@@ -179,7 +179,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            @if($uploadedContent->count() > 0 )
+                                                            @if($uploadedContent->count()>0 )
                                                                 @if (in_array('jpg',$files_ext) || in_array('jpeg',$files_ext) || in_array('heic',$files_ext) || in_array('png',$files_ext) || in_array('mp4',$files_ext) || in_array('mp3',$files_ext) || in_array('mov',$files_ext) || in_array('pdf',$files_ext))
                                                                     <a class="dropdown-item viewSubmitedHomework" data-toggle="modal" data-target="#viewSubmitedHomework{{$value->id}}" href="#">
                                                                         <span class="pl ti-download"></span>
@@ -188,6 +188,7 @@
                                                                     <a class="dropdown-item " href="{{route('download-uploaded-content-admin',[$homeworkDetails->id,$value->id])}}">
                                                                         <span class="pl ti-download"></span>
                                                                     </a>
+                                                                    {{-- {{route('download-uploaded-content-admin',$uploadedContent->id)}} --}}
                                                                 @endif
                                                             @endif
                                                         </td>
@@ -424,6 +425,7 @@
                     </div>
                 </div>
             </div>
+            {{-- @dd($homeworkDetails) --}}
             <div class="single-meta">
                 <div class="row">
                     <div class="col-lg-7">

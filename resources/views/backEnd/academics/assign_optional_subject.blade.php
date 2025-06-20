@@ -98,30 +98,26 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @php $count = 1; @endphp
+                                                    @php $count=1; @endphp
                                                     @foreach($students as $student)
-                                                        @php
-                                                            $isSubjectAssigned = $student->studentDetail->subjectAssigns->contains(function ($subjectAssign) use ($subject_info) {
-                                                                return $subjectAssign->subject && $subjectAssign->subject->subject_name == $subject_info->subject_name;
-                                                            });
-                                                        @endphp
-                                                        <tr>
-                                                            <td>  
-                                                                <div class="col-lg-12"> 
-                                                                    <div class="primary_input">
-                                                                        <input type="checkbox" id="optional_subject_{{ $count }}" class="common-checkbox optional_subject fix-gr-bg small" name="student_id[]" 
-                                                                               {{ $isSubjectAssigned ? 'checked' : '' }} 
-                                                                               value="{{ $student->id }}">
-                                                                        <label for="optional_subject_{{ $count }}"> {{ $count++ }} </label>
-                                                                    </div> 
+                                                    @php 
+                                                        $subjects =  $student->studentDetail->subjectAssign->subject ?? null;
+                                                    @endphp 
+                                                    <tr>
+                                                        <td>  
+                                                            <div class="col-lg-12"> 
+                                                                <div class="primary_input">
+                                                                    <input type="checkbox" id="optional_subject_{{@$count}}" class="common-checkbox optional_subject fix-gr-bg small" name="student_id[]" {{ (@$subjects->subject_name == @$subject_info->subject_name? 'checked': '' ) }} value="{{@$student->id}}">
+                                                                    <label for="optional_subject_{{@$count}}"> {{@$count++}} </label>
                                                                 </div> 
-                                                            </td> 
-                                                            <td>{{ $student->studentDetail->admission_no }}</td>
-                                                            <td class="nowrap">{{ $student->studentDetail->full_name }}</td> 
-                                                            <td>
-                                                                <span class="" style="border-bottom: 2px dashed #ddd !important;">{{ $subject_info->subject_name }}</span>
-                                                            </td>   
-                                                        </tr>
+                                                            </div> 
+                                                        </td> 
+                                                        <td>{{@$student->studentDetail->admission_no}}</td>
+                                                        <td class="nowrap">{{@$student->studentDetail->full_name}}</td> 
+                                                        <td>
+                                                            <span class="" style="border-bottom: 2px dashed #ddd !important;">{{@$subject_info->subject_name}}</span>
+                                                        </td>   
+                                                    </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table> 

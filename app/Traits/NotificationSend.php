@@ -3,126 +3,31 @@
 namespace App\Traits;
 
 use App\Models\User;
+use App\Services\GoogleFCMTokenService;
 use App\SmsTemplate;
 use App\SmSmsGateway;
 use App\Jobs\EmailJob;
 use GuzzleHttp\Client;
 use App\SmEmailSetting;
 use App\SmNotification;
-use App\Jobs\sendSmsJob;
 use App\Models\StudentRecord;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use App\Models\SmNotificationSetting;
-use Illuminate\Support\Facades\Cache;
 use AfricasTalking\SDK\AfricasTalking;
+use App\Jobs\sendSmsJob;
 use App\Notifications\AppNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
-use App\Services\GoogleFCMTokenService;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 
 trait NotificationSend
 {
-
-    // public function sent_notifications($event, $user_ids, $data, $role_names)
-    // {
-    //     try {
-    //         $notificationData = SmNotificationSetting::where('event', $event)
-    //             ->where('school_id', auth()->user()->school_id)
-    //             ->first();
-
-    //         foreach ($notificationData->recipient as $roleName => $recipientType) {
-    //             // For Super Admin Start
-    //             if ($recipientType == 1) {
-    //                 foreach ($notificationData->destination as $key => $type) {
-    //                     if ($roleName == 'Super admin') {
-    //                         $admin = User::find(1, ['id', 'full_name', 'email', 'phone_number']);
-    //                         $data['user_id'] = $admin->id;
-    //                         $data['role_id'] = 1;
-    //                         $data['receiver_name'] = $admin->full_name;
-    //                         $data['receiver_email'] = $admin->email;
-    //                         $data['receiver_phone_number'] = $admin->phone_number;
-    //                         $data['admin_name'] = $data['receiver_name'];
-    //                         if ($type == 1) {
-    //                             $function = 'send_' . strtolower($key);
-    //                             $this->$function($notificationData, $roleName, $data);
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //             // For Super Admin End
-    //             if ($recipientType == 1) {
-    //                 if(!is_null($role_names)){
-    //                     if (in_array($roleName, $role_names)) {
-    //                         foreach ($notificationData->destination as $key => $type) {
-                                
-    //                             // For Super Admin Start
-
-    //                             foreach ($user_ids as $user_id) {
-    //                                 $userInfo = User::with('roles')->find($user_id, ['id', 'full_name', 'email', 'phone_number', 'role_id']);
-    //                                 if ($roleName == 'Student') {
-    //                                     $data['user_id'] = $userInfo->id;
-    //                                     $data['role_id'] = $userInfo->roles->id;
-    //                                     $data['receiver_name'] = $userInfo->full_name;
-    //                                     $data['receiver_email'] = $userInfo->email;
-    //                                     $data['receiver_phone_number'] = $userInfo->phone_number;
-    
-    //                                     $data['student_name'] = $userInfo->full_name;
-    //                                 }
-    //                                 elseif ($roleName == 'Alumni') {
-    //                                     $data['user_id'] = $userInfo->id;
-    //                                     $data['role_id'] = $userInfo->roles->id;
-    //                                     $data['receiver_name'] = $userInfo->full_name;
-    //                                     $data['receiver_email'] = $userInfo->email;
-    //                                     $data['receiver_phone_number'] = $userInfo->phone_number;
-    
-    //                                     $data['alumni_name'] = $userInfo->full_name;
-    //                                 }
-                                    
-    //                                 elseif ($roleName == 'Parent') {
-    //                                     $data['role_id'] = 3;
-    //                                     if($userInfo->role_id == 3){
-    //                                         $data['user_id'] = $userInfo->id;
-    //                                         $data['receiver_name'] = $userInfo->full_name;
-    //                                         $data['receiver_email'] = $userInfo->email;
-    //                                         $data['receiver_phone_number'] = $userInfo->phone_number;
-        
-    //                                         $data['parent_name'] = $data['receiver_name'];
-    //                                     }else{
-    //                                         $data['user_id'] = $userInfo->student->parents->user_id;
-    //                                         $data['receiver_name'] = $userInfo->student->parents->guardians_name;
-    //                                         $data['receiver_email'] = $userInfo->student->parents->guardians_email;
-    //                                         $data['receiver_phone_number'] = $userInfo->student->parents->guardians_mobile;
-        
-    //                                         $data['parent_name'] = $data['receiver_name'];
-    //                                         $data['student_name'] = $userInfo->full_name;
-    //                                     }
-    //                                 } elseif ($roleName == 'Teacher') {
-    //                                     $data['user_id'] = $userInfo->id;
-    //                                     $data['role_id'] = $userInfo->roles->id;
-    //                                     $data['receiver_name'] = $userInfo->full_name;
-    //                                     $data['receiver_email'] = $userInfo->email;
-    //                                     $data['receiver_phone_number'] = $userInfo->phone_number;
-    //                                 }
-    //                                 if ($type == 1) {
-    //                                     $function = 'send_' . strtolower($key);
-    //                                     $this->$function($notificationData, $roleName, $data);
-    //                                 }
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     } catch (\Exception $e) {
-    //        Log::info($e);
-    //     }
-    // }
 
     public function sent_notifications($event, $user_ids, $data, $role_names)
     {
@@ -131,17 +36,11 @@ trait NotificationSend
                 ->where('school_id', auth()->user()->school_id)
                 ->first();
 
-            $sentNotifications = [];
-
             foreach ($notificationData->recipient as $roleName => $recipientType) {
-                
-                if ($recipientType == 1 && (is_null($role_names) || in_array($roleName, $role_names))) {
-                    
+                // For Super Admin Start
+                if ($recipientType == 1) {
                     foreach ($notificationData->destination as $key => $type) {
-
-                        $function = 'send_' . strtolower($key);
-                        
-                        if ($roleName === 'Super admin') {
+                        if ($roleName == 'Super admin') {
                             $admin = User::find(1, ['id', 'full_name', 'email', 'phone_number']);
                             $data['user_id'] = $admin->id;
                             $data['role_id'] = 1;
@@ -149,56 +48,84 @@ trait NotificationSend
                             $data['receiver_email'] = $admin->email;
                             $data['receiver_phone_number'] = $admin->phone_number;
                             $data['admin_name'] = $data['receiver_name'];
-
-                            if ($type == 1 && !isset($sentNotifications[$admin->id][$key])) {
+                            if ($type == 1) {
+                                $function = 'send_' . strtolower($key);
                                 $this->$function($notificationData, $roleName, $data);
-                                $sentNotifications[$admin->id][$key] = true;
                             }
-                        } else {
-                            foreach ($user_ids as $user_id) {
-                                $userInfo = User::with('roles')->find($user_id, ['id', 'full_name', 'email', 'phone_number', 'role_id']);
+                        }
+                    }
+                }
+                // For Super Admin End
+                if ($recipientType == 1) {
+                    if(!is_null($role_names)){
+                        if (in_array($roleName, $role_names)) {
+                            foreach ($notificationData->destination as $key => $type) {
                                 
-                                if ($roleName == 'Student') {
-                                    $data['user_id'] = $userInfo->id;
-                                    $data['role_id'] = $userInfo->roles->id;
-                                    $data['receiver_name'] = $userInfo->full_name;
-                                    $data['receiver_email'] = $userInfo->email;
-                                    $data['receiver_phone_number'] = $userInfo->phone_number;
-                                    $data['student_name'] = $userInfo->full_name;
-                                } elseif ($roleName == 'Alumni') {
-                                    $data['user_id'] = $userInfo->id;
-                                    $data['role_id'] = $userInfo->roles->id;
-                                    $data['receiver_name'] = $userInfo->full_name;
-                                    $data['receiver_email'] = $userInfo->email;
-                                    $data['receiver_phone_number'] = $userInfo->phone_number;
-                                    $data['alumni_name'] = $userInfo->full_name;
-                                } elseif ($roleName == 'Parent') {
-                                    $data['role_id'] = 3;
-                                    if ($userInfo->role_id == 3) {
+                                // For Super Admin Start
+                                // if ($roleName == 'Super admin') {
+                                //     $admin = User::find(1, ['id', 'full_name', 'email', 'phone_number']);
+                                //     $data['user_id'] = $admin->id;
+                                //     $data['role_id'] = 1;
+                                //     $data['receiver_name'] = $admin->full_name;
+                                //     $data['receiver_email'] = $admin->email;
+                                //     $data['receiver_phone_number'] = $admin->phone_number;
+                                //     $data['admin_name'] = $data['receiver_name'];
+                                //     if ($type == 1) {
+                                //         $function = 'send_' . strtolower($key);
+                                //         $this->$function($notificationData, $roleName, $data);
+                                //     }
+                                // }
+                                // For Super Admin End
+                                foreach ($user_ids as $user_id) {
+                                    $userInfo = User::with('roles')->find($user_id, ['id', 'full_name', 'email', 'phone_number', 'role_id']);
+                                    if ($roleName == 'Student') {
                                         $data['user_id'] = $userInfo->id;
+                                        $data['role_id'] = $userInfo->roles->id;
                                         $data['receiver_name'] = $userInfo->full_name;
                                         $data['receiver_email'] = $userInfo->email;
                                         $data['receiver_phone_number'] = $userInfo->phone_number;
-                                        $data['parent_name'] = $data['receiver_name'];
-                                    } else {
-                                        $data['user_id'] = $userInfo->student->parents->user_id;
-                                        $data['receiver_name'] = $userInfo->student->parents->guardians_name;
-                                        $data['receiver_email'] = $userInfo->student->parents->guardians_email;
-                                        $data['receiver_phone_number'] = $userInfo->student->parents->guardians_mobile;
-                                        $data['parent_name'] = $data['receiver_name'];
+    
                                         $data['student_name'] = $userInfo->full_name;
                                     }
-                                } elseif ($roleName == 'Teacher') {
-                                    $data['user_id'] = $userInfo->id;
-                                    $data['role_id'] = $userInfo->roles->id;
-                                    $data['receiver_name'] = $userInfo->full_name;
-                                    $data['receiver_email'] = $userInfo->email;
-                                    $data['receiver_phone_number'] = $userInfo->phone_number;
-                                }
-
-                                if ($type == 1 && !isset($sentNotifications[$userInfo->id][$key])) {
-                                    $this->$function($notificationData, $roleName, $data);
-                                    $sentNotifications[$userInfo->id][$key] = true;
+                                    elseif ($roleName == 'Alumni') {
+                                        $data['user_id'] = $userInfo->id;
+                                        $data['role_id'] = $userInfo->roles->id;
+                                        $data['receiver_name'] = $userInfo->full_name;
+                                        $data['receiver_email'] = $userInfo->email;
+                                        $data['receiver_phone_number'] = $userInfo->phone_number;
+    
+                                        $data['alumni_name'] = $userInfo->full_name;
+                                    }
+                                    
+                                    elseif ($roleName == 'Parent') {
+                                        $data['role_id'] = 3;
+                                        if($userInfo->role_id == 3){
+                                            $data['user_id'] = $userInfo->id;
+                                            $data['receiver_name'] = $userInfo->full_name;
+                                            $data['receiver_email'] = $userInfo->email;
+                                            $data['receiver_phone_number'] = $userInfo->phone_number;
+        
+                                            $data['parent_name'] = $data['receiver_name'];
+                                        }else{
+                                            $data['user_id'] = $userInfo->student->parents->user_id;
+                                            $data['receiver_name'] = $userInfo->student->parents->guardians_name;
+                                            $data['receiver_email'] = $userInfo->student->parents->guardians_email;
+                                            $data['receiver_phone_number'] = $userInfo->student->parents->guardians_mobile;
+        
+                                            $data['parent_name'] = $data['receiver_name'];
+                                            $data['student_name'] = $userInfo->full_name;
+                                        }
+                                    } elseif ($roleName == 'Teacher') {
+                                        $data['user_id'] = $userInfo->id;
+                                        $data['role_id'] = $userInfo->roles->id;
+                                        $data['receiver_name'] = $userInfo->full_name;
+                                        $data['receiver_email'] = $userInfo->email;
+                                        $data['receiver_phone_number'] = $userInfo->phone_number;
+                                    }
+                                    if ($type == 1) {
+                                        $function = 'send_' . strtolower($key);
+                                        $this->$function($notificationData, $roleName, $data);
+                                    }
                                 }
                             }
                         }
@@ -206,12 +133,15 @@ trait NotificationSend
                 }
             }
         } catch (\Exception $e) {
-            Log::info($e);
+           Log::info($e);
         }
     }
 
     public function send_email($notificationData, $role, $data)
     {
+        if ($notificationData->recipient[$role] != 1) {
+            return;
+        }
 
         $receiver_name = gv($data, 'receiver_name');
         $reciver_email = gv($data, 'receiver_email');
@@ -273,6 +203,10 @@ trait NotificationSend
 
     public function send_sms($notificationData, $role, $data)
     {
+        #dd ($notificationData, $role, $data);
+        // if ($notificationData->recipient[$role] != 1) {
+        //     return;
+        // }
 
         $reciver_number = $data['receiver_phone_number'];
         if (!$reciver_number) {

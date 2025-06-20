@@ -30,17 +30,15 @@ class EventGallery extends Component
     {
         $events = SmEvent::query();
         $events = $events->where('school_id', app('school')->id);
-
-        if ($this->sorting == 'asc') {
-            $events->orderBy('id', 'asc');
-        } elseif ($this->sorting == 'desc') {
-            $events->orderBy('id', 'desc');
-        } else {
+        if($this->sorting =='asc'){
+            $events->orderBy('id','asc');
+        }elseif($this->sorting =='desc'){
+            $events->orderBy('id','desc');
+        }else{
             $events->inRandomOrder();
         }
 
         $events = $events->take($this->count)->get();
-
-        return view('components.' . activeTheme() . '.event-gallery', compact('events'));
+        return view('components.'.activeTheme().'.event-gallery',compact('events'));
     }
 }

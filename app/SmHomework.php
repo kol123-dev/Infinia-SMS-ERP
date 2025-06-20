@@ -91,14 +91,6 @@ class SmHomework extends Model
         return $this->hasMany('App\SmHomeworkStudent', 'homework_id', 'id')->where('complete_status', 'C');
     }
 
-    public function complete()
-    { 
-        return $this->hasOne('Modules\Lms\Entities\LessonComplete', 'lesson_id', 'id')->when(auth()->user()->role_id==2, function ($q) {
-                $q->where('student_id', auth()->user()->student->id);
-        });
-    }
-    
-
     public function lmsHomeworkCompleted()
     {
         return $this->hasOne('App\SmHomeworkStudent', 'homework_id','id');
@@ -210,7 +202,7 @@ class SmHomework extends Model
     {
 
         try {
-            $abc = SmHomeworkStudent::withOutGlobalScopes()->where('homework_id', $h_id)->where('student_id', $s_id)->first();
+            $abc = SmHomeworkStudent::where('homework_id', $h_id)->where('student_id', $s_id)->first();
             return $abc;
         } catch (\Exception $e) {
             $data = [];
@@ -270,14 +262,4 @@ class SmHomework extends Model
     // {
     //     return $this->hasManyThrough(StudentRecord::class, SmClass::class, 'id', 'class_id', 'id');
     // }
-
-    public function course()
-    {
-        return $this->belongsTo('Modules\Lms\Entities\Course', 'course_id', 'id')->withDefault();
-    }
-
-    public function lesson()
-    {
-        return $this->belongsTo('Modules\Lms\Entities\CourseLesson', 'lesson_id', 'id')->withDefault();
-    }
 }

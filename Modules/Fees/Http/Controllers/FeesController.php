@@ -382,7 +382,6 @@ class FeesController extends Controller
             $invoiceStore = new FeesExtendedController();
             $payment_method = $request->payment_method;
             if ($request->student != "all_student") {
-
                 $student = StudentRecord::find($request->student);
                 if ($request->groups) {
                     if(empty($request->singleInvoice)){
@@ -861,6 +860,7 @@ class FeesController extends Controller
             Toastr::success('Update Successful', 'Success');
             return redirect()->route('fees.fees-invoice-list');
         } catch (\Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }
@@ -1473,11 +1473,6 @@ class FeesController extends Controller
                     ->filterColumn('paid_amount', function ($query, $keyword) {
                         $query->whereHas('invoiceDetails', function ($query) use ($keyword) {
                             $query->where('paid_amount', 'like', '%' . $keyword . '%');
-                        });
-                    })                    
-                    ->filterColumn('student_name', function ($query, $keyword) {
-                        $query->whereHas('studentInfo', function ($query) use ($keyword) {
-                            $query->where('full_name', 'like', '%' . $keyword . '%');
                         });
                     }) 
                     ->addColumn('create_date', function($row){

@@ -54,6 +54,7 @@ class SmOnlineExamController extends Controller
     {
         try {
             $online_exam_info=SmOnlineExam::find($request->online_exam_id);
+            // dd($online_exam_info);
             if (moduleStatusCheck('University')) {
                 $teacher_info=UnAssignSubject::where('un_semester_label_id',$online_exam_info->un_semester_label_id)
                 ->where('un_subject_id',$online_exam_info->un_subject_id)
@@ -446,13 +447,6 @@ class SmOnlineExamController extends Controller
             if (@$exam_status->student_done == 1) {
                 Toastr::warning('You are already participated this exam', 'Failed');
                 return redirect()->back();
-            }
-
-            if ($exam_status) {
-                $exam_status->student_done = 1;
-                $exam_status->save();
-                Toastr::success('Operation successful', 'Success');
-                return redirect('student-online-exam');
             }
             DB::beginTransaction();
     

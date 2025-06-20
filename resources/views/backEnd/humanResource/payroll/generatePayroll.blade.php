@@ -2,15 +2,6 @@
 @section('title')
     @lang('hr.generate_payroll')
 @endsection
-@push('css')
-    <style>
-        .fw-bold {
-            font-weight: bold;
-        }
-
-    </style>
-    
-@endpush
 @section('mainContent')
 
     @php
@@ -226,49 +217,43 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-2 col-md-6">
-                                                <div class="fw-bold name">
-                                                    {{ $totalCourse ?? 0 }}
-                                                </div>
+                                                <div class="value text-left">@lang('lms::lms.total_sell') </div>
                                             </div>
-
-                                            <div class="col-lg-2 col-md-6">
-                                                <div class="text-left">@lang('lms::lms.total_sell') </div>
-                                            </div>
-                                            <div class="col-lg-2 col-md-6">
-                                                <div class="value text-left"> {{ $totalSellCourseCount ?? 0 }} </div>
-                                            </div>
-
                                             <div class="col-lg-2 col-md-6">
                                                 <div class="name">
                                                     @lang('lms::lms.this_month_sell')
                                                 </div>
                                             </div>
                                             <div class="col-lg-2 col-md-6">
-                                                <div class="fw-bold name">
-                                                    {{ $thisMonthSell ?? 0 }}
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-2 col-md-6">
-                                                <div class="text-left">
-                                                    @lang('lms::lms.total_revenue')
+                                                <div class="value text-left">
+                                                    @lang('lms::lms.this_month_revenue')
                                                 </div>
                                             </div>
                                             <div class="col-lg-2 col-md-6">
                                                 <div class="value text-left">
-                                                    @if ($totalRevenue > 0)
-                                                        @php
-                                                            $format = generalSetting()->currencyDetail;
-                                                            $currency = $format->symbol;
-                                                        @endphp
-                                                        {{ $currency }} {{$totalRevenue }}
-                                                    @endif
+                                                    @lang('lms::lms.payable_amount')
                                                 </div>
                                             </div>
-
+                                        </div>
+                                    </div>
+                                    <div class="single-meta">
+                                        <div class="row">
                                             <div class="col-lg-2 col-md-6">
-                                                <div class="text-left">
-                                                    @lang('lms::lms.payable_amount')
+                                                <div class="name">
+                                                    {{ $totalCourse }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-6">
+                                                <div class="value text-left"> {{ $totalSellCourseCount }} </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-6">
+                                                <div class="name">
+                                                    {{ currency_format($thisMonthSell) }}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 col-md-6">
+                                                <div class="value text-left">
+                                                    {{ currency_format($thisMonthRevenue) }}
                                                 </div>
                                             </div>
                                             <div class="col-lg-2 col-md-6">

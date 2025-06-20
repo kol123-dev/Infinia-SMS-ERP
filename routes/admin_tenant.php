@@ -1,16 +1,19 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
-use App\Http\Controllers\UserPDFController;
-use App\Http\Controllers\UserNewsController;
-use App\Http\Controllers\UserForumController;
 use App\Http\Controllers\TeacherEvaluationController;
 use App\Http\Controllers\TeacherEvaluationReportController;
 use App\Http\Controllers\Admin\SystemSettings\PluginController;
 use App\Http\Controllers\Admin\FrontSettings\ThemeManageController;
 use App\Http\Controllers\Admin\FeesCollection\SmFeesCarryForwardController;
+use App\Http\Controllers\UserNewsController;
+use App\Http\Controllers\UserPDFController;
+use App\Http\Controllers\UserForumController;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Modules\RolePermission\Entities\Permission;
 
 Route::get('checkForeignKey', 'HomeController@checkForeignKey')->name('checkForeignKey');
 
@@ -20,6 +23,7 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/reg', function () {
 
 });
+
 
 Route::group(['middleware' => ['XSS', 'subscriptionAccessUrl']], function  (){
 
@@ -1076,11 +1080,6 @@ Route::group(['middleware' => ['XSS', 'subscriptionAccessUrl']], function  (){
         Route::put('student-certificate/{id}', 'Admin\AdminSection\SmStudentCertificateController@update')->name('student-certificate-update')->middleware('userRolePermission:student-certificate-edit');
         Route::delete('student-certificate/{id}', 'Admin\AdminSection\SmStudentCertificateController@destroy')->name('student-certificate-delete')->middleware('userRolePermission:student-certificate-delete');
 
-
-        //Set Default Certificate
-        Route::get('set-default-certificate/{id}/{type}', 'Admin\AdminSection\SmStudentCertificateController@setDefault')->name('student-certificate-set-default');
-        Route::get('reset-default-certificate/{id}', 'Admin\AdminSection\SmStudentCertificateController@resetDefault')->name('student-certificate-reset-default');
-
         // Generate certificate
         Route::get('generate-certificate', ['as' => 'generate_certificate', 'uses' => 'Admin\AdminSection\SmStudentCertificateController@generateCertificate'])->middleware('userRolePermission:generate_certificate');
         Route::post('generate-certificate', ['as' => 'generate_certificate_search', 'uses' => 'Admin\AdminSection\SmStudentCertificateController@generateCertificateSearch'])->middleware('userRolePermission:generate_certificate');
@@ -1122,7 +1121,7 @@ Route::group(['middleware' => ['XSS', 'subscriptionAccessUrl']], function  (){
         Route::get('student-id-card/{id}', 'Admin\AdminSection\SmStudentIdCardController@edit')->name('student-id-card-edit')->middleware('userRolePermission:student-id-card-edit');
         Route::put('student-id-card/{id}', 'Admin\AdminSection\SmStudentIdCardController@update')->name('student-id-card-update')->middleware('userRolePermission:student-id-card-edit');
         Route::post('student-id-card', 'Admin\AdminSection\SmStudentIdCardController@destroy')->name('student-id-card-delete')->middleware('userRolePermission:student-id-card-delete');
-        Route::get('id-card-preview/{id}','Admin\AdminSection\SmStudentIdCardController@previewIdCard')->name('id-cart-preview');
+
         Route::get('generate-id-card', ['as' => 'generate_id_card', 'uses' => 'Admin\AdminSection\SmStudentIdCardController@generateIdCard'])->middleware('userRolePermission:generate_id_card');
         Route::post('generate-id-card-search', ['as' => 'generate_id_card_bulk_search', 'uses' => 'Admin\AdminSection\SmStudentIdCardController@generateIdCardBulk']);
 
@@ -1535,7 +1534,7 @@ Route::group(['middleware' => ['XSS', 'subscriptionAccessUrl']], function  (){
             if (file_exists($file)) {
                 return Response::download($file);
             }
-        })->name('download-content-document')->middleware('userRolePermission:download-content-document');
+        })->name('download-content-document');
 
         Route::get('assignment-list', 'Admin\StudyMaterial\SmUploadContentController@assignmentList')->name('assignment-list')->middleware('userRolePermission:assignment-list');
         Route::get('study-metarial-list', 'Admin\StudyMaterial\SmUploadContentController@studyMetarialList')->name('study-metarial-list');
@@ -1752,9 +1751,6 @@ Route::group(['middleware' => ['XSS', 'subscriptionAccessUrl']], function  (){
         Route::get('language-setup/{id}', 'Admin\SystemSettings\SmSystemSettingController@languageSetup')->name('language-setup')->middleware('userRolePermission:language-setup');
         Route::get('language-settings', 'Admin\SystemSettings\SmSystemSettingController@languageSettings')->name('language-settings')->middleware('userRolePermission:language-settings');
         Route::post('language-add', 'Admin\SystemSettings\SmSystemSettingController@languageAdd')->name('language-add')->middleware('userRolePermission:language-add');
-        
-        Route::get('cron-job', 'Admin\SystemSettings\SmSystemSettingController@cronJob')->name('cron-job')->middleware('userRolePermission:cron-job');
-
 
         Route::get('language-edit/{id}', 'Admin\SystemSettings\SmSystemSettingController@languageEdit');
         Route::post('language-update', 'Admin\SystemSettings\SmSystemSettingController@languageUpdate')->name('language-update');
@@ -2465,9 +2461,7 @@ Route::group(['middleware' => ['XSS', 'subscriptionAccessUrl']], function  (){
         Route::post('user-forum-reply-vote-store', 'userReplyVote')->name('user-forum-reply-vote.store'); 
     });
     Route::get('user-custom-menu/{slug?}', 'HomeController@userCustomMenu')->name('user-custom-menu.index');
-    Route::get('/check-resetting', function () {
-        $isResetting = !Storage::exists('.app_resetting');
-        return response()->json(['is_resetting' => $isResetting]);
-    })->name('checkResetting');
+
+
 });
 

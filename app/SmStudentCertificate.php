@@ -87,9 +87,9 @@ class SmStudentCertificate extends Model
                 $body = str_replace('[parent_address]', @$parent->guardians_address, $body);
                 $body = str_replace('[profile_image]', @$parent->guardians_photo, $body);
             }elseif($role == "Lms"){
-                if(moduleStatusCheck('Lms')== TRUE) {
-                    $purchaseLog = CoursePurchaseLog::where('student_id',$student_id)->first();
-                    $body = str_replace('[name]', @$purchaseLog->student->full_name, $body);
+                if(moduleStatusCheck('Lms')== TRUE){
+                    $purchaseLog = CoursePurchaseLog::where('student_id',$user_id)->first();
+                    $body = str_replace('[student_name]', @$purchaseLog->student->full_name, $body);
                     $body = str_replace('[course_name]', @$purchaseLog->course->course_title, $body);
                     $complete_date = LessonComplete::where('course_id',$purchaseLog->course_id)->where('student_id',$purchaseLog->student_id)->latest()->first('created_at')->created_at;
                     if($complete_date){

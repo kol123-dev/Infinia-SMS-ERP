@@ -265,6 +265,7 @@ class SmStudentAdmissionRequest extends FormRequest
                 })];
             }
         }
+
         if ($user_role_id !=2 || $user_role_id != GlobalVariable::isAlumni()) {
             $rules +=[
                 'email_address' => ['bail',Rule::requiredIf(function () use ($field) {
@@ -275,16 +276,9 @@ class SmStudentAdmissionRequest extends FormRequest
                 }),Rule::unique('users', 'phone_number')->where(function ($query) use ($student) {
                     return  $query->whereNotNull('phone_number')->where('id', '!=', (optional($student)->user_id));
                 })],
-                'guardians_email' => [
-                    'bail',
-                    Rule::requiredIf(function () use ($field) {
-                        return !$this->parent_id && !$this->staff_parent && in_array('guardians_email', $field);
-                    }),
-                    'sometimes',
-                    'nullable',
-                    'email',
-                    Rule::unique('users', 'email')->ignore(optional(optional($student)->parents)->user_id),
-                ],
+                'guardians_email' =>['bail', Rule::requiredIf(function () use ($field) {
+                    return !$this->parent_id && !$this->staff_parent && in_array('guardians_email', $field);
+                }), 'sometimes', 'nullable'],
                 'guardians_phone'=>['bail', 'nullable', Rule::requiredIf(function () use ($field) {
                     return !$this->parent_id && !$this->staff_parent && in_array('guardians_phone', $field);
                 }),'max:100', 'different:phone_number'],

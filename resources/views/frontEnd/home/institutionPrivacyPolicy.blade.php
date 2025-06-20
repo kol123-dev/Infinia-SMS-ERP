@@ -3,7 +3,7 @@
 
 <?php
 $setting = generalSetting();
-if(isset($setting->copyright_text)){ $copyright_text = $setting->copyright_text; }else{ $copyright_text = "Copyright © " . date('Y') . " All rights reserved | This application is made with by Codethemes"; }
+if(isset($setting->copyright_text)){ $copyright_text = $setting->copyright_text; }else{ $copyright_text = "Copyright © " . date('Y') . " All rights reserved | This application is made with by infinia "; }
 if(isset($setting->logo)) { $logo = $setting->logo; } else{ $logo = 'public/uploads/settings/logo.png'; }
 
 if(isset($setting->favicon)) { $favicon = $setting->favicon; } else{ $favicon = 'public/backEnd/img/favicon.png'; }

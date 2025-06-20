@@ -149,6 +149,7 @@
                         <tbody>
                     
                                 @foreach($students as $student)
+                                {{-- @dd($student->studentRecord); --}}
                                 <tr>
                                     <td>{{$student->admission_no}}</td>
                                     <td>{{$student->full_name}}</td>
@@ -173,28 +174,6 @@
                                     <td>{{$online_exam_question->title}}</td>
                                     <td>{{$online_exam_question->subject !=""?$online_exam_question->subject->subject_name:""}}</td>
                                     <td>{{$total_marks}}</td>
-                                    <td>
-                                        @if(in_array($student->id, $present_students))
-                                            @php
-                                                if (moduleStatusCheck('OnlineExam')== TRUE) {
-                                                    $obtained_marks = Modules\OnlineExam\Entities\InfixOnlineExam::obtainedMarks($online_exam_question->id, $student->id);
-                                                } else {
-                                                    $obtained_marks = App\SmOnlineExam::obtainedMarks($online_exam_question->id, $student->id);
-                                                }
-                                                if($obtained_marks){
-                                                    if($obtained_marks->status == 1){
-                                                            echo "Waiting for marks";
-                                                        }else{
-                                                            echo $obtained_marks->total_marks;
-                                                        }
-                                                }else{
-                                                    echo "Waiting for marks";
-                                                }
-                                            @endphp
-                                        @else
-                                            @lang('common.absent')
-                                        @endif
-                                    </td>
                                     <td>
                                         @if(in_array($student->id, $present_students))
                                             @php

@@ -20,7 +20,7 @@ class SmTeacherUploadContentFactory extends Factory
      *
      * @return array
      */
-    public $contents = ['as', 'st', 'ot', 'sy'];
+    public $contents = ['as', 'st', 'ot'];
     public function definition()
     {
         return [

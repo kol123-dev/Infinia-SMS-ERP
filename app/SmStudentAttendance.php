@@ -3,14 +3,14 @@
 namespace App;
 
 use App\Scopes\AcademicSchoolScope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class SmStudentAttendance extends Model
 {
     use HasFactory;
     protected $table = "sm_student_attendances";
-    protected $guarded = [];
+    
     protected $casts = [
         'attendance_type' => 'string',
         'attendance_date' => 'string',
@@ -19,6 +19,7 @@ class SmStudentAttendance extends Model
     protected static function boot()
     {
         parent::boot();
+  
         static::addGlobalScope(new AcademicSchoolScope);
     }
     public function studentInfo()

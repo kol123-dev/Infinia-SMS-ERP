@@ -21,16 +21,12 @@
 
             <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-lg-12 no-gutters">
-                        <div class="main-title d-md-flex justify-content-between align-items-center">
+                    <div class="col-lg-4 no-gutters">
+                        <div class="main-title">
                             <h3 class="mb-30">@lang('exam.take_online_exam')</h3>
-                            <a href="{{ route('online-exam') }}" class="primary-btn small fix-gr-bg">
-                                @lang('admin.back')
-                            </a>
                         </div>
                     </div>
                 </div>
-
                 {{ Form::open(['class' => 'form-horizontal', 'files' => true, 'route' => 'student_online_exam_submit', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'id' => 'online_take_exam']) }}
                 <div class="row">
                     <input type="hidden" name="online_exam_id" id="online_exam_id" value="{{@$online_exam->id}}">
@@ -41,32 +37,26 @@
                                     <div class="row  pl-10">
                                         <div class="col-lg-7 mt-20">
                                             <h3>@lang('exam.exam_name') : {{@$online_exam->title}}</h3>
-                                            <h4><strong>@lang('common.subject') : </strong>{{@$online_exam->subject !=""?@$online_exam->subject->subject_name:""}}</h4>
-                                            <h4><strong>@lang('common.class_Sec') : </strong>{{@$online_exam->class !=""?@$online_exam->class->class_name:""}} ({{@$online_exam->section !=""?@$online_exam->section->section_name:""}})</h4>
-                                            <h4 class="mb-20"><strong>@lang('exam.total_marks') : </strong>
-                                            @php
-                                                @$total_marks = 0;
-                                                foreach($online_exam->assignQuestions as $question){
-                                                    $total_marks = $total_marks + $question->questionBank->marks;
-                                                }
-                                                echo @$total_marks;
-                                            @endphp</h4>
-                                            <p><strong>@lang('exam.instruction') : </strong>{{@$online_exam->instruction}}</p>
+                                                        <h4><strong>@lang('common.subject') : </strong>{{@$online_exam->subject !=""?@$online_exam->subject->subject_name:""}}</h4>
+                                                        <h4><strong>@lang('common.class_Sec') : </strong>{{@$online_exam->class !=""?@$online_exam->class->class_name:""}} ({{@$online_exam->section !=""?@$online_exam->section->section_name:""}})</h4>
+                                                        <h4 class="mb-20"><strong>@lang('exam.total_marks') : </strong>
+                                                        @php
+                                                        @$total_marks = 0;
+                                                            foreach($online_exam->assignQuestions as $question){
+                                                                $total_marks = $total_marks + $question->questionBank->marks;
+                                                            }
+                                                            echo @$total_marks;
+                                                        @endphp</h4>
+                                        <p><strong>@lang('exam.instruction') : </strong>{{@$online_exam->instruction}}</p>
                                         </div>
                                         <div class="col-lg-5 mt-20">
-                                            <p class="mb-2"><strong>@lang('exam.exam_has_to_be_submitted_within'): </strong>{{dateConvert(@$online_exam->end_date_time)}} {{ convertTime(@$online_exam->end_time)}}</p>
-                                            @php 
-                                                $current_date_time = date('Y-m-d H:i:s');
-                                            @endphp
-
-                                            @if ($current_date_time < date('Y-m-d H:i:s', strtotime(@$online_exam->start_time)))
-                                                <p class="mb-2"><strong>@lang('exam.exam_will_be_started_at'): </strong> {{ dateConvert(@$online_exam->date)}} {{ convertTime(@$online_exam->start_time)}}</p>                                                
-                                            @else                                        
-                                                <p id="countDownTimer"></p>
-                                                <input type="hidden" id="count_date" value="{{@$online_exam->date}}">
-                                                <input type="hidden" id="count_start_time" value="{{date('Y-m-d H:i:s', strtotime(@$online_exam->start_time))}}">
-                                                <input type="hidden" id="count_end_time" value="{{date('Y-m-d H:i:s', strtotime(@$online_exam->end_time))}}">
-                                            @endif
+                                            <p class="mb-2"><strong>@lang('exam.exam_has_to_be_submitted_within'): </strong>{{@$online_exam->date}} {{@$online_exam->end_time}}</p>
+                                            <p id="countDownTimer"></p>
+                                            
+                                            <input type="hidden" id="count_date" value="{{@$online_exam->date}}">
+                                            <input type="hidden" id="count_start_time" value="{{date('Y-m-d H:i:s', strtotime(@$online_exam->start_time))}}">
+                                            <input type="hidden" id="count_end_time" value="{{date('Y-m-d H:i:s', strtotime(@$online_exam->end_time))}}">
+                                        
                                         </div>
                                     </div>
                                 </div>

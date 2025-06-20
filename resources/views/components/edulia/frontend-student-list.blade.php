@@ -46,7 +46,7 @@
 </form>
 
 @if ($students->isEmpty() && auth()->check() && auth()->user()->role_id == 1)
-    <p class="text-center text-danger mt-4">@lang('edulia.no_data_available_please_go_to') <a target="_blank"
+    <p class="text-left text-danger">@lang('edulia.no_data_available_please_go_to') <a target="_blank"
             href="{{ URL::to('/student-admission') }}">@lang('edulia.student_list')</a></p>
 @elseif(count($students) > 0)
     <div class="user_list_container student_list">

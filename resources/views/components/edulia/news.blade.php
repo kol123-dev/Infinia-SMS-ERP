@@ -1,8 +1,3 @@
-<style>
-    .blog_item_inner {
-        background: #ffffff;
-    }
-</style>
 @if ($news->isEmpty() && auth()->check() && auth()->user()->role_id == 1)
     <p class="text-center text-danger">@lang('edulia.no_data_available_please_go_to') <a target="_blank"
             href="{{ URL::to('/news') }}">@lang('edulia.news')</a></p>

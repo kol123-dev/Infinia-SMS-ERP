@@ -11,11 +11,9 @@ class StaffNoticeController extends Controller
 {
     public function noticeList()
     {
-        $allNotices = SmNoticeBoard::whereJsonContains('inform_to', 5)
+        $allNotices = SmNoticeBoard::withoutGlobalScope(StatusAcademicSchoolScope::class)
             ->where('school_id', auth()->user()->school_id)
-            ->where('publish_on', '<=', date('Y-m-d'))
-            ->orderBy('id', 'DESC')
-            ->get(['id', 'notice_title', 'notice_message', 'notice_date']);
+            ->select('id', 'notice_title', 'notice_date', 'notice_message')->get();
         if (!$allNotices) {
             $response = [
                 'success' => false,

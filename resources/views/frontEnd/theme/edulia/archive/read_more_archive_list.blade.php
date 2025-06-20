@@ -5,7 +5,7 @@
                 class='archive_card_wrapper_content_title'>{{ $item->news_title }}</a>
             <p class="archive_card_wrapper_content_meta">{{ dateConvert($item->publish_date) }} /
                 {{ $item->category->category_name }}</p>
-            <p>{!! $item->news_body !!}</p>
+            <p>{{ $item->news_body }}</p>
             <a href="{{ route('frontend.news-details', $item->id) }}">+ {{ __('edulia.read_more') }}</a>
         </div>
     </div>

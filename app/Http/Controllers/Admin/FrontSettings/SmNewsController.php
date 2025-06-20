@@ -46,7 +46,6 @@ class SmNewsController extends Controller
             $news->news_body = $request->description;
             $news->school_id = app('school')->id;
             $news->status = $request->status ?? 0;
-            $news->mark_as_archive = $request->mark_as_archive ?? 0;
             if($request->is_global == 1){
                 $news->is_global = $request->is_global;
                 $news->auto_approve = 0;
@@ -95,7 +94,6 @@ class SmNewsController extends Controller
             $news->news_body = $request->description;
             $news->school_id = app('school')->id;
             $news->status = $request->status ?? 0;
-            $news->mark_as_archive = $request->mark_as_archive ?? 0;
             if($request->is_global == 1){
                 $news->is_global = $request->is_global;
                 $news->auto_approve = 0;

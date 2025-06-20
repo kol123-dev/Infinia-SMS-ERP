@@ -585,12 +585,10 @@ table.dataTable td {
 }
 
 @media only screen and (max-width:575px) {
-    .header_right .infix_session:not(.dropdown .infix_session),
-    .header_right .languageChange:not(.dropdown .languageChange) {
+    .header_right .nice_Select {
         display: none !important;
     }
 }
-
 
 span.demo_addons {
     float: right;

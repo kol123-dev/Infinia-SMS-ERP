@@ -38,7 +38,6 @@ class LeaveController extends Controller
                 ->where('active_status', 1)
                 ->where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
                 ->where('school_id', auth()->user()->school_id)
-                ->orderBy('id', 'DESC')
                 ->get();
 
             $approved = SmLeaveRequest::with(['leaveType' => function ($q) {
@@ -50,7 +49,6 @@ class LeaveController extends Controller
                 ->where('active_status', 1)
                 ->where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
                 ->where('school_id', auth()->user()->school_id)
-                ->orderBy('id', 'DESC')
                 ->get();
 
             $rejected = SmLeaveRequest::with(['leaveType' => function ($q) {
@@ -62,7 +60,6 @@ class LeaveController extends Controller
                 ->where('active_status', 1)
                 ->where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
                 ->where('school_id', auth()->user()->school_id)
-                ->orderBy('id', 'DESC')
                 ->get();
         }
 

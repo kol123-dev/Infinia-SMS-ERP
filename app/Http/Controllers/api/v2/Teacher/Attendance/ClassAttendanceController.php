@@ -211,7 +211,8 @@ class ClassAttendanceController extends Controller
             ->where('section_id', $request->section)
             ->where('attendance_date', date('Y-m-d', strtotime($request->attendance_date)))
             ->get();
-        */
+
+        dd($attendancee); */
 
         if (!$data) {
             $response = [

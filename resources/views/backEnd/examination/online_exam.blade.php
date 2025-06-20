@@ -183,7 +183,7 @@
                                                 <label for="checkbox" class="mb-2">
                                                     @lang('common.section')<span class="text-danger">*</span>
                                                 </label>
-                                                <select multiple class="multypol_check_select active position-relative  {{ $errors->has('section') ? ' is-invalid' : '' }}" id="selectSectionss" name="section[]" style="width:300px"></select>
+                                                <select multiple class="multypol_check_select active position-relative" id="selectSectionss" name="section[]" style="width:300px"></select>
                                                 @if ($errors->has('section'))
                                                     <span class="text-danger invalid-select" role="alert" style="display:block">
                                                         <span style="top:-25px">{{ $errors->first('section') }}</span>

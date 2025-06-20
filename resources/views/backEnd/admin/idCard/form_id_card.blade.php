@@ -5,11 +5,6 @@
     }
 </style>
 <div>
-    <input type="hidden" name="old_sign" value="{{ isset($id_card) ? 1:0 }}" id="old_sign">
-    <input type="hidden" name="old_logo" value="{{ isset($id_card) ? 1:0 }}" id="old_logo">
-    <input type="hidden" name="old_bg" value="{{ isset($id_card) ? 1:0 }}" id="old_bg">
-    <input type="hidden" name="old_profile" value="{{ isset($id_card) ? 1:0 }}" id="old_profile">
-    
     <div class="add-visitor">
         <div class="row">
             <div class="col-lg-12">
@@ -34,10 +29,10 @@
         <div class="row mt-25">
             <div class="col-lg-12">
                 <div class="primary_input">
-                    <label class="primary_input_label" for="">@lang('admin.layout') </label>
+                    <label class="primary_input_label" for="">@lang('admin.layout')</label>
                     <select class="primary_select  form-control{{ $errors->has('page_layout_style') ? ' is-invalid' : '' }}" name="page_layout_style" id="pageLayoutStyle">
-                        <option value="horizontal" {{isset($id_card)? ($id_card->page_layout_style == "horizontal"? 'selected':''):''}}>@lang('admin.horizontal')</option>
-                        <option value="vertical" {{isset($id_card)? ($id_card->page_layout_style == "vertical"? 'selected':''):''}}>@lang('admin.vertical')</option>
+                        <option value="horizontal" {{isset($id_card)? ($id_card->page_layout_style == "horizontal"? 'selected':''):''}}>@lang('admin.vertical')</option>
+                        <option value="vertical" {{isset($id_card)? ($id_card->page_layout_style == "vertical"? 'selected':''):''}}>@lang('admin.horizontal')</option>
                     </select>
 
                     @if ($errors->has('page_layout_style'))
@@ -100,7 +95,7 @@
                             <option value="0"
                                 @if (!in_array(3, $applicableUsers) && !in_array(2, $applicableUsers)) {{ 'selected' }} @endif>@lang('admin.staff')</option>
                         @else
-                            <option selected value="2">@lang('admin.student')</option>
+                            <option value="2">@lang('admin.student')</option>
                             <option value="3">@lang('admin.guardian')</option>
                             <option value="0">@lang('admin.staff')</option>
                         @endif
@@ -116,7 +111,8 @@
             </div>
         </div>
 
-        <div class="row mt-25 staffInfo 
+        <div
+            class="row mt-25 staffInfo 
             @if (isset($id_card)) @if (!in_array(3, $applicableUsers) && !in_array(2, $applicableUsers))
                     {{ 'd-block' }}
                 @else
@@ -139,7 +135,9 @@
                     <span class="text-danger">
                         {{ $errors->first('section') }}
                     </span>
-                @endif                
+                @endif
+
+                
             </div>
         </div>
 
@@ -223,7 +221,7 @@
                         name="user_photo_style" id="userPhotoStyle">
                         <option data-display="@lang('admin.user_photo_style')" value="">@lang('common.select')</option>
                         <option value="squre"
-                            {{ isset($id_card) ? ($id_card->user_photo_style == 'squre' || $id_card->user_photo_style == '' ? 'selected' : '') : '' }}>
+                            {{ isset($id_card) ? ($id_card->user_photo_style == 'squre' ? 'selected' : '') : '' }}>
                             @lang('admin.squre')</option>
                         <option value="round"
                             {{ isset($id_card) ? ($id_card->user_photo_style == 'round' ? 'selected' : '') : '' }}>
@@ -415,7 +413,7 @@
             </button>
         </div>
 
-        <div class="row mt-25 admissionNo ">
+        <div class="row mt-25 admissionNo">
             <div class="col-lg-4 d-flex">
                 <p class="text-uppercase fw-500 mb-10 text">@lang('student.admission_no')</p>
             </div>
@@ -458,7 +456,7 @@
                 </div>
             </div>
         </div>
-        @if (moduleStatusCheck('University') && moduleStatusCheck('QRCodeAttendance') ==  false)
+        @if (moduleStatusCheck('University'))
             <input type="hidden" value="university" id="module">
             <div class="row mt-25 classHide">
                 <div class="col-lg-4 d-flex">
@@ -611,8 +609,7 @@
         @php
             $check = 'checked';
         @endphp
-        
-        <div class="row mt-25 fatherName" style="{{ moduleStatusCheck('QRCodeAttendance') ? 'display:none;':'' }}">
+        <div class="row mt-25 fatherName">
             <div class="col-lg-4 d-flex">
                 <p class="text-uppercase fw-500 mb-10">@lang('student.father_name')</p>
             </div>
@@ -634,7 +631,7 @@
             </div>
         </div>
 
-        <div class="row mt-25 motherName" style="{{ moduleStatusCheck('QRCodeAttendance') ? 'display:none;':'' }}">
+        <div class="row mt-25 motherName">
             <div class="col-lg-4 d-flex">
                 <p class="text-uppercase fw-500 mb-10">@lang('student.mother_name')</p>
             </div>
@@ -677,10 +674,8 @@
                 </div>
             </div>
         </div>
-        @php
-            $applicableUsers = isset($id_card) ? json_decode($id_card->role_id):[];
-        @endphp
-        <div class="row mt-25 mobile  {{ isset($id_card) && !in_array(3, $applicableUsers) && !in_array(2, $applicableUsers) && moduleStatusCheck('QRCodeAttendance') ==  true ? 'd-none':'' }} ">
+
+        <div class="row mt-25 mobile {{ @$id_card->phone_number == 0 ? 'd-none' : '' }}">
             <div class="col-lg-4 d-flex">
                 <p class="text-uppercase fw-500 mb-10">@lang('common.phone')</p>
             </div>
@@ -702,7 +697,7 @@
             </div>
         </div>
 
-        <div class="row mt-25 dateOfBirth" style="{{ moduleStatusCheck('QRCodeAttendance') ? 'display:none':'' }}">
+        <div class="row mt-25 dateOfBirth">
             <div class="col-lg-4 d-flex">
                 <p class="text-uppercase fw-500 mb-10">@lang('common.date_of_birth')</p>
             </div>
@@ -724,7 +719,7 @@
             </div>
         </div>
 
-        <div class="row mt-25 bloodGroup" style="{{ moduleStatusCheck('QRCodeAttendance') ? 'display:none':'' }}">
+        <div class="row mt-25 bloodGroup">
             <div class="col-lg-4 d-flex">
                 <p class="text-uppercase fw-500 mb-10">@lang('student.blood_group')</p>
             </div>
@@ -745,101 +740,6 @@
                 </div>
             </div>
         </div>
-        
-
-        <div class="row mt-25 photo ">
-            <div class="col-lg-4 d-flex">
-                <p class="text-uppercase fw-500 mb-10">@lang('student.photo')</p>
-            </div>
-            <div class="col-lg-8">
-                <div class="d-flex radio-btn-flex ml-40">
-                    <div class="mr-30">
-                        <input type="radio" name="photo" id="photo_yes" value="1"
-                            class="common-radio relationButton" onclick="profilePhoto('1')"
-                            {{ isset($id_card) ? ($id_card->photo == 1 ? 'checked' : '') : 'checked' }}>
-                        <label for="photo_yes">@lang('admin.yes')</label>
-                    </div>
-                    <div class="mr-30">
-                        <input type="radio" name="photo" id="photo_no" value="0"
-                            class="common-radio relationButton" onclick="profilePhoto('0')"
-                            {{ isset($id_card) ? ($id_card->photo == 0 ? 'checked' : '') : '' }}>
-                        <label for="photo_no">@lang('admin.none')</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        @php
-            $applicableUsers = isset($id_card) ? json_decode($id_card->role_id):[];
-        @endphp
-        <div class="row mt-25 {{ isset($id_card) && !in_array(3, $applicableUsers) && !in_array(2, $applicableUsers) ? '':'d-none' }}" id="staff_department">
-            <div class="col-lg-4 d-flex">
-                <p class="text-uppercase fw-500 mb-10">@lang('hr.department')</p>
-            </div>
-            <div class="col-lg-8">
-                <div class="d-flex radio-btn-flex ml-40">
-                    <div class="mr-30">
-                        <input type="radio" name="staff_department" id="staff_dep_yes" value="1"
-                            class="common-radio relationButton" onclick="changeStaffDepartment('1')"
-                            {{ isset($id_card) ? ($id_card->staff_department == 1 ? 'checked' : '') : 'checked' }}>
-                        <label for="staff_dep_yes">@lang('admin.yes')</label>
-                    </div>
-                    <div class="mr-30">
-                        <input type="radio" name="staff_department" id="staff_dep_yno" value="0"
-                            class="common-radio relationButton" onclick="changeStaffDepartment('0')"
-                            {{ isset($id_card) ? ($id_card->staff_department == 0 ? 'checked' : '') : '' }}>
-                        <label for="staff_dep_yno">@lang('admin.none')</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-        <div class="row mt-25 {{ isset($id_card) && !in_array(3, $applicableUsers) && !in_array(2, $applicableUsers) ? '':'d-none' }}" id="staff_designation">
-            <div class="col-lg-4 d-flex">
-                <p class="text-uppercase fw-500 mb-10">@lang('hr.designation')</p>
-            </div>
-            <div class="col-lg-8">
-                <div class="d-flex radio-btn-flex ml-40">
-                    <div class="mr-30">
-                        <input type="radio" name="staff_designation" id="staff_designation_yes" value="1"
-                            class="common-radio relationButton" onclick="changeStaffDesignation('1')"
-                            {{ isset($id_card) ? ($id_card->staff_designation == 1 ? 'checked' : '') : 'checked' }}>
-                        <label for="staff_designation_yes">@lang('admin.yes')</label>
-                    </div>
-                    <div class="mr-30">
-                        <input type="radio" name="staff_designation" id="staff_designation_no" value="0"
-                            class="common-radio relationButton" onclick="changeStaffDesignation('0')"
-                            {{ isset($id_card) ? ($id_card->staff_designation == 0 ? 'checked' : '') : '' }}>
-                        <label for="staff_designation_no">@lang('admin.none')</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-25 signature">
-            <div class="col-lg-4 d-flex">
-                <p class="text-uppercase fw-500 mb-10">@lang('student.signature')</p>
-            </div>
-            <div class="col-lg-8">
-                <div class="d-flex radio-btn-flex ml-40">
-                    <div class="mr-30">
-                        <input type="radio" name="signature_status" id="signature_yes" value="1"
-                            class="common-radio relationButton" onclick="changeSignature('1')"
-                            {{ isset($id_card) ? ($id_card->signature_status == 1 ? 'checked' : '') : 'checked' }}>
-                        <label for="signature_yes">@lang('admin.yes')</label>
-                    </div>
-                    <div class="mr-30">
-                        <input type="radio" name="signature_status" id="signature_no" value="0"
-                            class="common-radio relationButton" onclick="changeSignature('0')"
-                            {{ isset($id_card) ? ($id_card->signature_status == 0 ? 'checked' : '') : '' }}>
-                        <label for="signature_no">@lang('admin.none')</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
 
         @php
             $tooltip = '';
@@ -863,7 +763,6 @@
                 </button>
             </div>
         </div>
-
-        
     </div>
 </div>
+

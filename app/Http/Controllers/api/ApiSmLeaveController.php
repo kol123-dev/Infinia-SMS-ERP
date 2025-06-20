@@ -25,6 +25,8 @@ class ApiSmLeaveController extends Controller
 {
     public function myLeaveType(Request $request,$user_id){
         try{
+
+
             $user=User::find($user_id);
             
             if ($user->role_id !=3) {
@@ -44,14 +46,18 @@ class ApiSmLeaveController extends Controller
             if (ApiBaseMethod::checkUrl($request->fullUrl())) {
                 return ApiBaseMethod::sendResponse($leaves, null);
             }
+         
         }catch (\Exception $e) {
-            return ApiBaseMethod::sendError('Something went wrong, please try again.');
+      
+          
         }
     }
 
-    public function saas_myLeaveType(Request $request,$school_id,$user_id)
-    {
+    public function saas_myLeaveType(Request $request,$school_id,$user_id){
+        
         try{
+
+
             $user=User::find($user_id);
             
             if ($user->role_id !=3) {
@@ -63,18 +69,39 @@ class ApiSmLeaveController extends Controller
                 ->where('sm_leave_defines.school_id',$request->user()->school_id)  
                 ->select('sm_leave_types.id','sm_leave_types.type','sm_leave_defines.days')         
                 ->get();
+                
+             
             }else{
                 return ApiBaseMethod::sendError('Something went wrong, please try again.');
             }
 
-            if (ApiBaseMethod::checkUrl($request->fullUrl())) {    
+    
+            if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+                
                 return ApiBaseMethod::sendResponse($leaves, null);
-            }       
+            }
+         
         }catch (\Exception $e) {
-            return ApiBaseMethod::sendError('Something went wrong, please try again.');
+      
+          
         }
     }
-
+    // {
+    //     "success": true,
+    //     "data": {
+    //         "my_leaves": [
+         
+    //             {
+    //                 "id": 10,
+    //                 "type": "new",
+    //                 "days": 20
+    //             }
+    //         ],
+    //         "apply_leaves": []
+    //     },
+    //     "message": null
+    // }
+    
     public function studentleaveApply(Request $request,$user_id)
     {
         try {
@@ -117,14 +144,22 @@ class ApiSmLeaveController extends Controller
             }
            
         } catch (\Exception $e) {
-            return ApiBaseMethod::sendError('Error.', $e->getMessage());
+ 
+           
         }
     }
 
     public function leaveStoreStudent(Request $request)
     {
+        
+      
         $user=User::find($request->login_id);
+        // if($user->role_id !=2){
+        //     if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+        //         return ApiBaseMethod::sendError('Invalid Student ID, please try again.');
 
+        //     } 
+        // }
         $input = $request->all();
         if (ApiBaseMethod::checkUrl($request->fullUrl())) {
             $validator = Validator::make($input, [
@@ -171,15 +206,16 @@ class ApiSmLeaveController extends Controller
             $apply_leave->academic_id = SmAcademicYear::API_ACADEMIC_YEAR($request->user()->school_id);
             $result = $apply_leave->save();
 
+         
             if($user->role_id==2){
-                $student=SmStudent::withoutGlobalScopes()->where('user_id',$request->login_id)->first();
+                $student=SmStudent::where('user_id',$request->login_id)->first();
 
                 $teacher_assign=SmAssignClassTeacher::where('class_id',$student->class_id)->where('section_id',$student->section_id)->first();
                 if($teacher_assign){
-                    $classTeacher = SmClassTeacher::select('teacher_id')
-                        ->where('assign_class_teacher_id',$teacher_assign->id)
-                        ->first();  
-                        
+                    $classTeacher=SmClassTeacher::select('teacher_id')
+                                            ->where('assign_class_teacher_id',$teacher_assign->id)
+                                            ->first();  
+                                            
                    $notification = new SmNotification();
                     $notification->message = $student->full_name .'Apply For Leave';
                     $notification->is_read = 0;
@@ -191,7 +227,10 @@ class ApiSmLeaveController extends Controller
                     $notification->date = date('Y-m-d');
                     $notification->save(); 
                 }
+                                       
+
             }
+         
 
             if($result){
                 $users = User::whereIn('role_id',[1,5])->where('school_id', $request->user()->school_id)->get();
@@ -223,9 +262,44 @@ class ApiSmLeaveController extends Controller
         }
     }
 
+    public function paretnLeave(Request $request,$student_id){
+
+    }
+
+    // {
+    //     "success": true,
+    //     "data": {
+    //         "pending_leaves": [
+    //             {
+    //                 "id": 4,
+    //                 "full_name": "Tad Preston",
+    //                 "apply_date": "2021-04-12",
+    //                 "leave_from": "2021-04-15",
+    //                 "leave_to": "2021-04-17",
+    //                 "reason": "test",
+    //                 "file": "",
+    //                 "type": "sick",
+    //                 "approve_status": "P"
+    //             },
+    //             {
+    //                 "id": 12,
+    //                 "full_name": "Ashely Coleman",
+    //                 "apply_date": "2021-04-14",
+    //                 "leave_from": "2021-04-17",
+    //                 "leave_to": "2021-04-19",
+    //                 "reason": null,
+    //                 "file": "",
+    //                 "type": "sick",
+    //                 "approve_status": "P"
+    //             }
+    //         ]
+    //     },
+    //     "message": null
+    // }
+
     public function pendingLeave(Request $request,$user_id){
         try {
-            $user =User::select('id','role_id','school_id')->find($user_id);
+            $user =User::select('id','role_id')->find($user_id);
             $staff = SmStaff::where('user_id', $user->id)->first();
 
             
@@ -239,27 +313,35 @@ class ApiSmLeaveController extends Controller
                 ->select('sm_leave_requests.id', 'users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
                 ->get();
             }elseif($user->role_id == 4){
-                $pending_leaves = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
-                            ->where('sm_leave_requests.approve_status', '=', $request->purpose)
-                            ->where('sm_leave_requests.staff_id', '=', $user->id)
-                            ->where('sm_leave_requests.school_id', '=',$request->user()->school_id)
-                            ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
-                            ->join('sm_leave_types', 'sm_leave_types.id', '=', 'sm_leave_defines.type_id')
-                            ->join('users', 'sm_leave_requests.staff_id', '=', 'users.id')
-                            ->select('sm_leave_requests.id', 'users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
-                            ->get();
+                
+                
+                    $pending_leaves = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
+                                ->where('sm_leave_requests.approve_status', '=', $request->purpose)
+                                ->where('sm_leave_requests.staff_id', '=', $user->id)
+                                ->where('sm_leave_requests.school_id', '=',$request->user()->school_id)
+                                ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
+                                ->join('sm_leave_types', 'sm_leave_types.id', '=', 'sm_leave_defines.type_id')
+                                ->join('users', 'sm_leave_requests.staff_id', '=', 'users.id')
+                                ->select('sm_leave_requests.id', 'users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
+                                ->get();
+
+                
             }else{
-                $pending_leaves = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
-                ->where('sm_leave_requests.staff_id', '=', $user->id)
-                ->where('sm_leave_requests.approve_status', '=', $request->purpose)
-                ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
-                ->join('users', 'sm_leave_requests.staff_id', '=', 'users.id')
-                ->leftjoin('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')  
-                ->where('sm_leave_requests.school_id', $user->school_id)
-                ->where('sm_leave_requests.academic_id', SmAcademicYear::API_ACADEMIC_YEAR($user->school_id))
-                ->select('sm_leave_requests.id', 'users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
-                ->get();
+   
+                    $pending_leaves = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
+                    ->where('sm_leave_requests.staff_id', '=', $user->id)
+                    ->where('sm_leave_requests.approve_status', '=', $request->purpose)
+                    ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
+                    ->join('users', 'sm_leave_requests.staff_id', '=', 'users.id')
+                    ->leftjoin('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')  
+                    ->where('sm_leave_requests.school_id',$request->user()->school_id)
+                    ->where('sm_leave_requests.academic_id', getAcademicId())
+                    ->select('sm_leave_requests.id', 'users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
+                    ->get();
+
             }
+
+        
             if (ApiBaseMethod::checkUrl($request->fullUrl())) {
                 $data = [];
                 $data['pending_leaves'] = $pending_leaves->toArray();
@@ -267,17 +349,19 @@ class ApiSmLeaveController extends Controller
             }
         } catch (\Exception $e) {
             return ApiBaseMethod::sendError('Error.', $e->getMessage());
+          
         }
     }
-
     public function leaveApprove(Request $request){
         try {
             $input = $request->all();
             if (ApiBaseMethod::checkUrl($request->fullUrl())) {
                 $validator = Validator::make($input, [
+                  
                     'id' => "required",
                     'user_id' => "required",
                     'approve_status' => 'required',
+                  
                 ]);
             } 
         
@@ -307,6 +391,7 @@ class ApiSmLeaveController extends Controller
             $notification->school_id =$request->user()->school_id;
             $notification->academic_id = SmAcademicYear::API_ACADEMIC_YEAR($request->user()->school_id);
             $notification->save();
+
 
             if (ApiBaseMethod::checkUrl($request->fullUrl())) {
                 if ($result) {
@@ -370,19 +455,15 @@ class ApiSmLeaveController extends Controller
         }
     }
     public function rejectUserLeave(Request $request,$user_id){
-        $user = User::find($user_id);
-        $rejectedRequest = [];
-        if ($user) {
-            $rejectedRequest = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
-            ->select('sm_leave_requests.id','sm_leave_requests.staff_id','users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
-            ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
-            ->join('users', 'sm_leave_requests.staff_id', '=', 'users.id')
-            ->leftjoin('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')
-            ->where('sm_leave_requests.staff_id', '=', $user_id)
-            ->where('sm_leave_requests.approve_status', '=', 'C')
-            ->where('sm_leave_requests.school_id', $user->school_id)
-            ->get();
-        }
+        $rejectedRequest = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
+        ->select('sm_leave_requests.id','sm_leave_requests.staff_id','users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
+        ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
+        ->join('users', 'sm_leave_requests.staff_id', '=', 'users.id')
+        ->leftjoin('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')
+        ->where('sm_leave_requests.staff_id', '=', $user_id)
+        ->where('sm_leave_requests.approve_status', '=', 'C')
+        ->where('sm_leave_requests.school_id', $request->user()->school_id)
+        ->get();
 
         if (ApiBaseMethod::checkUrl($request->fullUrl())) {
             $data = [];

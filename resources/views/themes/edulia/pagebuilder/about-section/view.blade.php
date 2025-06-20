@@ -5,44 +5,14 @@
             <div class="col-xxl-6 col-md-6">
                 <div class="about_us_img">
                     <div class="about_us_img_flex">
-                        <div class="about_us_img_flex_left">
-                            @if (!empty(pagesetting('about_area_img_medium')))
-                                <div class="about_us_img_item">
-                                    <div class="about_area_img_medium">
-                                        <img src="{{ pagesetting('about_area_img_medium')[0]['thumbnail'] }}" alt="">
-                                    </div>
-                                </div>
-                            @endif
-                            
-                            @if (!empty(pagesetting('about_area_img_small')))
-                                <div class="about_us_img_item">
-                                    <div class="about_us_img_item_img small-img">
-                                        <img src="{{ pagesetting('about_area_img_small')[0]['thumbnail'] }}" alt="">
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        <div class="about_us_img_flex_right">
-                            @if (!empty(pagesetting('about_area_img_large')))
-                                <div class="about_us_img_item">
-                                    <div class="about_us_img_item_img large-img">
-                                        <img src="{{ pagesetting('about_area_img_large')[0]['thumbnail'] }}" alt="">
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-
-
-
-
-                        {{-- @if (!empty(pagesetting('about_area_img_1')))
+                        @if (!empty(pagesetting('about_area_img_1')))
                             <div class="about_us_img_item">
                                 <div class="about_us_img_item_img large-img">
                                     <img src="{{ pagesetting('about_area_img_1')[0]['thumbnail'] }}"
                                         alt="{{ __('edulia.Image') }}">
                                 </div>
                             </div>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
             </div>

@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Modules\TwoFactorAuth\Entities\TwoFactorSetting;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Modules\RolePermission\Entities\InfixPermissionAssign;
 
 class User extends Authenticatable
@@ -228,11 +228,6 @@ class User extends Authenticatable
     }
 
     public function enrolledCourses()
-    {
-        return $this->hasMany('Modules\Lms\Entities\CoursePurchaseLog', 'student_id', 'id')->where('active_status','=', 'approve');
-    }
-
-    public function enrolledCoursesStudents()
     {
         return $this->hasMany('Modules\Lms\Entities\CoursePurchaseLog', 'student_id', 'id')->where('active_status','=', 'approve');
     }

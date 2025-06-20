@@ -24,9 +24,6 @@
             .school-table-style tfoot tr td {
                 padding: 10px 10px 10px 10px !important;
             }
-            html[dir="rtl"] #main-content {
-                overflow: initial !important;
-            }
         </style>
     @endpush
     <section class="sms-breadcrumb mb-20">
@@ -145,6 +142,7 @@
                                                 <select class="primary_select form-control{{ $errors->has('student') ? ' is-invalid' : '' }}" id="selectStudent" name="student">
                                                 <option data-display="@lang('common.select_student') *" value="">@lang('common.select_student')*</option>
                                                 @if (isset($invoiceInfo))
+                                                @dump($students)
                                                     @foreach ($students as $student)
                                                         <option value="{{$student->id}}" {{($student->id == $invoiceInfo->record_id)? 'selected':''}}>{{$student->studentDetail->full_name}} ({{$student->section->section_name}} - {{$student->roll_no}})</option>
                                                     @endforeach

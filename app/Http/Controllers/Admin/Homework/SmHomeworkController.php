@@ -18,8 +18,6 @@ use Illuminate\Http\Request;
 use App\Models\StudentRecord;
 use App\SmUploadHomeworkContent;
 use App\Traits\NotificationSend;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -36,7 +34,6 @@ use App\Http\Requests\Admin\Homework\SearchHomeworkRequest;
 use App\Http\Controllers\Admin\StudentInfo\SmStudentReportController;
 use App\Http\Requests\Admin\Homework\SearchHomeworkEvaluationRequest;
 use App\Http\Controllers\Admin\SystemSettings\SmSystemSettingController;
-use Modules\Lms\Http\Controllers\LessonController;
 use Modules\University\Repositories\Interfaces\UnCommonRepositoryInterface;
 
 class SmHomeworkController extends Controller
@@ -147,26 +144,6 @@ class SmHomeworkController extends Controller
                 }
             } else {
                 if ($request->status == "lmsHomework") {
-
-                    if(moduleStatusCheck('Lms')) {
-                        if (!Schema::hasColumn('sm_homeworks', 'student_ids')) {
-                            Schema::table('sm_homeworks', function (Blueprint $table) {
-                                $table->json('student_ids')->nullable();
-                            });
-                        }
-                    }
-
-                    $student_ids = StudentRecord::when($request->class, function ($query) use ($request) {
-                        $query->where('class_id', $request->class_id);
-                    })
-                        ->when($request->section_id, function ($query) use ($sections) {
-                            $query->whereIn('section_id', $sections);
-                        })
-                        ->when(!$request->academic_year, function ($query) use ($request) {
-                            $query->where('academic_id', getAcademicId());
-                        })->where('school_id', auth()->user()->school_id)->pluck('student_id')->unique();
-
-                    
                     $classes = SmClassSection::when($request->class_id, function ($query) use ($request) {
                         $query->where('class_id', $request->class_id);
                     })
@@ -175,8 +152,6 @@ class SmHomeworkController extends Controller
                         })
                         ->where('school_id', auth()->user()->school_id)
                         ->get();
-
-                    
 
                     foreach ($classes as $classe) {
                         $homeworks = new SmHomework();
@@ -196,7 +171,6 @@ class SmHomeworkController extends Controller
                             $homeworks->chapter_id = $request->chapter_id;
                             $homeworks->lesson_id = $request->lesson_id;
                             $homeworks->subject_id = $request->subject_id;
-                            $homeworks->student_ids = json_encode($student_ids);
                         }
                         $homeworks->save();
                     }
@@ -401,23 +375,6 @@ class SmHomeworkController extends Controller
                         }
 
                         $results = $homeworkstudent->save();
-
-                        if ($homeworkstudent->complete_status == 'C') {
-                            $course_id = $homework->course_id;
-                            $lesson_id = $homework->lesson_id;
-                        
-                            $lessonController = new LessonController();
-                        
-                            $modifiedRequest = $request->duplicate();
-                        
-                            $modifiedRequest->merge([
-                                'student_id' => $request->student_id[$i],
-                                'course_id'  => $course_id,
-                                'lesson_id'  => $lesson_id
-                            ]);
-                        
-                            $response = $lessonController->homeWorkComplete($modifiedRequest);
-                        }
                     }
                     $homeworks = SmHomework::find($request->homework_id);
                     $homeworks->evaluation_date = date('Y-m-d');
@@ -962,6 +919,7 @@ class SmHomeworkController extends Controller
     
                 return view('backEnd.homework.homework_report', compact('classes', 'data'));
             } catch (\Exception $e) {
+                dd($e);
                 Toastr::error('Operation Failed', 'Failed');
                 return redirect()->back();
             }

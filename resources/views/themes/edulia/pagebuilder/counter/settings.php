@@ -44,7 +44,7 @@ return [
         [
             'id'            => 'view_course_button_link',
             'type'          => 'text',
-            'value'         => 'course',
+            'value'         => '/course',
             'class'         => '',
             'label_title'   => __('edulia.view_course_button_link'),
             'placeholder'   => __('edulia.enter_button_link'),
@@ -60,7 +60,7 @@ return [
         [
             'id'            => 'contact_us_button_link',
             'type'          => 'text',
-            'value'         => 'contact-us',
+            'value'         => '/contact-us',
             'class'         => '',
             'label_title'   => __('edulia.contact_us_button_link'),
             'placeholder'   => __('edulia.enter_button_link'),

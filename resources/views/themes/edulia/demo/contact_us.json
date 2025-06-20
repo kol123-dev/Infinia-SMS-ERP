@@ -110,11 +110,11 @@
             "36bbe30e72": {
                 "settings": {
                     "google_map_editor": {
-                        "value": "<p>Information<\/p><p><br><\/p><div class=\"contacts_info_card\" style=\"color: rgb(85, 85, 85); font-family: Inter, sans-serif; background-color: rgb(255, 255, 255);\">Email Address<p>hello@aorasoft.com<\/p><\/div><div class=\"contacts_info_card\" style=\"color: rgb(85, 85, 85); font-family: Inter, sans-serif; background-color: rgb(255, 255, 255);\">Phone Number<p>+968 9700 2784<\/p><\/div><div class=\"contacts_info_card\" style=\"color: rgb(85, 85, 85); font-family: Inter, sans-serif; background-color: rgb(255, 255, 255);\">Address<p>Al Khuwair, Muscat, Oman<\/p><\/div>",
+                        "value": "<p>Information<\/p><p><br><\/p><div class=\"contacts_info_card\" style=\"color: rgb(85, 85, 85); font-family: Inter, sans-serif; background-color: rgb(255, 255, 255);\">Email Address<p>info@sppondonit.com<\/p><\/div><div class=\"contacts_info_card\" style=\"color: rgb(85, 85, 85); font-family: Inter, sans-serif; background-color: rgb(255, 255, 255);\">Phone Number<p>+1 (123) 456-7890<\/p><\/div><div class=\"contacts_info_card\" style=\"color: rgb(85, 85, 85); font-family: Inter, sans-serif; background-color: rgb(255, 255, 255);\">Address<p>503 Buffalo Street, Manhattan, USA<\/p><\/div>",
                         "is_array": "0"
                     },
                     "google_map_key": {
-                        "value": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m14!1m8!1m3!1d285.9450021539312!2d58.426811009055896!3d23.59402377030705!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e91ff006418d827%3A0x849613c8aae2dd81!2sRock%20international%20SPC!5e1!3m2!1sen!2som!4v1732686160258!5m2!1sen!2som\" width=\"250\" height=\"210\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"><\/iframe>",
+                        "value": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=!1m18!1m12!1m3!1d116833.83187882078!2d90.33728802520291!3d23.780975728331725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b8b087026b81%3A0x8fa563bbdd5904c2!2sDhaka!5e0!3m2!1sen!2sbd!4v1704430898343!5m2!1sen!2sbd\" width=\"250\" height=\"210\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"><\/iframe>",
                         "is_array": "0"
                     }
                 }

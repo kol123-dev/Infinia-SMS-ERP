@@ -562,7 +562,7 @@ class ApiSmHomeWorkController extends Controller
                 $uploadedContent = $student_detail->homeworkContents
                     ->where('homework_id', $s_homework->id)
                     ->first();
-
+    
                 $d['id'] = $s_homework->id;
                 $d['homework_date'] = $s_homework->homework_date;
                 $d['submission_date'] = $s_homework->submission_date;
@@ -574,7 +574,6 @@ class ApiSmHomeWorkController extends Controller
                 $d['file'] = $s_homework->file;
                 $d['description'] = $s_homework->description;
                 $d['obtained_marks'] = $student_result ? $student_result->marks : '';
-                $d['evaluation_date'] = $s_homework->evaluation_date;
                 
                 // Check the completion status correctly
                 if ($student_result) {
@@ -957,7 +956,7 @@ class ApiSmHomeWorkController extends Controller
 
                 if ($user->notificationToken != '') {
 
-                    //echo 'Infix Edu';
+                    //echo 'infinia Edu';
                     define('API_ACCESS_KEY', 'AAAAFyQhhks:APA91bGJqDLCpuPgjodspo7Wvp1S4yl3jYwzzSxet_sYQH9Q6t13CtdB_EiwD6xlVhNBa6RcHQbBKCHJ2vE452bMAbmdABsdPriJy_Pr9YvaM90yEeOCQ6VF7JEQ501Prhnu_2bGCPNp');
                     //   $registrationIds = ;
                     #prep the bundle

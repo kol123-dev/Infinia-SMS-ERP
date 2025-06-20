@@ -782,7 +782,7 @@ html[dir="rtl"] .input-right-icon button.primary-btn-small-input {
 html[dir="rtl"] #main-content {
   margin-right: 15%;
   margin-left: 0;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 @media (max-width: 1370px) {

@@ -53,12 +53,11 @@ class SmStudentIdCardController extends Controller
 
     public function store(SmStudentIdCardRequest $request)
     {
-       try {
-            
+        try {
             $destination='public/uploads/studentIdCard/';
             $id_card = new SmStudentIdCard();
             $id_card->title = $request->title;
-            $id_card->logo = $request->logo ? fileUpload($request->logo, $destination) : 'public/backEnd/id_card/img/logo.png' ;
+            $id_card->logo = $request->logo ? fileUpload($request->logo, $destination) : generalSetting()->logo;
             $id_card->school_id = Auth::user()->school_id;
             if(moduleStatusCheck('University')){
                 $id_card->un_academic_id = getAcademicId();
@@ -100,10 +99,6 @@ class SmStudentIdCardController extends Controller
             $id_card->student_address = $request->student_address;
             $id_card->dob = $request->dob;
             $id_card->blood = $request->blood;
-            $id_card->photo = $request->photo;
-            $id_card->signature_status = $request->signature_status;
-            $id_card->staff_department = $request->staff_department;
-            $id_card->staff_designation = $request->staff_designation;
             if (in_array(3, $request->applicable_user)) {
                 $id_card->phone_number = $request->phone_number;
             }
@@ -134,51 +129,21 @@ class SmStudentIdCardController extends Controller
         }
     }
 
-
-    public function previewIdCard($id)
-    {
-        try{
-            $id_card = SmStudentIdCard::where('id',$id)->first();
-            if($id_card)
-            {
-                $roles = InfixRole::select('*')->where('is_saas',0)->where('id', '!=', 1)->where(function ($q) {
-                    $q->where('school_id', Auth::user()->school_id)->orWhere('type', 'System');
-                })->get();
-                $view =  view('backEnd.admin.idCard.id_cart_preview_modal', compact('id_card','roles'))->render();
-                return response()->json([
-                    "view" => $view,
-                    "status" => 1
-                ]);
-            }else{
-                return response()->json([
-                    "status" => 0,
-                    "msg" => "Not Found"
-                ]);
-            }
-        }catch(\Exception $e){
-            return response()->json([
-                "status" => 0,
-                "msg" => 'Operation Failed'
-            ]);
-        }
-    }
-
-
     public function update(SmStudentIdCardRequest $request, $id)
     {
         try {
             $destination='public/uploads/studentIdCard/';  
             $id_card = SmStudentIdCard::find($request->id);
             $id_card->title = $request->title;
-            $id_card->logo = $request->old_logo == 0 ? 'public/backEnd/id_card/img/logo.png' :  fileUpdate($id_card->logo,$request->logo,$destination);          
-            $id_card->background_img = $request->old_bg == 0 ? 'public/backEnd/id_card/img/vertical_bg.png' :  fileUpdate($id_card->background_img,$request->background_img,$destination);          
-            $id_card->profile_image = $request->old_profile == 0 ? 'public/backEnd/id_card/img/thumb.png' : fileUpdate($id_card->profile_image,$request->profile_image,$destination);
+            $id_card->logo = fileUpdate($id_card->logo,$request->logo,$destination);          
+            $id_card->background_img = fileUpdate($id_card->background_img,$request->background_img,$destination);          
+            $id_card->profile_image = fileUpdate($id_card->profile_image,$request->profile_image,$destination);
             if(in_array(2, $request->applicable_user) || in_array(3, $request->applicable_user)){
                 $id_card->role_id = json_encode($request->applicable_user);
             }else{
                 $id_card->role_id = json_encode($request->role);
             }
-            $id_card->signature = $request->old_sign == 0 ? 'public/backEnd/id_card/img/Signature.png' : fileUpdate($id_card->signature,$request->signature,$destination);
+            $id_card->signature = fileUpdate($id_card->signature,$request->signature,$destination);
             $id_card->page_layout_style = $request->page_layout_style;
             $id_card->user_photo_style = $request->user_photo_style;
             $id_card->user_photo_width = $request->user_photo_width;
@@ -197,10 +162,6 @@ class SmStudentIdCardController extends Controller
             $id_card->student_address = $request->student_address;
             $id_card->dob = $request->dob;
             $id_card->blood = $request->blood;
-            $id_card->photo = $request->photo;
-            $id_card->signature_status = $request->signature_status;
-            $id_card->staff_department = $request->staff_department;
-            $id_card->staff_designation = $request->staff_designation;
             if (moduleStatusCheck('University')) {
                 $id_card->un_session = $request->un_session_id;
                 $id_card->un_faculty = $request->un_faculty_id;
@@ -209,7 +170,6 @@ class SmStudentIdCardController extends Controller
                 $id_card->un_semester = $request->un_semester_id;
                 $id_card->un_semester_label = $request->un_semester_label_id;
             }
-            
             if(in_array(3, $request->applicable_user)){
                 $id_card->phone_number = $request->phone_number;
             }
@@ -220,7 +180,6 @@ class SmStudentIdCardController extends Controller
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }
-        
     }
 
     public function destroy(Request $request)
@@ -274,7 +233,6 @@ class SmStudentIdCardController extends Controller
             'grid_gap' => 'required',
         ]);
         if ($request->role==2) {
-           
             $s_students = SmStudent::when($request->class, function($q) use($request){
                     $q->whereHas('studentRecord', function($query) use($request){
                         $query->where('class_id', $request->class);
@@ -287,16 +245,14 @@ class SmStudentIdCardController extends Controller
                 })
                 ->with('parents', 'bloodGroup')
                 ->get();
-                
         } elseif ($request->role==3) {
-            
             $studentGuardian = SmStudent::get('parent_id');
             $s_students = SmParent::whereIn('id', $studentGuardian)->get();
         } else {
             $s_students = SmStaff::whereRole($request->role)->status()->get();
         }
         $id_card = SmStudentIdCard::status()->find($request->id_card);
-        
+
         $role_id = $request->role;
         $gridGap = $request->grid_gap;
 
@@ -365,13 +321,19 @@ class SmStudentIdCardController extends Controller
     {
         set_time_limit(2700);
         try {
+
             $s_ids = explode('-', $s_id);
             $students = [];
             foreach ($s_ids as $sId) {
                 $students[] = SmStudent::find($sId);
             }
+
+           
+
             $id_card = SmStudentIdCard::find($c_id);
+
             return view('backEnd.admin.idCard.student_id_card_print_2', ['id_card' => $id_card, 'students' => $students]);
+
             $pdf = Pdf::loadView('backEnd.admin.idCard.student_id_card_print_2', ['id_card' => $id_card, 'students' => $students]);
             return $pdf->stream($id_card->title . '.pdf');
         } catch (\Exception $e) {

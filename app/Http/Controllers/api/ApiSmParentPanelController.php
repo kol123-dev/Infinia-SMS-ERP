@@ -32,7 +32,7 @@ class ApiSmParentPanelController extends Controller
                     'id' => $user->id,
                     'user_id' => $user->user_id,
                     'full_name' => $user->full_name,
-                    'phone_number' => $user->mobile,
+                    'phone_number' => $user->phone_number,
                     'admission_no' => $user->admission_no,
                     'class_section' => $class_sec,
                     'father_name' => $user->parents->father_name,
@@ -171,7 +171,6 @@ class ApiSmParentPanelController extends Controller
             $d['photo'] = $student->student_photo;
             $d['phone_number']= $student->phone_number;
             $d['admission_no']= $student->admission_no;
-            $d['student_id']= $student->id;
             $d['class_section']= $class_sec;
             $d['father_name']= $student->parents->father_name;
             $d['fathers_mobile']= $student->parents->fathers_mobile;

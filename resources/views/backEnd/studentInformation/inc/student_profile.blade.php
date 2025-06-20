@@ -68,7 +68,6 @@
             </div>
         </div>
     </div>
-    
     <div class="single-meta">
         <div class="d-flex justify-content-between">
             <div class="name">
@@ -77,6 +76,7 @@
 
             </div>
             <div class="value">
+
                 @if ($student_detail->defaultClass != '')
                     {{ @$student_detail->defaultClass->section->section_name }}
                 @elseif ($student_detail->studentRecord != '')
@@ -93,6 +93,7 @@
                     @lang('common.gender')
                 </div>
                 <div class="value">
+
                     {{ @$student_detail->gender != '' ? $student_detail->gender->base_setup_name : '' }}
                 </div>
             </div>
@@ -117,19 +118,6 @@
                 </div>
             </div>
         </div>
-        
-        @if(moduleStatusCheck('QRCodeAttendance') && file_exists(public_path('qr_codes/student-'.$student_detail->id.'-qrcode.png')))
-            <div class="single-meta">
-                <div class="d-flex justify-content-between">
-                    <div class="name">
-                        @lang('qrcodeattendance::qr_code_attendance.qr_code')
-                    </div>
-                    <div class="value">
-                        <img src="{{ asset('public/qr_codes/student-'.$student_detail->id.'-qrcode.png') }}" height="100" width="100" alt="">
-                    </div>
-                </div>
-            </div>
-        @endif
     @endif
 </div>
 </div>

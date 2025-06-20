@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\v2;
 
-use App\SmParent;
 use App\SmStudent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,19 +15,11 @@ class StudentDormitoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-      if (auth()->user()->role_id == 3) {
-            $parent = SmParent::where('user_id', auth()->user()->id)->first();
-            $student_detail = SmStudent::where('parent_id', $parent->id)->first();  
-
-        } else {
-            $parent = SmParent::where('id', auth()->user()->id)->first();
-            $student_detail = SmStudent::where('parent_id', $parent->id)->first();
-        }
-        
+        $student_detail = SmStudent::where('user_id', auth()->user()->id)->first();
         if (@$student_detail->room_id == @$this->id) {
             $status = __('dormitory.assigned');
         } else {
-            $status = __('dormitory.not_assigned');
+            $status = '';
         }
         return [
             'id' => (int)$this->id,

@@ -20,7 +20,6 @@ class SyllabusController extends Controller
             ->where('content_type', 'sy')
             ->whereNull('course_id')
             ->whereNull('chapter_id')
-            ->where('available_for_all_classes', 1)
             ->whereNull('lesson_id')
             ->where('school_id', auth()->user()->school_id)
             ->where('academic_id', $record->academic_id)
@@ -32,7 +31,6 @@ class SyllabusController extends Controller
                 return $que->where('section', $record->section_id)
                     ->orWhereNull('section');
             })
-            ->orderBy('id', 'DESC')
             ->get()
             ->map(function ($value) {
                 return [

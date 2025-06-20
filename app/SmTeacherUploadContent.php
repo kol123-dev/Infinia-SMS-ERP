@@ -105,14 +105,4 @@ class SmTeacherUploadContent extends Model
     {
         return $query->whereNull('course_id')->whereNull('chapter_id')->whereNull('lesson_id');
     }
-
-    public function lesson()
-    {
-        return $this->belongsTo('Modules\Lms\Entities\CourseLesson', 'lesson_id', 'id')->withDefault();
-    }
-    
-    public function course()
-    {
-        return $this->belongsTo('Modules\Lms\Entities\Course', 'course_id', 'id')->withDefault();
-    }
 }

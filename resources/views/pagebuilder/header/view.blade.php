@@ -124,7 +124,7 @@
             <div class="heading_mobile_thum"><i class="far fa-bars"></i></div>
         </div>
         <div class='text-center'>
-            <a href='' class="heading_logo">
+            <a href='index.php' class="heading_logo">
                 <img src="assets/img/logo.png" alt="">
             </a>
         </div>
@@ -203,14 +203,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-2 my-auto">
-                    <a href="" class="heading_main_logo mobile-menu-left">
+                    <a href="index.php" class="heading_main_logo mobile-menu-left">
                         <img src="assets/img/logo.png" alt="">
                     </a>
                 </div>
                 <div class="col-md-7">
                     <nav class="heading_main_menu">
                         <ul>
-                            <li class="heading_main_menu_list"><a href=""
+                            <li class="heading_main_menu_list"><a href="index.php"
                                     class="heading_main_menu_list_link">Home</a></li>
                             <li class="heading_main_menu_list"><a href="about.php"
                                     class="heading_main_menu_list_link">About</a></li>
@@ -372,7 +372,7 @@
     </div>
     <ul>
         <li class='has-submenu'>
-            <a href="">Home</a>
+            <a href="index.php">Home</a>
         </li>
         <li><a href="about.php">About</a></li>
         <li><a href="course.php">Courses</a></li>

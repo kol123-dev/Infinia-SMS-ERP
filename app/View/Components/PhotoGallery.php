@@ -15,9 +15,9 @@ class PhotoGallery extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct($count, $column)
+    public function __construct($count = 3, $column = 4)
     {
-        $this->count  = $count;
+        $this->count = $count;
         $this->column = $column;
     }
 
@@ -28,16 +28,9 @@ class PhotoGallery extends Component
     {
         $photoGalleries = SmPhotoGallery::where('parent_id', '=', null)
                         ->where('school_id', app('school')->id)
-                        ->orderBy('position','asc')
-                        ->get();    
-
-        $photoGalleryCount = SmPhotoGallery::where('school_id', app('school')->id)->count();
-                   
-        return view('components.' . activeTheme() . '.photo-gallery', [
-            'photoGalleries' => $photoGalleries,
-            'column' => $this->column,
-            'count' => $this->count,
-            'photoGalleryCount' => $photoGalleryCount
-        ]);
+                        ->take($this->count)
+                        ->orderBy('position','desc')
+                        ->get();
+        return view('components.' . activeTheme() . '.photo-gallery', compact('photoGalleries'));
     }
 }

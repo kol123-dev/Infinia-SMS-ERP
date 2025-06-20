@@ -39,6 +39,7 @@ use Modules\University\Repositories\Interfaces\UnCommonRepositoryInterface;
 
 class SmExamMarkRegisterController extends Controller
 {
+        // Mark Register View Page
         public function index()
         {
             try {
@@ -63,6 +64,8 @@ class SmExamMarkRegisterController extends Controller
         public function create()
         {
             try{
+                //$exams = SmExam::with('examType', 'class', 'section')->get();
+                
                 $exams = SmExamType::where('active_status', 1)
                 ->where('academic_id', getAcademicId())
                 ->where('school_id', Auth::user()->school_id)
@@ -84,6 +87,7 @@ class SmExamMarkRegisterController extends Controller
         }
     public function search(AddMarkRequest $request)
     {
+        
         try {
             if (moduleStatusCheck('University')) {
                 $data = [];
@@ -247,6 +251,7 @@ class SmExamMarkRegisterController extends Controller
                 if ($students->count() < 1) {
                     Toastr::error('Student is not found in according this class and section!', 'Failed');
                     return redirect()->back();
+                // return redirect()->back()->with('message-danger', 'Student is not found in according this class and section! Please add student in this section of that class.');
                 } else {
                     if($request->section !=''){
                     $marks_entry_form = SmExamSetup::with('class','section')->where(
@@ -266,16 +271,21 @@ class SmExamMarkRegisterController extends Controller
                         ->whereIn('section_id',$classSections)->where('academic_id', getAcademicId())->orderby('id','ASC')->get();
                     }
 
+
                     if ($marks_entry_form->count() > 0) {
                         $number_of_exam_parts = count($marks_entry_form);
                         return view('backEnd.examination.masks_register_create', compact('exams', 'classes', 'students', 'exam_id', 'class_id', 'section_id', 'subject_id', 'subjectNames', 'number_of_exam_parts', 'marks_entry_form', 'exam_types', 'exam_type','search_info'));
                     } else {
                         Toastr::error('No result found or exam setup is not done!', 'Failed');
                         return redirect()->back();
+                        // return redirect()->back()->with('message-danger', 'No result found or exam setup is not done!');
                     }
+                
+                    // return view('backEnd.examination.masks_register_create', compact('exams', 'classes', 'students',   'exam_id', 'class_id', 'section_id', 'marks_register_subjects', 'assign_subject_ids','search_info'));
                 }
             }
         } catch (\Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }

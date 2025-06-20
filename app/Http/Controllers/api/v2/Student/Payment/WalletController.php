@@ -21,7 +21,7 @@ class WalletController extends Controller
         $data['myBalance'] = auth()->user()->wallet_balance ? (float)number_format(auth()->user()->wallet_balance, 2, '.', '') : 0.00;
         $data['currencySymbol'] = (string)generalSetting()->currency_symbol;
         $walletTransactions = WalletTransaction::where('user_id', auth()->user()->id)
-            ->where('school_id', auth()->user()->school_id)->orderBy('id', 'DESC')
+            ->where('school_id', auth()->user()->school_id)
             ->get();
 
         $data['walletTransactions'] = WalletResource::collection($walletTransactions);

@@ -342,9 +342,8 @@ class AuthenticationController extends Controller
         $student = SmStudent::withoutGlobalScope(SchoolScope::class)
             ->where('school_id', auth()->user()->school_id)
             ->where('id', $request->student_id)->first();
-            
-        $user = User::where('school_id', auth()->user()->school_id)->where('role_id', 2)
-            ->where('id', $student->user->id)->first();
+        $user = User::where('school_id', auth()->user()->school_id)
+            ->where('id', $student->id)->first();
 
         if ($request->filled('first_name')) {
             $student->first_name = $request->first_name;

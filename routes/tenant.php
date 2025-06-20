@@ -357,9 +357,6 @@ Route::group(['middleware' => []], function () {
         $routes->get('event-details/{id}', 'singleEventDetails')->name('event-details')->where('id', '[0-9]+');
         $routes->get('blog-list', 'blogList')->name('blog-list');
         $routes->post('load-more-blog-list', 'loadMoreBlogList')->name('load-more-blog-list');
-        $routes->post('load-more-events', 'loadMoreEvents')->name('load-more-events');
-        $routes->post('load-more-photo-gallery-list', 'loadMorePhotoGalleryList')->name('load-more-photo-gallery-list');
-        $routes->post('load-more-course-list', 'loadMoreCourseList')->name('load-more-course-list');
         $routes->get('speech-slider/{id}', 'singleSpeechSlider')->name('speech-slider')->where('id', '[0-9]+');
         $routes->get('all-course-list', 'courseList')->name('all-course-list');
         $routes->get('single-course-details/{id}', 'singleCourseDetail')->name('single-course-details');

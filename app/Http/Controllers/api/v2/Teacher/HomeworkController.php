@@ -294,6 +294,7 @@ class HomeworkController extends Controller
 
     public function storeHomeWork(Request $request)
     {
+        // dd(date('Y-m-d',strtotime($request->assign_date)));
 
         $maxFileSize = generalSetting()->file_size * 1024;
 

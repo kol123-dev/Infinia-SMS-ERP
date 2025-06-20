@@ -38,8 +38,7 @@ class Course extends Component
          else{
             $courses->inRandomOrder();
          }
-        $courseCount = SmCourse::where('school_id', app('school')->id)->count();
         $courses = $courses->take($this->count)->get();
-        return view('components.'.activeTheme().'.course', compact('courses','courseCount'));
+        return view('components.'.activeTheme().'.course', compact('courses'));
     }
 }

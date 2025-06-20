@@ -34,7 +34,6 @@ class ContentController extends Controller
             $uploadContents = SmTeacherUploadContent::where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
                 ->where('school_id', auth()->user()->school_id)
                 ->whereNullLms()
-                ->orderBy('id', 'DESC')
                 ->get()
                 ->map(function ($row) {
                     if ($row->available_for_admin == 1) {
@@ -76,7 +75,6 @@ class ContentController extends Controller
                 $q->where('created_by', auth()->user()->id);
             })->whereNullLms()->where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
                 ->where('school_id', auth()->user()->school_id)
-                ->orderBy('id', 'DESC')
                 ->get()
                 ->map(function ($row) {
                     if ($row->available_for_admin == 1) {

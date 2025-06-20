@@ -64,7 +64,6 @@ class HomeworkController extends Controller
             ->where('chapter_id', null)
             ->where('lesson_id', null)
             ->where('academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())
-            ->orderBy('id', 'DESC')
             ->get();
 
         $data['homeworkLists'] = SmHomeworkResource::collection($homeworkLists);

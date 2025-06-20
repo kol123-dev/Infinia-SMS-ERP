@@ -77,12 +77,8 @@ class ApiSmTeacherController extends Controller
                     $d['available_for'] = 'all classes student';
                 }
                 if ($data->classes != "" && $data->sections != "") {
-                    $d['available_for'] = 'All Students Of (' . $data->classes->class_name . '->' . @$data->globalSections->section_name . ')';
+                    $d['available_for'] = 'All Students Of (' . $data->classes->class_name . '->' . @$data->sections->section_name . ')';
                 }
-                if ($data->available_for_all_classes == 0 && $data->available_for_admin == 0) {
-                    $d['available_for'] = 'All Students Of (' . $data->classes->class_name . '->' . @$data->globalSections->section_name . ')';
-                }
-                
                 $d['upload_date'] = $data->upload_date;
                 $d['description'] = $data->description;
                 $d['upload_file'] = $data->upload_file;

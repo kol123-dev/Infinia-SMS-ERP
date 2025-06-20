@@ -9,7 +9,7 @@ return [
         [
             'id'            => 'online_admission_header',
             'type'          => 'text',
-            'value'         => 'Online Admission going on session 2024-25',
+            'value'         => 'Online Admission going on session 2022-23',
             'class'         => '',
             'label_title'   => __('edulia.heading'),
             'placeholder'   => __('edulia.enter_text'),

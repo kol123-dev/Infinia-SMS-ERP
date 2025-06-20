@@ -120,7 +120,7 @@
                 </div>
                 @if (!empty(pagesetting('header_menu_search')) && pagesetting('header_menu_search') == 1)
                     <div class="col-md-3 text-end mobile-none">
-                        <form action='#' methods='GET' class="heading_main_search mb-0">
+                        <form action='#' methods='GET' class="heading_main_search">
                             <div class="input-control">
                                 <input type="search" class="input-control-input" placeholder='{{pagesetting('header_menu_search_placeholder')}}' required>
                                 <button type='submit' class="input-control-icon"><i class="far fa-search"></i></button>

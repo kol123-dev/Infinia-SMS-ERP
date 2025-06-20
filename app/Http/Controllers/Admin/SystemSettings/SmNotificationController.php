@@ -103,6 +103,7 @@ class SmNotificationController extends Controller
             }
             return response()->json();
         } catch (\Exception $e) {
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }

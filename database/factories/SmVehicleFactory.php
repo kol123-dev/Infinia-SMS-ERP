@@ -27,7 +27,6 @@ class SmVehicleFactory extends Factory
             'vehicle_model' =>'INFIX-M'.rand(100,1000),
             'made_year' =>date('Y'),          
             'note' =>$this->faker->sentence($nbWords =6, $variableNbWords = true),
-            'driver_id' => 5,
         ];
     }
 }

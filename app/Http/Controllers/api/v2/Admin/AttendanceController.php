@@ -123,69 +123,47 @@ class AttendanceController extends Controller
 
     public function subjectList(Request $request)
     {
-        try {
-            $staff_info = SmStaff::withoutGlobalScope(ActiveStatusSchoolScope::class)
+        $staff_info = SmStaff::withoutGlobalScope(ActiveStatusSchoolScope::class)
+            ->where('school_id', auth()->user()->school_id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+
+        if (teacherAccess()) {
+            $subject_all = SmAssignSubject::withoutGlobalScope(StatusAcademicSchoolScope::class)
                 ->where('school_id', auth()->user()->school_id)
-                ->where('user_id', auth()->user()->id)
-                ->first();
-    
-            if (!$staff_info) {
-                return response()->json([
-                    'success' => false,
-                    'data'    => null,
-                    'message' => 'Staff information not found'
-                ]);
-            }
-    
-            if (teacherAccess()) {
-                $subject_all = SmAssignSubject::withoutGlobalScope(StatusAcademicSchoolScope::class)
-                    ->where('school_id', auth()->user()->school_id)
-                    ->where('class_id', $request->class)
-                    ->where('section_id', $request->section)
-                    ->where('teacher_id', $staff_info->id)
-                    ->distinct('subject_id')
-                    ->get();
-            } else {
-                $subject_all = SmAssignSubject::withoutGlobalScope(StatusAcademicSchoolScope::class)
-                    ->where('school_id', auth()->user()->school_id)
-                    ->where('class_id', $request->class)
-                    ->where('section_id', $request->section)
-                    ->distinct('subject_id')
-                    ->get();
-            }
-    
-            $subjects = [];
-            foreach ($subject_all as $allSubject) {
-                $subject = SmSubject::withoutGlobalScope(StatusAcademicSchoolScope::class)
-                    ->where('school_id', auth()->user()->school_id)
-                    ->where('id', $allSubject->subject_id)
-                    ->first(['id', 'subject_name']);
-                if ($subject) {
-                    $subjects[] = $subject;
-                }
-            }
-    
-            if (empty($subjects)) {
-                return response()->json([
-                    'success' => true,
-                    'data'    => [],
-                    'message' => 'No subjects found, or may not be assigned to you'
-                ]);
-            }
-    
-            return response()->json([
-                'success' => true,
-                'data'    => $subjects,
-                'message' => 'Subject list retrieved successfully'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
+                ->where('class_id', $request->class)
+                ->where('section_id', $request->section)
+                ->where('teacher_id', $staff_info->id)
+                ->distinct('subject_id')->get();
+        } else {
+            $subject_all = SmAssignSubject::withoutGlobalScope(StatusAcademicSchoolScope::class)
+                ->where('school_id', auth()->user()->school_id)
+                ->where('class_id', $request->class)
+                ->where('section_id', $request->section)
+                ->distinct('subject_id')->get();
+        }
+        $students = [];
+        foreach ($subject_all as $allSubject) {
+            $students[] = SmSubject::withoutGlobalScope(StatusAcademicSchoolScope::class)
+                ->where('school_id', auth()->user()->school_id)
+                ->where('id', $allSubject->subject_id)
+                ->first(['id', 'subject_name']);
+        }
+        if (!$students) {
+            $response = [
                 'success' => false,
                 'data'    => null,
-                'message' => 'An error occurred: ' . $e->getMessage()
-            ], 500);
+                'message' => 'Operation failed'
+            ];
+        } else {
+            $response = [
+                'success' => true,
+                'data'    => $students,
+                'message' => 'Subject list'
+            ];
         }
-    }   
+        return response()->json($response);
+    }
 
     public function studentSearch(Request $request)
     {
@@ -558,12 +536,9 @@ class AttendanceController extends Controller
             'year' => 'nullable|required_with:month|date_format:Y'
         ]);
 
-        $student_id = SmStudent::where('id', $request->student_attendance_id)->first();
-
-        $record = StudentRecord::where('student_id', $student_id->id)
+        $record = StudentRecord::where('id', $request->student_attendance_id)
             ->where('school_id', auth()->user()->school_id)
             ->first();
-
         if ($request->year && $request->month) {
             $year = $request->year;
             $month = sprintf('%02d', $request->month);

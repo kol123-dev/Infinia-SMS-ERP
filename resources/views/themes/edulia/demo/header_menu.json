@@ -27,7 +27,7 @@
         "settings": {
           "speech_user_image": {
             "value": [
-              "{\"type\":\"image\",\"name\":\"1.jpg\",\"path\":\"optionbuilder\\\/uploads\\\/400010-20-2023_0523pm1.jpg\",\"mime\":\"jpg\",\"size\":36474,\"thumbnail\":\"https:\/\/infixedu.ischooll.com\/public\\\/storage\\\/optionbuilder\\\/uploads\\\/400010-20-2023_0523pm1.jpg\"}"
+              "{\"type\":\"image\",\"name\":\"1.jpg\",\"path\":\"optionbuilder\\\/uploads\\\/400010-20-2023_0523pm1.jpg\",\"mime\":\"jpg\",\"size\":36474,\"thumbnail\":\"https:\/\/infiniaedu.ischooll.com\/public\\\/storage\\\/optionbuilder\\\/uploads\\\/400010-20-2023_0523pm1.jpg\"}"
             ],
             "is_array": "1"
           },

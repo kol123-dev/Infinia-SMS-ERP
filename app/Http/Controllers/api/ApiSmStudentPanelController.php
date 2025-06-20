@@ -53,7 +53,6 @@ class ApiSmStudentPanelController extends Controller
             ->select('sm_staffs.full_name', 'sm_staffs.email', 'sm_staffs.mobile')
             ->where('sm_assign_subjects.class_id', '=', @$record->class_id)
             ->where('sm_assign_subjects.section_id', '=', @$record->section_id)
-            ->distinct()
             ->get();
 
         $class_teacher = DB::table('sm_class_teachers')

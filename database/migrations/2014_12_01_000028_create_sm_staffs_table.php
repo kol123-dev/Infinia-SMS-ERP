@@ -99,7 +99,7 @@ class CreateSmStaffsTable extends Migration
                 'first_name'       => 'Super',
                 'last_name'        => 'Admin',
                 'full_name'        => 'Super Admin',
-                'email'            => 'admin@infixedu.com',
+                'email'            => 'admin@infinia .com',
                 'created_at' => date('Y-m-d h:i:s')
             ]
         ]);

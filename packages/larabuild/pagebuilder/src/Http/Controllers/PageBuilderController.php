@@ -397,7 +397,7 @@ class PageBuilderController extends Controller {
     
                 if ($file_data['slug'] == $slug) {
                    
-                    $check = DB::table(config('pagebuilder.db_prefix', 'infixedu__') . 'pages')
+                    $check = DB::table(config('pagebuilder.db_prefix', 'infinia__') . 'pages')
                         ->where('school_id', Auth::user()->school_id)
                         ->where('slug', $slug)
                         ->first();
@@ -426,4 +426,38 @@ class PageBuilderController extends Controller {
         return redirect()->back();
     }
     
+    public function index()
+    {
+        $pages = DB::table(config('pagebuilder.db_prefix', 'infinia__') . 'pages')
+            ->where('school_id', app('school')->id)
+            ->get();
+        return view('pagebuilder::pages.index', compact('pages'));
+    }
+
+    public function create()
+    {
+        return view('pagebuilder::pages.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'slug' => 'required|unique:' . config('pagebuilder.db_prefix', 'infinia__') . 'pages,slug',
+        ]);
+
+        DB::table(config('pagebuilder.db_prefix', 'infinia__') . 'pages')->insert([
+            'name' => $request->title,
+            'title' => $request->title,
+            'description' => $request->description,
+            'slug' => $request->slug,
+            'settings' => json_encode($request->settings),
+            'home_page' => $request->home_page,
+            'status' => 'published',
+            'is_default' => 1,
+            'school_id' => app('school')->id
+        ]);
+
+        return redirect()->route('pagebuilder.index');
+    }
 }

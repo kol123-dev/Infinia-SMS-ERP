@@ -59,7 +59,7 @@ class AttendanceController extends Controller
 
     public function attendanceReport(Request $request)
     {
-        $record = StudentRecord::where('student_id',$request->student_attendance_id)->where('school_id', auth()->user()->school_id)->firstOrFail();
+        $record = StudentRecord::where('id',$request->student_attendance_id)->where('school_id', auth()->user()->school_id)->firstOrFail();
         if ($request->year && $request->month) {
             $year = $request->year;
             $month = sprintf('%02d', $request->month);

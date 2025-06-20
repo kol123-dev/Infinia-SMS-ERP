@@ -20,7 +20,7 @@ Route::group(['middleware' => ['XSS', 'subdomain']], function () {
         Route::get('download-timeline-doc/{file_name}', 'Student\SmStudentPanelController@DownlodTimeline')->name('download-timeline-doc');
 
         // Fees
-        Route::get('student-fees', ['as' => 'student_fees', 'uses' => 'Student\SmFeesController@studentFees']);
+        Route::get('student-fees', ['as' => 'student_fees', 'uses' => 'Student\SmFeesController@studentFees'])->middleware('userRolePermission:student_fees');
         
         Route::post('studentPayByPaypal', 'SmCollectFeesByPaymentGateway@payByPaypal')->name('studentPayByPaypal');
         // Route::get('fees-payment-stripe/{fees_type}/{student_id}/{amount}', 'Student\SmFeesController@feesPaymentStripe');

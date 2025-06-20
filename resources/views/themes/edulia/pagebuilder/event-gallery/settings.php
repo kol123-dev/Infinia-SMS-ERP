@@ -9,7 +9,7 @@ return [
         [
             'id' => 'event_gallery_count',
             'type' => 'number',
-            'value' => 6,
+            'value' => 3,
             'class' => '',
             'label_title' => __('edulia.how_many_event')
         ],

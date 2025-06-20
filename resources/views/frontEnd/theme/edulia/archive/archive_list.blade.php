@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-lg-8 col-md-7">
                                 <div class="col-lg-12 col-md-12" id="dynamicLoadMoreData">
-                                    @forelse ($archives->paginate(5) as $item)
+                                    @foreach ($archives->paginate(5) as $item)
                                         <div class="archive_card_wrapper no-img searchArchiveContent">
                                             <div class="archive_card_wrapper_content">
                                                 <a href="{{ route('frontend.news-details', $item->id) }}"
@@ -43,20 +43,14 @@
                                                 <p class="archive_card_wrapper_content_meta">
                                                     {{ dateConvert($item->publish_date) }} /
                                                     {{ $item->category->category_name }}</p>
-                                                <p>{!! $item->news_body !!}</p>
+                                                <p>{{ $item->news_body }}</p>
                                                 <a href="{{ route('frontend.news-details', $item->id) }}">+
                                                     {{ __('edulia.read_more') }}</a>
                                                 <input type="hidden" name="createdYear" id="createdYear"
                                                     value="{{ $item->created_at->format('Y') }}">
                                             </div>
                                         </div>
-                                    @empty
-                                        <div class="text-center text-danger">
-                                            <div class="archive_card_wrapper_content">
-                                                <p>{{ __('edulia.no_data_found') }}</p>
-                                            </div>
-                                        </div>
-                                    @endforelse
+                                    @endforeach
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="archive_btns">
@@ -111,11 +105,6 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
-        $(document).ready(function() {
-            if ($('.text-danger').length > 0) {
-                $('.load_more_archive_btn').hide();
-            }
-        });
 
         $(document).on('click', '.load_more_archive_btn', function(e) {
             e.preventDefault();
@@ -163,10 +152,6 @@
                         $('.load_more_archive_btn').hide();
                     } else {
                         $('#dynamicLoadMoreData').append(response.html);
-                    }
-
-                    if ($('.text-danger').length > 0) {
-                        $('.load_more_archive_btn').hide();
                     }
                 }
             })

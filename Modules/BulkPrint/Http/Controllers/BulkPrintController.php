@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 use App\Models\StudentRecord;
 use App\SmHrPayrollEarnDeduc;
 use App\SmStudentCertificate;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Modules\Lms\Entities\Course;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Routing\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
@@ -79,8 +79,8 @@ class BulkPrintController extends Controller
         else{
             $s_students=SmStaff::where('role_id',$request->role)->status()->get();
         }
-        $s_students =  $s_students->take(10);
         $id_card = SmStudentIdCard::status()->find($request->id_card);
+
         $role_id=$request->role;
 
         $gridGap = $request->grid_gap !=null ? $request->grid_gap :15;

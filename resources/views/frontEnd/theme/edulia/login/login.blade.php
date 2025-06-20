@@ -161,7 +161,7 @@
                 </div>
             </div>
 
-            @if (config('app.app_sync') && session('domain') != 'school')
+            @if (config('app.app_sync'))
                 <div class="row justify-content-center align-items-center" style="">
                     <div class="col-lg-6 col-md-8">
                         <div class="grid__button__layout">
@@ -169,7 +169,7 @@
                                 @if ($user)
                                     <form method="POST" class="loginForm" action="{{ route('login') }}">
                                         @csrf()
-                                        <input type="hidden" name="email" value="{{ $user->email }}">
+                                        <input type="hidden" name="email" value="{{ $user[0]->email }}">
                                         <input type="hidden" name="auto_login" value="true">
                                         {{-- <button type="submit"
                                 class="primary-btn fix-gr-bg  mt-10 text-center col-lg-12 text-nowrap">{{ $user[0]->roles->name }}</button> --}}
@@ -190,10 +190,10 @@
                                     <div class="col-4 col-sm-4 col-md-3">
                                         <form method="POST" class="loginForm" action="{{ route('login') }}">
                                             @csrf()
-                                            <input type="hidden" name="email" value="{{ $user->email }}">
+                                            <input type="hidden" name="email" value="{{ $user[0]->email }}">
                                             <input type="hidden" name="auto_login" value="true">
                                             <input type="submit" class='input-control-input'
-                                                value="{{ $user->roles->name }}">
+                                                value="{{ $user[0]->roles->name }}">
                                         </form>
                                     </div>
                                 @endif

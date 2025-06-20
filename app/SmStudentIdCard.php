@@ -2,10 +2,10 @@
 namespace App;
 
 use App\Role;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\StatusAcademicSchoolScope;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SmStudentIdCard extends Model
 {
@@ -19,12 +19,13 @@ class SmStudentIdCard extends Model
     
     public static function roleName($id){
         $id_card= SmStudentIdCard::find($id);
-        $arr=[];
-        $roles=json_decode($id_card->role_id,true);        
-        foreach($roles as $role){
-            $arr[] = $role;
-        }
-        $roleNames = Role::whereIn('id',$arr)->get(['id','name']);           
+            $arr=[];
+            $names=[];
+            $value=json_decode($id_card->role_id,true);
+            foreach($value as $values){
+                $arr[] = $values;
+            }
+            $roleNames = Role::whereIn('id',$arr)->get(['id','name']);
         return $roleNames;
     }
 
@@ -36,7 +37,7 @@ class SmStudentIdCard extends Model
         $studentInfos = SmStudent::where('parent_id',$parent_id)
                     ->where('active_status',1)
                     ->where('school_id', Auth::user()->school_id)
-                    ->get(['full_name','student_photo','first_name','last_name']);
+                    ->get(['full_name','student_photo']);
         return $studentInfos;
     }
 }

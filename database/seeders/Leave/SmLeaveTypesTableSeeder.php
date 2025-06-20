@@ -10,7 +10,6 @@ use App\SmLeaveDefine;
 use Illuminate\Database\Seeder;
 use Modules\RolePermission\Entities\InfixRole;
 use App\Http\Requests\Admin\Leave\SmLeaveRequest;
-use App\SmStudent;
 
 class SmLeaveTypesTableSeeder extends Seeder
 {

@@ -11,7 +11,7 @@
                         @if (!empty(pagesetting('service_details')))
                             @foreach (pagesetting('service_details') as $service)
                                 <li>
-                                    <div class="tmp-services-items" style="margin-top:60px ">
+                                    <div class="tmp-services-items">
                                         <div class="tmp-services-content">
                                             <h2>{{ $service['heading'] }}</h2>
                                             <p>{!! $service['paragraph'] !!}</p>

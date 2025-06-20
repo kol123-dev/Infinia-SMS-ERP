@@ -24,9 +24,6 @@ use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Modules\Lms\Entities\Course;
-use Modules\Lms\Entities\CoursePurchaseLog;
-use Modules\Lms\Entities\CourseTeacher;
 use Modules\RolePermission\Entities\InfixRole;
 
 class SmPayrollController extends Controller
@@ -94,6 +91,7 @@ class SmPayrollController extends Controller
 
     public function generatePayroll(Request $request, $id, $payroll_month, $payroll_year)
     {
+
         try {
             $staffDetails = SmStaff::find($id);
             // return $staffDetails;
@@ -139,38 +137,22 @@ class SmPayrollController extends Controller
                     $h++;
                 }
             }
-            # For Teacher Commission
+            // for teacher commission Lms module-abu nayem
             if (moduleStatusCheck('Lms') == true) {
-                $months = [
-                    "January" => 1,
-                    "February" => 2,
-                    "March" => 3,
-                    "April" => 4,
-                    "May" => 5,
-                    "June" => 6,
-                    "July" => 7,
-                    "August" => 8,
-                    "September" => 9,
-                    "October" => 10,
-                    "November" => 11,
-                    "December" => 12,
-                ];
-                
-                $monthNumber = $months[$payroll_month];
-
-                $data['courses']                = Course::where('instructor_id', $id)->get(['id']);
-                $data['courseIds']              = $data['courses']->pluck('id')->toArray();
-                $data['totalCourse']            = $data['courses']->count();
-                $totalSellCourse                = CoursePurchaseLog::whereIn('course_id', $data['courseIds'])->where('instructor_id', $id);
-                $data['totalSellCourseCount']   = $totalSellCourse->count();
-                $data['thisMonthSell']          = CoursePurchaseLog::where('instructor_id',$id)->whereIn('course_id', $data['courseIds'])->whereMonth('created_at', $monthNumber)->count();
-                $totalSellAmount                =  $totalSellCourse->sum('amount');
-                $teacher_commission             = courseSetting()->teacher_commission;
-                $data['totalRevenue']           = earnRevenue($totalSellAmount, $teacher_commission);
-
+                $data['courses'] = \Modules\Lms\Entities\CourseTeacher::where('staff_id', $id)->get(['id', 'course_id']);
+                $data['courseIds'] = $data['courses']->pluck('course_id')->toArray();
+                $data['totalCourse'] = $data['courses']->count();
+                $totalSellCourse = \Modules\Lms\Entities\CoursePurchaseLog::whereIn('course_id', $data['courseIds'])->where('active_status', 'approve');
+                $data['totalSellCourseCount'] = $totalSellCourse->count();
+                $data['thisMonthSell'] = $totalSellCourse->whereMonth('created_at', $month)
+                    ->whereYear('created_at', $payroll_year)
+                    ->count();
+                $thisMonthSellAmount =  $totalSellCourse->sum('amount');
+                $teacher_commission = courseSetting()->teacher_commission;
+                $data['thisMonthRevenue'] = earnRevenue($thisMonthSellAmount, $teacher_commission);
                 return view('backEnd.humanResource.payroll.generatePayroll', compact('staffDetails', 'payroll_month', 'payroll_year', 'p', 'l', 'a', 'f', 'h', 'extra_days'))->with($data);
             }
-            # End Of teacher commission 
+            //end teacher commission 
             return view('backEnd.humanResource.payroll.generatePayroll', compact('staffDetails', 'payroll_month', 'payroll_year', 'p', 'l', 'a', 'f', 'h', 'extra_days'));
         } catch (\Exception $e) {
             Toastr::error('Operation Failed', 'Failed');

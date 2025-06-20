@@ -3457,6 +3457,7 @@
         }
     });
     $(document).on("click", "#create-image-option", function(event) {
+        console.log('clicked');
         $("#question_bank div.multiple-images").html("");
 
         var number_of_option = $("#number_of_image_option").val();
@@ -3465,6 +3466,7 @@
             appendRow += "<div class='row  mt-25'>";
             appendRow += "<div class='col-lg-10'>";
             appendRow += "<div class='input-effect'>";
+            // appendRow +="<input class='primary_input_field form-control has-content'  type='file' name='images[]' autocomplete='off' required>";
             appendRow += "<label class='primary-btn fix-gr-bg multiple_images'><i class='fa fa-image'></i> <span class='show_file_name" + i + "'>No File Chosen [650x450]</span> <input type='file' onChange='uploadImage(" + i + ")' name='images[]' id='question_image" + i + "' style='display: none;'></label>";
             appendRow += "</div>";
             appendRow += "</div>";

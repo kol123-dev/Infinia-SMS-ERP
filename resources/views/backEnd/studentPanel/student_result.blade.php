@@ -37,6 +37,7 @@
         @else
         <div class="white-box">
             <ul class="nav nav-tabs tabs_scroll_nav ml-0" role="tablist">
+
                 @foreach ($records as $key => $record)
                     <li class="nav-item">
                         <a class="nav-link @if ($record->is_default == 1) active @endif " href="#tab{{ $key }}" role="tab"

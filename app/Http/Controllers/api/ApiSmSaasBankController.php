@@ -39,41 +39,54 @@ class ApiSmSaasBankController extends Controller
     }
     public function saas_childBankSlipStore(Request $request)
     {
-        try {
-            $request->validate([
-                'amount' => "required",
-                #'class_id' => "required",
-                #'section_id' => "required",
-                'user_id' => "required",
-                'fees_type_id' => "required",
-                'payment_mode' => "required",
-                'date' => "required",
-                'school_id' => "required",
-            ]);
-    
-            if ($request->payment_mode == "bank" && empty($request->bank_id)) {
-                return response()->json([
-                    'success' => false,
-                    'data' => null,
-                    'message' => 'Bank Field is required.'
-                ], 422);
+        if(ApiBaseMethod::checkUrl($request->fullUrl())){
+            $input = $request->all();
+            $validator = Validator::make($input, [
+          
+            'amount'=> "required",
+            'class_id' =>"required",
+            'section_id'=>"required",
+            'user_id'=>"required",
+            'fees_type_id'=>"required",
+            'payment_mode'=>"required",
+            'date'=>"required",
+            'school_id'=>"required",
+
+           
+        ]);
+        }
+        if ($validator->fails()) {
+            if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+                return ApiBaseMethod::sendError('Validation Error.', $validator->errors());
             }
-    
+         }
+
+        try {
+
+            if($request->payment_mode=="bank"){
+                if($request->bank_id==''){                  
+                    if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+                        return ApiBaseMethod::sendError('Bank Field Required');
+                    }
+                }
+            }
+
+
             $fileName = "";
-            if ($request->hasFile('slip')) {
+            if ($request->file('slip') != "") {
                 $file = $request->file('slip');
-                $fileName = $request->input('user_id') . time() . "." . $file->getClientOriginalExtension();
-                $file->move('public/uploads/bankSlip/', $fileName);
+                $fileName = $request->input('user_id') . time() . "." . $file->getClientOriginalExtension();                
+                $file->move('public/uploads/bankSlip/',$fileName);
                 $fileName = 'public/uploads/bankSlip/' . $fileName;
             }
-    
-            $student = SmStudent::where('user_id', $request->user_id)->first();
-            $details = $student->studentRecords->first();
 
-            $newformat = date('Y-m-d', strtotime($request->date));
-            $payment_mode_name = ucwords($request->payment_mode);
-            $payment_method = SmPaymentMethhod::where('method', $payment_mode_name)->first();
-    
+            $student=SmStudent::where('user_id',$request->user_id)->first();
+
+            $date = strtotime($request->date);
+            $newformat = date('Y-m-d', $date);
+            $payment_mode_name=ucwords($request->payment_mode);
+            $payment_method=SmPaymentMethhod::where('method',$payment_mode_name)->first();
+
             $payment = new SmBankPaymentSlip();
             $payment->date = $newformat;
             $payment->amount = $request->amount;
@@ -82,20 +95,20 @@ class ApiSmSaasBankController extends Controller
             $payment->fees_type_id = $request->fees_type_id;
             $payment->student_id = $student->id;
             $payment->payment_mode = $request->payment_mode;
-            if ($payment_method->id == 3) {
+            if($payment_method->id==3){
                 $payment->bank_id = $request->bank_id;
             }
-            $payment->class_id = $details->class_id;
-            $payment->section_id = $details->section_id;
+            $payment->class_id = $request->class_id;
+            $payment->section_id = $request->section_id;
             $payment->school_id = $request->school_id;
             $payment->academic_id = SmAcademicYear::API_ACADEMIC_YEAR($request->school_id);
-            $result = $payment->save();
-    
-            if ($result) {
-                $users = User::whereIn('role_id', [1, 5])->where('school_id', 1)->get();
-                foreach ($users as $user) {
+            $result=$payment->save();
+
+            if($result){
+                $users = User::whereIn('role_id',[1,5])->where('school_id', 1)->get();
+                foreach($users as $user){
                     $notification = new SmNotification();
-                    $notification->message = $student->full_name . ' Payment Received';
+                    $notification->message = $student->full_name .'Payment Recieve';
                     $notification->is_read = 0;
                     $notification->url = "bank-payment-slip";
                     $notification->user_id = $user->id;
@@ -106,26 +119,24 @@ class ApiSmSaasBankController extends Controller
                     $notification->save();
                 }
             }
-    
-            return response()->json([
-                'success' => true,
-                'data' => null,
-                'message' => 'Payment Added, Please Wait for approval.'
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'data' => null,
-                'message' => collect($e->errors())->flatten()->first()
-            ], 422);
+
+
+          if(ApiBaseMethod::checkUrl($request->fullUrl())){
+                if ($result) {
+                    return ApiBaseMethod::sendResponse(null, 'Payment Added, Please Wait for approval');
+                } else {
+                    return ApiBaseMethod::sendError('Something went wrong, please try again');
+                }
+            }
+         
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'data' => null,
-                'message' => 'Something went wrong. Please try again.'
-            ]);
+
         }
     }
+
+
+
+
 
     public function saas_roomList(Request $request)
     {
@@ -143,16 +154,11 @@ class ApiSmSaasBankController extends Controller
     
     public function saas_bookCategory(Request $request, $school_id)
     {
-        $book_category = DB::table('sm_book_categories')->where('school_id', $school_id)->get();
-    
-        // Return a JSON response with a success flag
-        return response()->json([
-            'success' => true,
-            'data' => $book_category,
-            'message' => 'Book categories retrieved successfully.'
-        ]);
+        $book_category = DB::table('sm_book_categories')->where('school_id',$school_id)->get();
+        if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+            return ApiBaseMethod::sendResponse($book_category, null);
+        }
     }
-    
     public function saas_bookCategoryStore(Request $request)
     {
                 $input = $request->all();

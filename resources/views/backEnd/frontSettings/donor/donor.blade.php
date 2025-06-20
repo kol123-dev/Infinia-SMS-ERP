@@ -339,4 +339,3 @@
 @endsection
 
 @include('backEnd.partials.data_table_js')
-@include('backEnd.partials.date_picker_css_js')

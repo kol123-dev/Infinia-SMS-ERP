@@ -1,5 +1,3 @@
-
-
 @extends('backEnd.master')
 @section('title') 
     @lang('admin.create_id_card')
@@ -307,9 +305,9 @@
                                             <div class="text-danger" id="applicableUserError"></div>
                                             
                                             @if ($errors->has('user_photo_style'))
-                                                <span class="text-danger invalid-select" role="alert">
-                                                    {{ $errors->first('user_photo_style') }}
-                                                </span>
+                                            <span class="text-danger invalid-select" role="alert">
+                                                {{ $errors->first('user_photo_style') }}
+                                            </span>
                                             @endif
                                         </div>
                                     </div>
@@ -926,7 +924,6 @@ $( document ).ready(function() {
 
     $(document).on("change", "#pageLayoutStyle", function(event) {
         let pageLayout = $(this).val();
-        
         if(pageLayout == "horizontal"){
             $('#horizontal').removeClass('d-none');
             $('#vertical').addClass('d-none');
@@ -1128,7 +1125,6 @@ $( document ).ready(function() {
     }
 
     motherName = (status) => {
-        
         let pageLayout = $('#pageLayoutStyle').val();
         if(pageLayout == "horizontal"){
             if(status == "1"){
@@ -1195,9 +1191,6 @@ $( document ).ready(function() {
             }
         }
     }
-
-
-    
 });
 
 // Image Show

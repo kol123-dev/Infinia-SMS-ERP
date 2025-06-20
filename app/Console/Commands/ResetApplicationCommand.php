@@ -8,7 +8,6 @@ use Nwidart\Modules\Facades\Module;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
-use Modules\Lms\Database\Seeders\LmsDatabaseSeeder;
 
 class ResetApplicationCommand extends Command
 {
@@ -53,7 +52,6 @@ class ResetApplicationCommand extends Command
         'InAppLiveClass',
         'MercadoPago',
         'BBB',
-        'Lms'
     ];
 
     /**
@@ -67,9 +65,8 @@ class ResetApplicationCommand extends Command
         $this->createAppResetFile();
         $this->deativateActivatedModule();
         $this->call('optimize:clear');
-        $this->call('migrate:fresh', ['--force' => true]);
+        $this->call('migrate:fresh', ['--force' => true, '--seed' => true]);
         $this->moduleAcivate();
-        $this->dbSeed();
         $this->call('optimize:clear');
         $this->call('clear:log-files');
         $this->generateNewKey();
@@ -89,7 +86,6 @@ class ResetApplicationCommand extends Command
     {
         Artisan::call('key:generate', ['--force' => true]);
     }
-
     protected function deativateActivatedModule()
     {
         foreach ($this->modules as $data) {
@@ -99,7 +95,6 @@ class ResetApplicationCommand extends Command
             }
         }
     }
-    
     protected function moduleAcivate()
     {
         foreach ($this->modules as $data) {
@@ -111,18 +106,6 @@ class ResetApplicationCommand extends Command
             $controller = new \App\Http\Controllers\Admin\SystemSettings\SmAddOnsController();
             $controller->moduleAddOnsEnable($data);
             config(['app.app_sync' => true]);
-        }
-    }
-
-    protected function dbSeed()
-    {
-        Artisan::call('db:seed', ['--force' => true]);
-    
-        if (class_exists(LmsDatabaseSeeder::class)) {
-            Artisan::call('db:seed', [
-                '--class' => 'Modules\\Lms\\Database\\Seeders\\LmsDatabaseSeeder',
-                '--force' => true,
-            ]);
         }
     }
 }

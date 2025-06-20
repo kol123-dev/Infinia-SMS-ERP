@@ -16,6 +16,6 @@ class SmOnlineExamQuestionAssign extends Model
     
     public function questionBank()
     {
-        return $this->belongsTo('App\SmQuestionBank', 'question_bank_id', 'id')->withOutGlobalScopes();
+        return $this->belongsTo('App\SmQuestionBank', 'question_bank_id', 'id');
     }
 }

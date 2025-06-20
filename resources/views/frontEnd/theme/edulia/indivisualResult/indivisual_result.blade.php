@@ -58,10 +58,10 @@
         <div class="marksheet_container" id="print_sheet">
             <div class="institute_info text-center mb-2">
                 <h3 class="institute_name text-uppercase mb-0">
-                    {{ isset(generalSetting()->school_name) ? generalSetting()->school_name : 'Infix School Management ERP' }}
+                    {{ isset(generalSetting()->school_name) ? generalSetting()->school_name : 'infinia School Management ERP' }}
                 </h3>
                 <p class="institute_address">
-                    {{ isset(generalSetting()->address) ? generalSetting()->address : 'Infix School Address' }}</p>
+                    {{ isset(generalSetting()->address) ? generalSetting()->address : 'infinia School Address' }}</p>
                 <p class="institute_address" style="font-size: 16px;">
                     @lang('common.email'): <span
                         class="text-lowercase">{{ isset(generalSetting()->email) ? generalSetting()->email : 'hello@aorasoft.com' }}</span>,
@@ -85,7 +85,8 @@
                 </div>
                 <div class="col-sm-12 col-md-4 d-flex justify-content-end order-2">
                     @php
-                        $generalsettingsResultType = generalSetting()->result_type;
+                        $gs = App\SmGeneralSettings::where('school_id', Auth::user()->school_id)->first('result_type');
+                        $generalsettingsResultType = $gs->result_type;
                     @endphp
                     @if (@$grades)
                         <table class="table-bordered gpa-table mx-auto mx-md-0 my-4 my-md-0 order-md-3"

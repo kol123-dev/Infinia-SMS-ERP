@@ -19,6 +19,7 @@ class LessonSubTopicResource extends JsonResource
         //     // 'id' => $this->id,
         //     'sub_topic_title' => $this->sub_topic_title,
         // ];
+        // dd($this->sub_topic_title);
 
         return $this->sub_topic_title;
     }

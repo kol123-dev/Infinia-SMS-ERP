@@ -352,6 +352,7 @@ class SmExamAttendanceController extends Controller
             return redirect('exam-attendance-create');
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e);
             Toastr::error('Operation Failed', 'Failed');
             return redirect()->back();
         }

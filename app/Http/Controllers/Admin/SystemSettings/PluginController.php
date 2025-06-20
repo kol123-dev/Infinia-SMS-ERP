@@ -64,6 +64,7 @@ class PluginController extends Controller
             }
         }
         catch(\Exception $e){
+            dd($e);
             Toastr::error($e->getMessage(), 'Failed');
             return redirect()->back();
         }

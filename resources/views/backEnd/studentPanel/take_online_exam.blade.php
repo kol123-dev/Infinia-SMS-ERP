@@ -3,11 +3,6 @@
 @lang('exam.take_online_exam')
 @endsection
 @section('mainContent')
-<style>
-    .pt-60 {
-        padding-top: 60px;
-    }
-</style>
 <section class="sms-breadcrumb mb-20">
     <div class="container-fluid">
         <div class="row justify-content-between">
@@ -58,7 +53,7 @@
                                                     <p><strong>@lang('exam.instruction') : </strong>{{@$online_exam->instruction}}</p>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <p class="mb-2"><strong>@lang('exam.exam_has_to_be_submitted_within'): </strong> {{ dateTimeConvert(@$online_exam->end_time)}}</p>
+                                                    <p class="mb-2"><strong>@lang('exam.exam_has_to_be_submitted_within'): </strong>{{@$online_exam->date}} {{@$online_exam->end_time}}</p>
                                                 <p id="countDownTimer"></p>
                                                 </div>
                                             </div>
@@ -138,9 +133,11 @@
                                                         <div class="primary_input mt-20">
                                                             <label class="primary_input_label" for="">@lang('exam.suitable_words')</label>
                                                             <textarea class="primary_input_field form-control mt-10 form_filler_{{@$question->question_bank_id}}" name="answer_word_{{@$question->question_bank_id}}" id="answer_word_{{@$question->question_bank_id}}">{{isset($submited_answer)? $submited_answer->user_answer : '' }} </textarea>
+                                                           
+                                                            
                                                         </div>
                                                     </div>
-                                                    <div class="col-2 pt-60">
+                                                    <div class="col-2">
                                                         <p class="primary-btn fix-gr-bg" data-question = "{{@$question->question_bank_id}}" onclick="fillBlanks({{@$question->question_bank_id }})">{{ __('common.Fill') }}</p>
                                                     </div>
                                                 </div>
@@ -149,7 +146,7 @@
                                         </td>
                                         <input type="hidden" name="marks[]" value="{{@$question->questionBank!=""?@$question->questionBank->id:""}}">
                                         <td width="20%" class="text-right">
-                                             <div class="primary-btn fix-gr-bg">
+                                             <div class="std_mark_box">
 
                                                 <strong>{{@$question->questionBank!=""?@$question->questionBank->marks:""}}</strong>
                                             </div>

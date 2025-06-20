@@ -179,18 +179,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if(moduleStatusCheck('QRCodeAttendance') && file_exists(public_path('qr_codes/staff-'.$staffDetails->id.'-qrcode.png')))
-                                <div class="single-meta">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="name">
-                                            @lang('qrcodeattendance::qr_code_attendance.qr_code')
-                                        </div>
-                                        <div class="value">
-                                            <img height="100" width="100" src="{{ asset('public/qr_codes/staff-'.$staffDetails->id.'-qrcode.png') }}" alt="">
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -1111,6 +1099,7 @@
                                                             <button class="primary-btn fix-gr-bg submit" type="submit">Save</button>
                                                         </div>
                                                     </div>
+    
                                                 </div>
                                             </div>
                                         </div>

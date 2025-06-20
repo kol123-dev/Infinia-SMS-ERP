@@ -33,7 +33,7 @@ class SmClassesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run($school_id = 1, $academic_id = 1, $count = 1)
+    public function run($school_id = 1, $academic_id = 1, $count = 10)
     {
         $sections = SmSection::where('school_id', $school_id)->where('academic_id', $academic_id)->get();
         $subjects = SmSubject::where('school_id', $school_id)->where('academic_id', $academic_id)->get();
@@ -50,7 +50,7 @@ class SmClassesTableSeeder extends Seeder
                     'academic_id' => $class->academic_id,
                 ];
                 $i = 0;
-                SmStudent::factory()->times(5)->create()->each(function ($student) use ($class, $section, $school_id) {
+                SmStudent::factory()->times(50)->create()->each(function ($student) use ($class, $section, $school_id) {
 
                     User::factory()->times(1)->create([
                         'role_id' => 2,
@@ -64,7 +64,7 @@ class SmClassesTableSeeder extends Seeder
 
                     SmParent::factory()->times(1)->create([
                         'school_id' => $school_id,
-                        'guardians_email' => 'guardian_' . $student->id . '@infixedu.com',
+                        'guardians_email' => 'guardian_' . $student->id . '@infinia.com',
                     ])->each(function ($parent) use ($student, $school_id) {
                         $student->parent_id = $parent->id;
                         $student->save();

@@ -8,10 +8,6 @@
         .common-checkbox~label::after {
             top: 20px !important;
         }
-        .verticle-scroll-question {
-            overflow-y: auto;
-            resize: vertical;
-        }
     </style>
 @endpush
 @section('mainContent')
@@ -163,7 +159,7 @@
                                                         for="">{{ __('common.section') }} <span
                                                             class="text-danger"> *</span></label>
                                                     <select name="section[]" id="selectMultiSections" multiple="multiple"
-                                                        class="multypol_check_select active position-relative {{ $errors->has('section') ? ' is-invalid' : '' }}">
+                                                        class="multypol_check_select active position-relative">
 
                                                     </select>
                                                 </div>
@@ -206,6 +202,40 @@
                                     </div>
                                     @endif
                                     <div class="row mt-15">
+                                        {{-- <div class="col-lg-12">
+                                            <label class="primary_input_label" for="">
+                                                {{ __('exam.question_type') }}
+                                                <span class="text-danger"> *</span>
+                                            </label>
+                                            <select
+                                                class="primary_select  form-control{{ $errors->has('question_type') ? ' is-invalid' : '' }}"
+                                                name="question_type" id="question-type">
+                                                <option data-display="@lang('exam.question_type') *" value="">
+                                                    @lang('exam.question_type') *</option>
+
+                                                @if (moduleStatusCheck('MultipleImageQuestion') == true)
+                                                    <option value="MI"
+                                                        {{ isset($bank) ? ($bank->type == 'MI' ? 'selected' : '') : '' }}>
+                                                        @lang('exam.multiple_image')</option>
+                                                @endif
+
+                                                <option value="M"
+                                                    {{ isset($bank) ? ($bank->type == 'M' ? 'selected' : '') : '' }}>
+                                                    @lang('exam.multiple_choice')</option>
+                                                <option value="T"
+                                                    {{ isset($bank) ? ($bank->type == 'T' ? 'selected' : '') : '' }}>
+                                                    @lang('exam.true_false')</option>
+                                                <option value="F"
+                                                    {{ isset($bank) ? ($bank->type == 'F' ? 'selected' : '') : '' }}>
+                                                    @lang('exam.fill_in_the_blanks')</option>
+                                            </select>
+                                            @if ($errors->has('group'))
+                                                <span class="text-danger invalid-select" role="alert">
+                                                    {{ $errors->first('group') }}
+                                                </span>
+                                            @endif
+                                        </div> --}}
+
                                         <div class="col-lg-12">
                                             <label class="primary_input_label" for="">
                                                 {{ __('exam.question_type') }}
@@ -239,7 +269,7 @@
                                             <div class="primary_input">
                                                 <label class="primary_input_label" for="">@lang('exam.question') <span
                                                         class="text-danger"> *</span></label>
-                                                <textarea class="primary_input_field verticle-scroll-question form-control{{ $errors->has('question') ? ' is-invalid' : '' }}" cols="0"
+                                                <textarea class="primary_input_field form-control{{ $errors->has('question') ? ' is-invalid' : '' }}" cols="0"
                                                     rows="4" name="question">{{ isset($bank) ? $bank->question : (old('question') != '' ? old('question') : '') }}</textarea>
 
 
@@ -631,8 +661,7 @@
                                                     @else
                                                         <td>{{ $bank->class != '' ? $bank->class->class_name : '' }} ({{ $bank->section != '' ? $bank->section->section_name : '' }})</td>
                                                     @endif
-                                                    <td class="">{{ Str::limit($bank->question, 90, '...')}}</td>
-
+                                                    <td>{{ $bank->question }}</td>
                                                     <td>
                                                         @if ($bank->type == 'M')
                                                             {{ 'Multiple Choice' }}

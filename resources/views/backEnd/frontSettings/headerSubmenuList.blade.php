@@ -3,9 +3,6 @@
         .primary_input.custom-transfer-account {
             display: inline-block;
         }
-        #accordion .dd-item .card-header a {
-            color: var(--base_color);
-        }
     </style>
 @endpush
 @if(count(@$menus)>0)

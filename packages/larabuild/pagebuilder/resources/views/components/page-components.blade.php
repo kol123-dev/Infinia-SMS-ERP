@@ -1,62 +1,70 @@
+
 @if(!empty($page->settings['grids']))
-
-    @foreach ($page->settings['grids'] as $grid)
-        @php
-            $columns = getColumnInfo($grid['grid']);
-            setGridId($grid['grid_id']);
-            $css = getCss();
-            if (!empty(getBgOverlay())) {
-                $css = 'position:relative;' . $css;
+@foreach ($page->settings['grids'] as $grid)
+@php $columns = getColumnInfo($grid['grid']); @endphp
+<!-- Section start -->
+@php
+setGridId($grid['grid_id']);
+$css = getCss();
+if(!empty(getBgOverlay()))
+$css = 'position:relative;'.$css;
+$x_components = ['header-breadcumb','home-slider','counter','event','news-area','event-gallery', 'app-banner', 'news-section'];
+$container = [];
+$non_container = [];
+if(isset($grid['data'])) {
+    foreach ($grid['data'] as $key => $components) {
+        foreach($components as $component){
+            if(in_array($component['section_id'], $x_components)){
+                $non_container = $grid['data'];
+            }else{
+                $container =  $grid['data'];
             }
+        }
+    }
+}
 
-            $x_components = ['header-breadcumb', 'home-slider', 'counter', 'event', 'news-area', 'event-gallery', 'app-banner', 'news-section'];
-            $non_container = ['opening-hour','contact-form','google-map','speech','cta','faqs'];
+@endphp
+<section class="pb-themesection {{ getClasses() }}" {!!getCustomAttributes() !!} {!! !empty($css)? 'style="' .$css.'"':'' !!}>
+    {!! getBgOverlay() !!}
+    @if(!empty($container))
+        <div {!! getContainerStyles() !!}>
+            <div class="row">
+               
+                @foreach ($container as $column => $components)
+                    <div class="{{ $columns[$column] }}">
+                        @foreach ($components as $component)
+                        
+                        @php setSectionId($component['id']); @endphp
+                    
+                            @if(view()->exists('themes.'.activeTheme().'.pagebuilder.' . $component['section_id'] . '.view'))
+                                {!! view('themes.'.activeTheme().'.pagebuilder.'. $component['section_id']. '.view')->render() !!}
+                            @endif
+                        @endforeach
+                    </div>
 
-            $isNonContainer = false;
-            
-            if (isset($grid['data'])) {
-                foreach ($grid['data'] as $dataColumn) {
-                    foreach ($dataColumn as $component) {
-                        if (in_array($component['section_id'], $non_container)) {
-                            $isNonContainer = true;
-                            break 2;
-                        }
-                    }
-                }
-            }
-        @endphp
+                @endforeach
+            </div>
+        </div>
+    @endif
 
-        <section class="pb-themesection {{ getClasses() }}" {!! getCustomAttributes() !!} {!! !empty($css) ? 'style="' . $css . '"' : '' !!}>
-            {!! getBgOverlay() !!}
-            
-            @if ($isNonContainer)
-                <div {!! getContainerStyles() !!}>
-            @endif
 
-            <div class="{{ $isNonContainer ? 'full-width' : 'container-fluid' }}">
-                <div class="row droppable-container" data-id="{{ $grid['grid_id'] }}">
-                    @foreach ($columns as $columnIndex => $columnClass)
-                        <div class="{{ $columnClass }} p-0">
-                            @foreach ($grid['data'][$columnIndex] ?? [] as $component)
-                                @php
-                                    setSectionId($component['id']);
-                                    $isXComponent = in_array($component['section_id'], $x_components);
-                                @endphp
-
-                                <div class="{{ $isXComponent ? 'full-width' : '' }}" >
-                                    @if (view()->exists('themes.' . activeTheme() . '.pagebuilder.' . $component['section_id'] . '.view'))
-                                        {!! view('themes.' . activeTheme() . '.pagebuilder.' . $component['section_id'] . '.view')->render() !!}
-                                    @endif
-                                </div>
+        @if(!empty($non_container))
+                    @foreach ($non_container as $column => $components)
+                        <div class="{{ $columns[$column] }}">
+                            @foreach ($components as $component)
+                            @php setSectionId($component['id']); @endphp
+                        
+                                @if(view()->exists('themes.'.activeTheme().'.pagebuilder.' . $component['section_id'] . '.view'))
+                                    {!! view('themes.'.activeTheme().'.pagebuilder.'. $component['section_id']. '.view')->render() !!}
+                                @endif
                             @endforeach
                         </div>
-                    @endforeach
-                </div>
-            </div>
 
-            @if ($isNonContainer)
-                </div>
-            @endif
-        </section>
-    @endforeach
+                    @endforeach
+                @endif
+
+     
+</section>
+
+@endforeach
 @endif

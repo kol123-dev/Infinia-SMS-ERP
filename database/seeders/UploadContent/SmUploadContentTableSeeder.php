@@ -13,7 +13,7 @@ class SmUploadContentTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run($school_id, $academic_id, $count=20)
+    public function run($school_id, $academic_id, $count=5)
     {
         $classSection = SmClassSection::where('school_id', $school_id)->where('academic_id', $academic_id)->first();
         SmTeacherUploadContent::factory()->times($count)->create(array_merge([

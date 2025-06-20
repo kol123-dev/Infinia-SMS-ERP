@@ -255,5 +255,4 @@ return [
     'add_expert_staff' => 'Add Expert Staff',
     'yes' => 'Yes',
     'no' => 'no',
-    'edit_speech_slider' => 'Edit Speech Slider',
 ];

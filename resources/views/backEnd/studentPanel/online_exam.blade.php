@@ -91,6 +91,7 @@
                                                                     $endTime = strtotime($online_exam->date . ' ' . $online_exam->end_time);
                                                                     $now = date('h:i:s');
                                                                     $now =  strtotime("now");
+                                                                    // dump($submitted_answer);
                                                                 @endphp
                                                             @if( !empty( $submitted_answer))
                                                                 @if(@$submitted_answer->status == 1)

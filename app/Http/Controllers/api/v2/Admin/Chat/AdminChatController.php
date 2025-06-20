@@ -83,7 +83,7 @@ class AdminChatController extends Controller
 
     public function userList(Request $request)
     {
-        $users = $this->invitationService->getAllConnectedUsers();
+        $users = $this->invitationService->getAllConnectedUsers()->shortByDesc();
         $data = ChatUserListResource::collection($users);
 
         if ($data->isEmpty()) {

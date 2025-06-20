@@ -25,43 +25,6 @@
             display: block !important;
         }
     }
-    button#mobileSelectorDropdown {
-        background: transparent;
-        border: 0;
-    }
-    button#mobileSelectorDropdown svg {
-        color: #2f2f3bad;
-    }
-    button#mobileSelectorDropdown + .dropdown-menu{
-        background: var(--text_white);
-        box-shadow: 0 9px 20px rgba(46, 35, 94, .07);
-        border: 0;
-        padding: 16px 0!important;
-    }
-    .dropdown.open .dropdown-menu {
-        display: block;
-    }
-
-    .infix_session.open .nice_Select, 
-    .languageChange.open .nice_Select {
-        display: block;
-    }
-    button#mobileSelectorDropdown + .dropdown-menu .list,
-    button#mobileSelectorDropdown + .dropdown-menu .nice-select-search-box,
-    button#mobileSelectorDropdown + .dropdown-menu .nice-select{
-        min-width: 100%;
-        width: 100%!important;
-    }
-
-    button#mobileSelectorDropdown + .dropdown-menu .infix_session,
-    button#mobileSelectorDropdown + .dropdown-menu .languageChange {
-        padding: 0 16px;
-    }
-
-    button#mobileSelectorDropdown + .dropdown-menu .infix_session:hover,
-    button#mobileSelectorDropdown + .dropdown-menu .languageChange:hover {
-        background: #f6f6f6;
-    }
 </style>
 <div class="container-fluid no-gutters" id="main-nav-for-chat">
     <div class="row">
@@ -155,50 +118,6 @@
                     @if (moduleStatusCheck('AiContent'))
                         @include('aicontent::inc.menu_btn')
                     @endif
-
-                    <!-- Mobile view Dropdown for selection Academic Year and Language : Start -->
-
-                    <div class="dropdown d-sm-none">
-                        <button class="" type="button" id="mobileSelectorDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <circle cx="12" cy="5" r="2"></circle>
-                            <circle cx="12" cy="12" r="2"></circle>
-                            <circle cx="12" cy="19" r="2"></circle>
-                        </svg>
-
-                        </button>
-                        <div class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton">
-                        <select name="#" class="nice_Select bgLess mb-0 infix_session" id="infix_session_mbl">
-                            @foreach (academicYears() as $academic_year)
-                                @if (moduleStatusCheck('University'))
-                                    <option value="{{ @$academic_year->id }}"
-                                        {{ getAcademicId() == @$academic_year->id ? 'selected' : '' }}>
-                                        {{ @$academic_year->name }} </option>
-                                @else
-                                    <option value="{{ @$academic_year->id }}"
-                                        {{ getAcademicId() == @$academic_year->id ? 'selected' : '' }}>
-                                        {{ @$academic_year->year }} [{{ @$academic_year->title }}]
-                                    </option>
-                                @endif
-                            @endforeach
-                        </select>
-
-                        @if (generalSetting()->lang_btn == 1)
-                            <select class="nice_Select bgLess mb-0 languageChange" id="languageChange_mbl">
-                                <option data-display="@lang('common.select_language')"
-                                    value="0">@lang('common.select_language')
-                                </option>
-                                @foreach ($languages as $lang)
-                                    <option data-display="{{ $lang->language_universal }}" value="{{ $lang->language_universal }}"
-                                        {{ $lang->language_universal == userLanguage() ? 'selected' : '' }}>
-                                        {{ $lang->native }}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                        </div>
-                    </div>
-
-                    <!-- Mobile view Dropdown for selection Academic Year and Language : END -->
 
                     <ul class="header_notification_warp d-flex align-items-center">
 
@@ -542,28 +461,6 @@
 			}
 		}
 	};
-
-    $(document).ready(function () {
-
-        $('#infix_session_mbl').on('change', function () {
-            const selectedSession = $(this).val();
-        });
-
-        $('#languageChange_mbl').on('change', function () {
-            const selectedLanguage = $(this).val();
-        });
-
-        $('#mobileSelectorDropdown').on('click', function () {
-            $(this).closest('.dropdown').toggleClass('open');
-        });
-
-        $(document).on('click', function (e) {
-            if (!$(e.target).closest('.dropdown').length) {
-                $('.dropdown.open').removeClass('open');
-            }
-        });
-    });
-
 </script>
 @section('script')
 @endsection

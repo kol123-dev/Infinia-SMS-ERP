@@ -27,7 +27,7 @@
     {{ Form::open(['class' => 'form-horizontal', 'files' => true, 'route' => 'add-new-class-routine-store',
                         'method' => 'POST', 'enctype' => 'multipart/form-data', 'name' => 'myForm', 'onsubmit' => "return validateAddNewroutine()"]) }}
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12">  
                 <input type="hidden" name="url" id="url" value="{{URL::to('/')}}">
                 <input type="hidden" name="day" id="day" value="{{@$day}}">
                 <input type="hidden" name="class_time_id" id="class_time_id" value="{{@$class_time_id}}">
@@ -36,7 +36,7 @@
                 <input type="hidden" name="update_teacher_id" id="update_teacher_id" value="{{isset($teacher_detail)? $teacher_detail->id:''}}">
                 @if(isset($assigned_id))
                     <input type="hidden" name="assigned_id" id="assigned_id" value="{{@$assigned_id}}">
-                @endif
+                @endif               
                 <div class="row mt-25">
                     <div class="col-lg-12 mt-30-md">
                         <select class="primary_selectModal form-control" name="subject" id="subject" onchange="changeSubject()">

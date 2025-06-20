@@ -389,7 +389,7 @@ class SmApiController extends Controller
         if (!empty($request->field_name)) {
             $request_string = $request->field_name;
             $request_id = $request->id;
-            $data = SmStudent::withoutGlobalScopes()->find($request_id);
+            $data = SmStudent::find($request_id);
             $data->$request_string = $request->$request_string;
             if ($request_string == "first_name") {
                 $full_name = $request->$request_string . ' ' . $data->last_name;
@@ -11964,12 +11964,9 @@ class SmApiController extends Controller
     public function saas_noticeList(Request $request, $school_id)
     {
         try {
-            $role_id = Auth::user()->role_id;
-
             $allNotices = SmNoticeBoard::withoutGlobalScope(StatusAcademicSchoolScope::class)->where('active_status', 1)
                 ->orderBy('id', 'DESC')
                 ->where('academic_id', SmAcademicYear::API_ACADEMIC_YEAR($school_id))
-                ->whereJsonContains('inform_to', (string)$role_id)
                 ->where('school_id',$school_id)
                 ->get();
 
@@ -16854,7 +16851,7 @@ class SmApiController extends Controller
                 ->where('sm_students.user_id', '=', $id)
                 ->select('title', 'date', 'description', 'file', 'sm_student_timelines.active_status')
 
-                ->where('sm_student_timelines.academic_id', SmAcademicYear::API_ACADEMIC_YEAR($request->user()->school_id))->
+                ->where('sm_student_timelines.academic_id', SmAcademicYear::SINGLE_SCHOOL_API_ACADEMIC_YEAR())->
                 where('sm_student_timelines.school_id',$school_id)->get();
 
             return ApiBaseMethod::sendResponse($timelines, null);
@@ -17924,20 +17921,14 @@ class SmApiController extends Controller
     }
     public function saas_staffLeaveList(Request $request,$school_id, $id)
     {
-        // $teacher = SmStaff::withoutGlobalScopes()->where('user_id', '=', $id)->where('school_id',$school_id)->first();
 
-        // $teacher_id = @$teacher->id;
+        $teacher = SmStaff::where('user_id', '=', $id)->where('school_id',$school_id)->first();
+        $teacher_id = @$teacher->id;
 
-        $leave_list = SmLeaveRequest::where('sm_leave_requests.staff_id', '=', $id)
-
-            #->select('sm_leave_requests.id','sm_leave_requests.staff_id','users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
-            ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
-            ->leftjoin('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')
-            ->where('sm_leave_requests.approve_status', '=', 'P')
-            ->where('sm_leave_requests.school_id', $school_id)
-            ->get();
-        
-            
+        $leave_list = SmLeaveRequest::where('staff_id', '=', $teacher_id)
+            ->join('sm_leave_defines', 'sm_leave_defines.id', '=', 'sm_leave_requests.leave_define_id')
+            ->join('sm_leave_types', 'sm_leave_types.id', '=', 'sm_leave_defines.type_id')
+            ->where('sm_leave_defines.school_id',$school_id)->get();
         $status = 'P for Pending, A for Approve, R for reject';
         $data = [];
         if (ApiBaseMethod::checkUrl($request->fullUrl())) {
@@ -18272,22 +18263,49 @@ class SmApiController extends Controller
     }
     public function saas_pendingLeave(Request $request, $school_id)
     {
-         $pending_request = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
-            ->select('sm_leave_requests.id','sm_leave_requests.staff_id','users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
-            ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
-            ->join('users', 'sm_leave_requests.staff_id', '=', 'users.id')
-            ->leftjoin('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')
-            ->where('sm_leave_requests.approve_status', '=', 'P')
-            ->where('sm_leave_requests.school_id', $school_id)
-            ->get();
-
         if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+            $pendingRequest = SmLeaveRequest::with('leaveDefine','staffs','student')->where('sm_leave_requests.active_status', 1)
+                ->where('sm_leave_requests.approve_status', '=', 'P')
+                ->join('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')
+                ->select('sm_leave_requests.id', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'type', 'approve_status')
+                ->where('sm_leave_requests.school_id', Auth::user()->school_id)
+                ->get();
             $data = [];
-            $data['pending_request'] = $pending_request->toArray();
+            $data['pending_request'] = $pendingRequest->toArray();
             return ApiBaseMethod::sendResponse($data, null);
         }
-    }
+        try {
 
+            $user = Auth::user();
+            $staff = SmStaff::where('user_id', Auth::user()->id)->first();
+            if (Auth()->user()->role_id == 1) {
+                $apply_leaves = SmLeaveRequest::where([['active_status', 1], ['approve_status', '!=', 'A']])->get();
+            } else {
+                $apply_leaves = SmLeaveRequest::where([['active_status', 1], ['approve_status', '!=', 'A'], ['staff_id', '=', $staff->id]])->get();
+            }
+            $leave_types = SmLeaveType::where('active_status', 1)->get();
+            $roles = InfixRole::where('id', '!=', 1)->where('id', '!=', 3)->where(function ($q) {
+                $q->where('school_id', Auth::user()->school_id)->orWhere('type', 'System');
+            })->get();
+
+            $pendingRequest = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
+                ->select('sm_leave_requests.id', 'full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
+                ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
+                ->join('sm_staffs', 'sm_leave_requests.staff_id', '=', 'sm_staffs.id')
+                ->leftjoin('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')
+                ->where('sm_leave_requests.school_id', Auth::user()->school_id)
+                ->where('sm_leave_requests.approve_status', '=', 'P')
+                ->get();
+            if (ApiBaseMethod::checkUrl($request->fullUrl())) {
+                $data = [];
+                $data['pending_request'] = $pendingRequest->toArray();
+                return ApiBaseMethod::sendResponse($data, null);
+            }
+            return view('backEnd.humanResource.approveLeaveRequest', compact('apply_leaves', 'leave_types', 'roles'));
+        } catch (\Exception $e) {
+            return ApiBaseMethod::sendError('Error.', $e->getMessage());
+        }
+    }
     public function approvedLeave(Request $request)
     {
 
@@ -18324,19 +18342,16 @@ class SmApiController extends Controller
             return ApiBaseMethod::sendError('Error.', $e->getMessage());
         }
     }
-    
     public function saas_approvedLeave(Request $request,$school_id)
     {
+
         try {
-            $approved_request = SmLeaveRequest::where('sm_leave_requests.active_status', 1)
-                ->select('sm_leave_requests.id','sm_leave_requests.staff_id','users.full_name', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'sm_leave_types.type', 'approve_status')
-                ->join('sm_leave_defines', 'sm_leave_requests.leave_define_id', '=', 'sm_leave_defines.id')
-                ->join('users', 'sm_leave_requests.staff_id', '=', 'users.id')
-                ->leftjoin('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')
+            $approved_request = SmLeaveRequest::with('leaveDefine','staffs','student')->where('sm_leave_requests.active_status', 1)
                 ->where('sm_leave_requests.approve_status', '=', 'A')
-                ->where('sm_leave_requests.school_id', $school_id)
+                ->join('sm_leave_types', 'sm_leave_requests.type_id', '=', 'sm_leave_types.id')
+                ->select('sm_leave_requests.id', 'apply_date', 'leave_from', 'leave_to', 'reason', 'file', 'type', 'approve_status')
+                ->where('sm_leave_requests.school_id', Auth::user()->school_id)
                 ->get();
-    
 
             if (ApiBaseMethod::checkUrl($request->fullUrl())) {
                 $data = [];
@@ -18347,7 +18362,6 @@ class SmApiController extends Controller
             return ApiBaseMethod::sendError('Error.', $e->getMessage());
         }
     }
-
     public function rejectLeave(Request $request)
     {
         try {
@@ -18681,7 +18695,7 @@ class SmApiController extends Controller
 
                 if ($user->notificationToken != '') {
 
-                    //echo 'Infix Edu';
+                    //echo 'infinia Edu';
                     define('API_ACCESS_KEY', 'AAAA5ZKAL1I:APA91bFSF0aIpn2uayU2SJ7Ov8Krc3xlQVqwEBYt0FOyDxswMgDVOq7hKoOkRVm5gGd_YxWzwe_kl-POUQE13twf65yxpd3dRffEjNqaXTdl7x-lCCkIY7YYOD4pVjaHWNazHJSgB6xp');
                     //   $registrationIds = ;
                     #prep the bundle
@@ -18738,7 +18752,7 @@ class SmApiController extends Controller
 
                 if ($user->notificationToken != '') {
 
-                    //echo 'Infix Edu';
+                    //echo 'infinia Edu';
                     define('API_ACCESS_KEY', 'AAAAFyQhhks:APA91bGJqDLCpuPgjodspo7Wvp1S4yl3jYwzzSxet_sYQH9Q6t13CtdB_EiwD6xlVhNBa6RcHQbBKCHJ2vE452bMAbmdABsdPriJy_Pr9YvaM90yEeOCQ6VF7JEQ501Prhnu_2bGCPNp');
                     //   $registrationIds = ;
                     #prep the bundle

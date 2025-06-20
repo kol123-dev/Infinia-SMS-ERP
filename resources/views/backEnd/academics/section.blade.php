@@ -117,6 +117,7 @@
                             <div class="col-lg-12">
                                <x-table>
                                     <table id="table_id" class="table Crm_table_active3" cellspacing="0" width="100%">
+    
                                         <thead>
     
                                             <tr>

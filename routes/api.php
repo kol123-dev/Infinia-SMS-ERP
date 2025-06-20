@@ -1163,7 +1163,7 @@ Route::group(['middleware' => ['XSS', 'auth:api', 'json.response'], 'as' => 'api
     Route::get('school/{school_id}/studentSyllabus/{user_id}/{record_id}', 'api\ApiSmStudyMaterialController@saas_studentSyllabusApi');
     Route::get('school/{school_id}/studentOtherDownloads/{user_id}/{record_id}', 'api\ApiSmStudyMaterialController@saas_studentOtherDownloadsApi');
     Route::get('school/{school_id}/room-list', 'api\ApiSmSaasBankController@saas_roomList');
-    Route::any('saas-book-category/{school_id}', 'api\ApiSmSaasBankController@saas_bookCategory');
+    Route::any('saas-book-category', 'api\ApiSmSaasBankController@saas_bookCategory');
     Route::get('my-leave-type/{school_id}/{user_id}', 'api\ApiSmLeaveController@saas_myLeaveType');
     // update 1-14-2-2022
     Route::get('student-record/{student_id}', 'api\ApiStudentRecordController@getRecord');

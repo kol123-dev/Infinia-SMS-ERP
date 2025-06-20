@@ -167,6 +167,7 @@ class SmOnlineExamController extends Controller
                     }
                     $online_exam->school_id = Auth::user()->school_id;
                     $online_exam->academic_id = getAcademicId();
+                    // dd($online_exam, $online_exam->class_id, $online_exam->section_id, $online_exam->subject->subject_name);
                     $online_exam->save();
 
                     $data['class_id'] = $online_exam->class_id;
@@ -321,7 +322,7 @@ class SmOnlineExamController extends Controller
     public function manageOnlineExamQuestion($id)
     {
         try {
-            $online_exam    = SmOnlineExam::find($id);
+            $online_exam = SmOnlineExam::find($id);
             $question_banks = SmQuestionBank::with('questionGroup')->where('class_id', $online_exam->class_id)
                 ->where('section_id', $online_exam->section_id)
                 ->get();

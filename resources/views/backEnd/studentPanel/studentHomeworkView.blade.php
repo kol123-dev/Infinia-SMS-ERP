@@ -176,13 +176,7 @@
                 </div>
             </div>
             @php
-            if (Auth::user()->role_id == 2) {
              $student_detail = App\SmStudent::where('user_id', Auth::user()->id)->first();
-            } else {
-                $parent = Auth::user()->parent;
-                $student_detail = App\SmStudent::where('parent_id', $parent->id)->first();
-            }
-             
              $student_result = $student_detail->homeworks->where('homework_id', $homeworkDetails->id)->first();
             @endphp
             <div class="single-meta">

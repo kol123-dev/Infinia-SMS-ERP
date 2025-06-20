@@ -4,9 +4,9 @@ namespace App;
 
 use App\Scopes\SchoolScope;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SmParent extends Model
 {
@@ -54,14 +54,14 @@ class SmParent extends Model
     {
 
         try {
-            // if (Session::get('childrens')) {
-            //     return Session::get('childrens');
-            // } else {
+            if (Session::get('childrens')) {
+                return Session::get('childrens');
+            } else {
                 $parent = Auth::user()->parent;
                 $childrens = $parent->childrens;
                 Session::put('childrens', $childrens);
                 return Session::get('childrens');
-            // }
+            }
 
         } catch (\Exception $e) {
             $data = [];
