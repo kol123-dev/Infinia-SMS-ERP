@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "./*"
-          target: "/var/www/sms.infiniasync.com/html"
+          target: "/var/www/sms.infiniasync.com/html/dssd/ss"
           strip_components: 0
 
       - name: Run Laravel deployment commands
