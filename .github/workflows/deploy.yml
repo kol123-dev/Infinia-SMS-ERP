@@ -3,7 +3,7 @@ name: Deploy Laravel school Erp
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
