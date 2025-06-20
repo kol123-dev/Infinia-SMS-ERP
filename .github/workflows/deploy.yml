@@ -28,7 +28,7 @@ jobs:
           --exclude='.env' \
           --exclude='storage/' \
           --exclude='.git/' \
-          ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/Tesla01/web/sms.infiniasync.com/public_html/public/new-site/
+          ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/Tesla01/web/sms.infiniasync.com/public_html/public/
 
       - name: Run Laravel deployment commands
         uses: appleboy/ssh-action@v1.0.0
